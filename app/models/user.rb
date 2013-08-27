@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
   has_one :profile, foreign_key: "user_id"
+  has_many :ideas, foreign_key: "created_by_id"
 
   accepts_nested_attributes_for :profile
 
