@@ -4,12 +4,12 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-ross:
+ross_pro:
   first_name: Ross
   last_name: Brown
   user_id: 1
 #
-rob:
+rob_pro:
   first_name: Rob
   last_name: LaFeve
   user_id: 2

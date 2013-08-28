@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20130827205039) do
 
   create_table "idea_votes", force: true do |t|
     t.integer  "user_id"
-    t.integer  "vote_id"
+    t.integer  "idea_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20130827205039) do
     t.string   "title"
     t.datetime "when"
     t.text     "description"
-    t.integer  "created_by_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 20130827205039) do
     t.string   "avatar"
     t.string   "position"
     t.text     "biography"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|

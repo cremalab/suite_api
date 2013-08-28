@@ -3,13 +3,13 @@ require 'test_helper'
 class IdeasControllerTest < ActionController::TestCase
   def setup
     @idea = ideas(:sandwich)
-    #@idea = Idea.create(ideas(:sandwich))
   end
 
   test "should create new idea" do
-    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
-                description: "Mmmmm... eatloaf"}
+    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+                description: "Mmmmm... eatloaf", user_id: 1}
     idea_count = Idea.all.count
+    p meatloaf
     post :create, idea: meatloaf
     assert_response :success
     assert_includes @response.body, "id"

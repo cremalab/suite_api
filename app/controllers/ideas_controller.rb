@@ -4,7 +4,7 @@ class IdeasController < ApplicationController
     if @idea.save
       render :show, status: 201
     else
-      render :json => @user.errors.full_messages, status: 422
+      render :json => @idea.errors.full_messages, status: 422
     end
 
   end
@@ -34,6 +34,6 @@ class IdeasController < ApplicationController
 
   private
     def idea_params
-      params.require(:idea).permit(:title, :when)
+      params.require(:idea).permit(:title, :when, :user_id)
     end
 end
