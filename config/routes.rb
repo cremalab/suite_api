@@ -16,7 +16,7 @@ SuiteApi::Application.routes.draw do
 
   resource :users
   resources :sessions
-
+  resources :ideas
 
 
 
