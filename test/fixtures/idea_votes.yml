@@ -5,7 +5,7 @@
 # below each fixture, per the syntax in the comments below
 #
 ross:
-  user: ross
+  user_id: 1
 
 rob:
-  user: rob
+  user_id: 2

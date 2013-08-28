@@ -2,18 +2,20 @@ require 'test_helper'
 
 class IdeasControllerTest < ActionController::TestCase
   def setup
-    @idea = Idea.create(sandwiches)
+    @idea = ideas(:sandwich)
+    #@idea = Idea.create(ideas(:sandwich))
   end
 
   test "should create new idea" do
+    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
+                description: "Mmmmm... eatloaf"}
     idea_count = Idea.all.count
-    post :create, idea: milkshakes
+    post :create, idea: meatloaf
     assert_response :success
     assert_includes @response.body, "id"
     assert_includes @response.body, "title"
     assert_includes @response.body, "description"
     assert_includes @response.body, "when"
-    assert_includes @response.body, "idea_votes"
     Idea.all.count.must_equal idea_count + 1
   end
 
@@ -33,7 +35,7 @@ class IdeasControllerTest < ActionController::TestCase
 
   test "should get destroy" do
     idea_count = Idea.all.count
-    delete :destroy, id: milkshakes.id
+    delete :destroy, id: @idea.id
     assert_response :success
     Idea.all.count.must_equal idea_count - 1
   end
