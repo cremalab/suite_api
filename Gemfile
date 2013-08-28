@@ -39,6 +39,7 @@ gem "turn", "~> 0.9.6"
 gem "factory_girl", "~> 4.2.0"
 
 gem "sorcery", "~> 0.8.2"
+gem 'rack-cors', :require => 'rack/cors'
 
 # Use unicorn as the app server
 gem 'unicorn'

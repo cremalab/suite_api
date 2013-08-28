@@ -14,9 +14,9 @@ SuiteApi::Application.routes.draw do
   #   resources :products
   get "logout" => "sessions#destroy", :as => "logout"
 
-  resources :users
-  resources :sessions
-  resources :ideas
+  resources :users,      format: :json
+  resources :sessions,   format: :json
+  resources :ideas,      format: :json
 
 
 

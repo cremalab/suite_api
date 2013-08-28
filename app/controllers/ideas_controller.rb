@@ -6,7 +6,11 @@ class IdeasController < ApplicationController
     else
       render :json => @idea.errors.full_messages, status: 422
     end
+  end
 
+  def index
+    @ideas = Idea.all
+    render @ideas.as_json
   end
 
   def show
