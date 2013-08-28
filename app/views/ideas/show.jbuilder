@@ -1,1 +1,1 @@
-json.(@idea, :id, :title, :description, :when)
+json.partial! 'idea', idea: @idea

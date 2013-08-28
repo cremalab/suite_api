@@ -5,12 +5,13 @@ class IdeasController < ApplicationController
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
+      p @idea.errors.full_messages
     end
   end
 
   def index
     @ideas = Idea.all
-    render @ideas.as_json
+    render :index, status: :ok
   end
 
   def show
