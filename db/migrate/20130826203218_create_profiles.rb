@@ -6,6 +6,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.string :avatar
       t.string :position
       t.text :biography
+      t.references :user
 
       t.timestamps
     end
