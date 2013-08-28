@@ -9,7 +9,6 @@ class IdeasControllerTest < ActionController::TestCase
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: 1}
     idea_count = Idea.all.count
-    p meatloaf
     post :create, idea: meatloaf
     assert_response :success
     assert_includes @response.body, "id"
