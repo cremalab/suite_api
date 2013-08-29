@@ -16,19 +16,14 @@ ActiveRecord::Schema.define(version: 20130828192911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "alternate_ideas", force: true do |t|
+  create_table "alternates", force: true do |t|
     t.string   "alternate"
-    t.integer  "idea_vote_id"
+    t.integer  "vote_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "idea_votes", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "idea_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "alternates", ["vote_id"], name: "index_alternates_on_vote_id", using: :btree
 
   create_table "ideas", force: true do |t|
     t.string   "title"
@@ -38,6 +33,8 @@ ActiveRecord::Schema.define(version: 20130828192911) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "first_name"
@@ -50,8 +47,10 @@ ActiveRecord::Schema.define(version: 20130828192911) do
     t.datetime "updated_at"
   end
 
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
-    t.string   "email"
+    t.string   "email",                        null: false
     t.string   "crypted_password"
     t.string   "salt"
     t.datetime "created_at"
@@ -61,5 +60,16 @@ ActiveRecord::Schema.define(version: 20130828192911) do
   end
 
   add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
+
+  create_table "votes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "idea_id"
+    t.string   "vote"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["idea_id"], name: "index_votes_on_idea_id", using: :btree
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
 
 end

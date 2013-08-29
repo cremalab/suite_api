@@ -4,10 +4,7 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-ross_vote:
-  user_id: 1
-  idea_id: 1
+one:
+  vote: ross_vote_sandwich
+  alternate: "Yellow Sub"
 
-rob_vote:
-  user_id: 2
-  idea_id: 1

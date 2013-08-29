@@ -5,14 +5,12 @@
 # below each fixture, per the syntax in the comments below
 #
 milkshakes:
-  id: 1
   title: Milkshakes from Town Topic
   when: 2013-08-28 09:26:06 -0500
   description: "Some prefer malts, but whatever you choose, you'll regret it later."
   user_id: 1
 
 sandwich:
-  id: 2
   title: Chicken Salad Sandwiches at Sylvia's
   when: 2013-09-01 09:26:06 -0500
   description: "It's the best sandwich they have and I can't go on any longer without eating one."

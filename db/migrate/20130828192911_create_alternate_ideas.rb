@@ -1,9 +1,9 @@
 class CreateAlternateIdeas < ActiveRecord::Migration
   def change
-    create_table :alternate_ideas do |t|
+    create_table :alternates do |t|
       t.string :alternate
 
-      t.references :idea_vote
+      t.references :vote, index: true
 
       t.timestamps
     end
