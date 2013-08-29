@@ -1,5 +1,5 @@
 class ApiKey < ActiveRecord::Base
-  belongs_to :user, foreign_key: "api_key_id"
+  belongs_to :user, foreign_key: "api_key_id", dependent: :destroy
 
   before_create :generate_access_token
 

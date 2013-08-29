@@ -4,11 +4,15 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :null_session
   private
     def ensure_authenticated
-      user = User.find(params[:auth][:user_id])
-      api_key = ApiKey.where(
-        access_token: params[:auth][:access_token],
-        user_id: params[:auth][:access_token]
-      )
-      head :unauthorized unless api_key
+      if params[:auth]
+        user = User.find(params[:auth][:user_id])
+        api_key = ApiKey.where(
+          access_token: params[:auth][:access_token],
+          user_id: params[:auth][:access_token]
+        )
+        head :unauthorized unless api_key
+      else
+        head :unauthorized
+      end
     end
 end
