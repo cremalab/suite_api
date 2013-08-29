@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #Relationships
   has_one :profile, foreign_key: "user_id"
   has_many :ideas, foreign_key: "user_id"
+  has_many :api_keys, foreign_key: "user_id"
 
 
   #Validations
@@ -17,5 +18,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
 
 
+  def current_access_token
+    self.api_keys.last ? self.api_keys.last.access_token : nil
+  end
 
 end

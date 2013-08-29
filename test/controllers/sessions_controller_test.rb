@@ -9,6 +9,8 @@ class SessionsControllerTest < ActionController::TestCase
     post :create, email: 'ross@poop.com', password: 'poopmom'
     assert_response :success
     assert_includes @response.body, "ross@poop.com"
+    assert_includes @response.body, "access_token"
+    assert_includes @response.body, "user_id"
   end
 
   test "logout" do

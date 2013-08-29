@@ -1,4 +1,7 @@
 class IdeasController < ApplicationController
+
+  before_action :ensure_authenticated
+
   def create
     @idea = Idea.new(idea_params)
     if @idea.save
