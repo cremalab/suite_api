@@ -1,10 +1,19 @@
 class UsersController < ApplicationController
 
-  before_action :ensure_authenticated, except: ['create']
+  # before_action :ensure_authenticated, except: [:create]
 
   def create
     @user = User.new(user_params)
+
     if @user.save
+
+      # May want to refactor this
+      if @user.api_keys.length > 0
+        @user.api_keys.last.destroy
+      end
+
+      @api_key = @user.api_keys.create()
+
       auto_login(@user)
       @logged_in = current_user == @user
       render :show, status: 201

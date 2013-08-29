@@ -18,5 +18,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
 
 
+  def current_access_token
+    self.api_keys.last ? self.api_keys.last.access_token : nil
+  end
 
 end
