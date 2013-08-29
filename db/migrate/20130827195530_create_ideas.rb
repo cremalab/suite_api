@@ -4,7 +4,7 @@ class CreateIdeas < ActiveRecord::Migration
       t.string :title
       t.datetime :when
       t.text :description
-      t.references :user
+      t.references :user, index: true
 
       t.timestamps
     end

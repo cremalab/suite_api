@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   test "confirm Password" do
     new_user_attr = {email: "mattowens11@gmail.com", password: "fauxhawks"}
 
@@ -41,6 +38,11 @@ class UserTest < ActiveSupport::TestCase
     new_user_attr[:email] = "mattowens11@gmail.com"
     new_user = User.new(new_user_attr)
     assert new_user.valid?
+
+  end
+
+  test "just prints" do
+    p users(:rob).ideas[0].votes[1].alternate
 
   end
 
