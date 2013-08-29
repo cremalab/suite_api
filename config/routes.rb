@@ -13,6 +13,7 @@ SuiteApi::Application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   get "logout" => "sessions#destroy", :as => "logout"
+  get "me" => 'users#me', :as => 'me'
 
   resources :users,      format: :json
   resources :sessions,   format: :json
