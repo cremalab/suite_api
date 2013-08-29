@@ -41,11 +41,6 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
-  test "just prints" do
-    p users(:rob).ideas[0].votes[1].alternate
-
-  end
-
   test "uniqueness of email" do
     new_user = users(:ross).attributes
     new_user = User.new(new_user)
