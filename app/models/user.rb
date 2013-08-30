@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #Relationships
   has_one :profile, foreign_key: "user_id"
   has_many :ideas, foreign_key: "user_id"
+  has_many :idea_threads, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
 

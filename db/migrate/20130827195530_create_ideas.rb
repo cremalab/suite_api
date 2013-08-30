@@ -5,6 +5,7 @@ class CreateIdeas < ActiveRecord::Migration
       t.datetime :when
       t.text :description
       t.references :user, index: true
+      t.references :idea_thread, index: true
 
       t.timestamps
     end

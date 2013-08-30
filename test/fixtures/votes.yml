@@ -7,19 +7,15 @@
 ross_vote_milkshake:
   user_id: 1
   idea: milkshakes
-  vote: Yes
 
 rob_vote_milkshake:
   user_id: 2
   idea: milkshakes
-  vote: Yes
 
 ross_vote_sandwich:
   user_id: 1
   idea: sandwich
-  vote: No
 
 rob_vote_sandwich:
   user_id: 2
   idea: sandwich
-  vote: Yes
