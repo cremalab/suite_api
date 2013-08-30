@@ -6,20 +6,22 @@ class ApplicationController < ActionController::Base
   private
 
     def ensure_authenticated
-      access_token = request.headers['HTTP_X_ACCESS_TOKEN']
-      user_id      = request.headers['HTTP_X_USER_ID']
-      if access_token && user_id
-        api_key = ApiKey.find_by(
-          access_token: access_token,
-          user_id: user_id
-        )
-        if api_key
-          current_user = access_token
+      if request.format == 'text/html'
+        access_token = request.headers['HTTP_X_ACCESS_TOKEN']
+        user_id      = request.headers['HTTP_X_USER_ID']
+        if access_token && user_id
+          api_key = ApiKey.find_by(
+            access_token: access_token,
+            user_id: user_id
+          )
+          if api_key
+            current_user = access_token
+          else
+            head :unauthorized unless api_key
+          end
         else
-          head :unauthorized unless api_key
+          head :unauthorized
         end
-      else
-        head :unauthorized
       end
     end
 end
