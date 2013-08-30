@@ -30,27 +30,8 @@ class VotesControllerTest < ActionController::TestCase
   test "show" do
     get :show, id: @vote.id
     assert_response :success
-<<<<<<< HEAD
 
   end
-
-  # test "update" do
-  #   get :update, id: @vote.id, auth: @auth
-  #   assert_response :success
-=======
-    p @response.body
-    # assert_includes @response.body, "Yes"
-
-  end
-
-  test "update" do
-    new_vote = {vote: "No"}
-    get :update, id: @vote.id, vote: new_vote
-    assert_response :success
-    # assert_includes @response.body, "No"
->>>>>>> ab389f648957baaf7c33304b94637032c0ad62a0
-
-  # end
 
   test "destroy" do
     vote_count = Vote.all.count

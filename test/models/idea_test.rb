@@ -11,10 +11,6 @@ class IdeaTest < ActiveSupport::TestCase
     refute new_idea.valid?
 
     new_idea = Idea.new(new_idea_attr)
-    new_idea.when = nil
-    refute new_idea.valid?
-
-    new_idea = Idea.new(new_idea_attr)
     new_idea.user_id = nil
     refute new_idea.valid?
 
