@@ -13,7 +13,6 @@ class IdeasController < ApplicationController
 
   def index
     @ideas = Idea.all
-    p @current_auth_user
     render :index, status: :ok
   end
 
