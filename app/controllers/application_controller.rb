@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :null_session
 
+  def current_auth_user
+    return @current_auth_user
+  end
+
   private
 
     def ensure_authenticated
@@ -15,7 +19,7 @@ class ApplicationController < ActionController::Base
             user_id: user_id
           )
           if api_key
-            current_user = access_token
+            @current_auth_user = api_key.user
           else
             head :unauthorized unless api_key
           end
