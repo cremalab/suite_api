@@ -5,6 +5,6 @@ class Vote < ActiveRecord::Base
   belongs_to :user
 
   #Validations
-  validates_presence_of :idea_id, :user_id, :vote
+  validates_presence_of :idea_id, :user_id
 
 end

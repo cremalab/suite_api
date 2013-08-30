@@ -2,7 +2,7 @@ class VotesController < ApplicationController
   def create
     @vote = Vote.new(vote_params)
     if @vote.save
-      render :index, status: 201
+      render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
     end

@@ -1,1 +1,1 @@
-json.(@vote, :idea_id, :user_id, :vote)
+json.array! @votes, partial: 'vote', as: :vote
