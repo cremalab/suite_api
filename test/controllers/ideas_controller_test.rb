@@ -8,7 +8,8 @@ class IdeasControllerTest < ActionController::TestCase
       password_confirmation: 'password'
     )
     @user.api_keys.create()
-    @auth = {access_token: @user.current_access_token, user_id: @user.id}
+    @request.env["HTTP_X_USER_ID"] = @user.id
+    @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
 
   test "should create new idea" do
@@ -46,6 +47,8 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should return unauthorized if no access_token" do
+    @request.env["HTTP_X_ACCESS_TOKEN"] = 'ta-daaaaaa'
+    p @request.env["HTTP_X_ACCESS_TOKEN"]
     get :show, id: @idea.id, auth: {}
     assert_response :unauthorized
   end

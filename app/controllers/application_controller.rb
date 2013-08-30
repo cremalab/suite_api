@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
       access_token = request.headers['HTTP_X_ACCESS_TOKEN']
       user_id      = request.headers['HTTP_X_USER_ID']
       if access_token && user_id
-        api_key = ApiKey.where(
+        api_key = ApiKey.find_by(
           access_token: access_token,
           user_id: user_id
         )
