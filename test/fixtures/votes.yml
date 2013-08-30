@@ -7,19 +7,19 @@
 ross_vote_milkshake:
   user_id: 1
   idea: milkshakes
-  vote: Yes
+  vote: "Yes"
 
 rob_vote_milkshake:
   user_id: 2
   idea: milkshakes
-  vote: Yes
+  vote: "Yes"
 
 ross_vote_sandwich:
   user_id: 1
   idea: sandwich
-  vote: No
+  vote: "No"
 
 rob_vote_sandwich:
   user_id: 2
   idea: sandwich
-  vote: Yes
+  vote: "Yes"
