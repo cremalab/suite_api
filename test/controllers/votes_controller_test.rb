@@ -29,6 +29,7 @@ class VotesControllerTest < ActionController::TestCase
   test "show" do
     get :show, id: @vote.id, auth: @auth
     assert_response :success
+    p @response.body
     assert_includes @response.body, "Yes"
 
   end
