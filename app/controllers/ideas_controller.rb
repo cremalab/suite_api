@@ -8,7 +8,6 @@ class IdeasController < ApplicationController
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
-      p @idea.errors.full_messages
     end
   end
 
@@ -34,7 +33,7 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
-        render :show, status: :ok
+        render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity
       end
@@ -42,6 +41,6 @@ class IdeasController < ApplicationController
 
   private
     def idea_params
-      params.require(:idea).permit(:title, :when, :user_id, :description)
+      params.require(:idea).permit(:title, :when, :user_id, :description, votes_attributes: [ :user_id ])
     end
 end

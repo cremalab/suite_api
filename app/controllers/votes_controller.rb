@@ -1,21 +1,24 @@
 class VotesController < ApplicationController
+
+  before_action :ensure_authenticated
+
   def create
     @vote = Vote.new(vote_params)
     if @vote.save
-      render :index, status: 201
+      render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
     end
   end
   def show
     @vote = Vote.find(params[:id])
-    render :index, status: 200
+    render :show, status: 200
   end
 
   def update
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
-      render :index, status: :ok
+      render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
     end
@@ -23,10 +26,11 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
+    p @vote
     if @vote.destroy
-      render :index, status: :ok
+      render :show, status: :ok
     else
-      render :index, status: :unprocessable_entity
+      render :show, status: :unprocessable_entity
     end
 
   end

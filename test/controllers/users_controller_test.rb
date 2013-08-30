@@ -42,7 +42,12 @@ class UsersControllerTest < ActionController::TestCase
     new_user = {email: "mattowens11@gmail.com", password: "yellowsub",
                 password_confirmation: "yellowsub" }
     user = User.create(new_user)
+    api_key = user.api_keys.create()
     user_id = user.id
+
+    @request.env["HTTP_X_USER_ID"] = user_id
+    @request.env["HTTP_X_ACCESS_TOKEN"] = user.current_access_token
+
     get :show, id: user_id
     assert_response :success
     assert_includes @response.body, "mattowens11@gmail.com"

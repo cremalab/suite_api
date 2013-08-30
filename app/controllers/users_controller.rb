@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  # before_action :ensure_authenticated, except: [:create]
+  before_action :ensure_authenticated, except: [:create]
 
   def create
     @user = User.new(user_params)
@@ -29,8 +29,9 @@ class UsersController < ApplicationController
   end
 
   def me
-    @user = current_user
+    @user = User.find(params[:auth][:user_id])
     if @user
+      @logged_in = true
       render :show, status: 200
     else
       return head :no_content
