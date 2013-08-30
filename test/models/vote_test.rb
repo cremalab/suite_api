@@ -5,7 +5,7 @@ class IdeaVoteTest < ActiveSupport::TestCase
   #   assert true
   # end
   test "validation" do
-    new_vote_attr = {user_id: 1, idea_id: 2, vote: "Yes"}
+    new_vote_attr = {user_id: 1, idea_id: 2}
 
     new_vote = Vote.new(new_vote_attr)
     new_vote.user_id = nil
@@ -16,14 +16,7 @@ class IdeaVoteTest < ActiveSupport::TestCase
     refute new_vote.valid?
 
     new_vote = Vote.new(new_vote_attr)
-    new_vote.vote = nil
-    refute new_vote.valid?
-
-    new_vote = Vote.new(new_vote_attr)
     assert new_vote.valid?
-
-
-
   end
 
 end

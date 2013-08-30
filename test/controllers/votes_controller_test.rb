@@ -19,7 +19,7 @@ class VotesControllerTest < ActionController::TestCase
   end
 
   test "create" do
-    new_vote = {user_id: @user.id, idea_id: @idea.id, vote: "Yes"}
+    new_vote = {user_id: @user.id, idea_id: @idea.id}
     vote_count = Vote.all.count
     post :create, vote: new_vote, auth: @auth
     assert_response :success
@@ -29,17 +29,14 @@ class VotesControllerTest < ActionController::TestCase
   test "show" do
     get :show, id: @vote.id, auth: @auth
     assert_response :success
-    assert_includes @response.body, "Yes"
 
   end
 
-  test "update" do
-    new_vote = {vote: "No"}
-    get :update, id: @vote.id, vote: new_vote,auth: @auth
-    assert_response :success
-    assert_includes @response.body, "No"
+  # test "update" do
+  #   get :update, id: @vote.id, auth: @auth
+  #   assert_response :success
 
-  end
+  # end
 
   test "destroy" do
     vote_count = Vote.all.count
