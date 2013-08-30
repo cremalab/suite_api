@@ -1,7 +1,7 @@
 class Idea < ActiveRecord::Base
   #Relationships
   has_many :votes, foreign_key: "idea_id"
-  belongs_to :users
+  belongs_to :user
 
   #Validations
   validates_presence_of :title, :when, :user_id
