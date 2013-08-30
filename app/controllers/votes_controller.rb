@@ -26,7 +26,6 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
-    p @vote
     if @vote.destroy
       render :show, status: :ok
     else
