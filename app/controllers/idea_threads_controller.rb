@@ -12,6 +12,7 @@ class IdeaThreadsController < ApplicationController
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422
+      p @idea_thread.errors.full_messages
     end
   end
 
