@@ -8,6 +8,11 @@ class IdeaThreadsController < ApplicationController
   end
   def create
     @idea_thread = IdeaThread.new(idea_thread_params)
+    if @idea_thread.save
+      render :show, status: 201
+    else
+      render :json => @idea_thread.errors.full_messages, status: 422
+    end
   end
 
 private

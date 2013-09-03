@@ -8,6 +8,7 @@ class IdeasControllerTest < ActionController::TestCase
       password_confirmation: 'password'
     )
     @user.api_keys.create()
+    @request.env["HTTP_X_REQUESTED_WITH"] = {}
     @request.env["HTTP_X_USER_ID"] = @user.id
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
