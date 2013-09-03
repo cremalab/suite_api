@@ -15,7 +15,8 @@ class IdeasControllerTest < ActionController::TestCase
 
   test "should create new idea" do
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
-                description: "Mmmmm... eatloaf", user_id: 1}
+                description: "Mmmmm... eatloaf", user_id: 1,
+                idea_thread_id: idea_threads(:lunch).id}
     idea_count = Idea.all.count
     post :create, idea: meatloaf
     assert_response :success

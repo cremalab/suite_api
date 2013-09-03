@@ -3,6 +3,7 @@ require 'test_helper'
 class IdeaTest < ActiveSupport::TestCase
   test "validation" do
     new_idea_attr = {title: "Meatloaf at YJ's",
+                      idea_thread_id: 2,
                       when: "2013-08-28 09:26:06 -0500",
                       description: "Mmmmm... eatloaf", user_id: 1}
 
