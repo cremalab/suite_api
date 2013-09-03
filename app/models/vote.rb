@@ -7,4 +7,8 @@ class Vote < ActiveRecord::Base
   #Validations
   validates_presence_of :idea_id, :user_id
 
+  #Live Stream
+  #after_save
+  #after_destroy
+
 end

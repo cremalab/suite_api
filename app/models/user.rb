@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
 
-
   #Validations
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
@@ -18,6 +17,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   accepts_nested_attributes_for :profile
+
+  #Live Stream
+  #after_save
+  #after_destroy
 
 
   def current_access_token

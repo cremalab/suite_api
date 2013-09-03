@@ -8,5 +8,9 @@ class Idea < ActiveRecord::Base
   validates_presence_of :title, :user_id, :idea_thread_id
   accepts_nested_attributes_for :votes, allow_destroy: true
 
+  #Live Stream
+  #after_save
+  #after_destroy
+
 
 end
