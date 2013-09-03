@@ -14,6 +14,7 @@ SuiteApi::Application.routes.draw do
   #   resources :products
   get "logout" => "sessions#destroy", :as => "logout"
   get "me" => 'users#me', :as => 'me'
+  get 'browser' => 'browser#index', :as => 'browser'
 
   resources :users,      format: :json
   resources :sessions,   format: :json
