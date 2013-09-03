@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130830165911) do
+ActiveRecord::Schema.define(version: 20130903172135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alternates", force: true do |t|
+    t.string   "alternate"
+    t.integer  "vote_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "alternates", ["vote_id"], name: "index_alternates_on_vote_id", using: :btree
 
   create_table "api_keys", force: true do |t|
     t.string   "access_token"
@@ -36,12 +45,11 @@ ActiveRecord::Schema.define(version: 20130830165911) do
     t.datetime "when"
     t.text     "description"
     t.integer  "user_id"
-    t.integer  "idea_thread_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "idea_thread_id"
   end
 
-  add_index "ideas", ["idea_thread_id"], name: "index_ideas_on_idea_thread_id", using: :btree
   add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
@@ -72,6 +80,7 @@ ActiveRecord::Schema.define(version: 20130830165911) do
   create_table "votes", force: true do |t|
     t.integer  "user_id"
     t.integer  "idea_id"
+    t.string   "vote"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

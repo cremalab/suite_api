@@ -15,6 +15,15 @@ class IdeaThreadsController < ApplicationController
     end
   end
 
+  def destroy
+    @idea_thread = IdeaThread.find(params[:id])
+    if @idea_thread.destroy
+      render :json => ['Idea thread destroyed'], status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
 private
   def idea_thread_params
     params.require(:idea_thread).permit(:user_id, ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ])
