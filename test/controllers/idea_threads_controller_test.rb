@@ -27,6 +27,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     assert_response :success
     IdeaThread.all.count.must_equal idea_thread_count + 1
     assert_includes @response.body, "Meatloaf"
+    assert_includes @response.body, "created_at"
   end
 
   test "should destroy" do
