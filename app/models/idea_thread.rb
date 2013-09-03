@@ -1,6 +1,6 @@
 class IdeaThread < ActiveRecord::Base
   #Relationships
-  has_many :ideas, foreign_key: "idea_thread_id"
+  has_many :ideas, dependent: :destroy
   belongs_to :users
 
   #Validations

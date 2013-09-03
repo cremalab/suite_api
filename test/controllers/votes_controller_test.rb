@@ -11,7 +11,9 @@ class VotesControllerTest < ActionController::TestCase
       email: 'test@cremalab.com', password: 'password',
       password_confirmation: 'password'
     )
+    @vote.user_id = @user.id
     @user.api_keys.create()
+    @request.env["HTTP_X_REQUESTED_WITH"] = {}
     @request.env["HTTP_X_USER_ID"] = @user.id
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
     @idea = ideas(:sandwich)
