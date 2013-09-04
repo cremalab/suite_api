@@ -5,7 +5,7 @@ class Idea < ActiveRecord::Base
   belongs_to :user
 
   #Validations
-  validates_presence_of :title, :user_id, :idea_thread_id
+  validates_presence_of :title, :user_id
   accepts_nested_attributes_for :votes, allow_destroy: true
 
 
