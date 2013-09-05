@@ -1,11 +1,17 @@
 class SSE
-  def initialize(io)
+
+  attr_reader :io, :response
+
+  def initialize(response)
+    response.headers['Content-Type'] = 'text/event-stream'
+    @response = response
+    @io = response.stream
     @io = io
   end
 
   def write(object, options = {})
     options.each do |k,v|
-        @io.write "#{k}: #{v}\n"
+      @io.write "#{k}: #{v}\n"
     end
     @io.write "data: #{JSON.dump(object)}\n\n"
   end
