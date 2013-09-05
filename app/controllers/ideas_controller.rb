@@ -24,6 +24,7 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
+      @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
