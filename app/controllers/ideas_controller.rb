@@ -1,4 +1,8 @@
+require 'sse'
+
 class IdeasController < ApplicationController
+  include ActionController::Live
+
 
   before_action :ensure_authenticated
 
@@ -12,8 +16,24 @@ class IdeasController < ApplicationController
   end
 
   def index
+    #Live streaming
     @ideas = Idea.all
-    render :index, status: :ok
+
+    response.headers['Content-Type'] = 'text/event-stream'
+
+    sse = SSE.new(response.stream)
+
+    begin
+      loop do
+        sse.write(@ideas)
+        sleep 1
+      end
+    rescue IOError
+      # When the client disconnects, we'll get an IOError on write
+    ensure
+      sse.close
+    end
+    #render :index, status: :ok
   end
 
   def show

@@ -13,4 +13,5 @@ class Idea < ActiveRecord::Base
   #after_destroy
 
 
+
 end
