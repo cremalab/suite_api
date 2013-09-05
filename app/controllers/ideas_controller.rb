@@ -18,6 +18,16 @@ class IdeasController < ApplicationController
   def index
     #Live streaming
     @ideas = Idea.all
+    render :index, status: :ok
+  end
+
+  def show
+    @idea = Idea.find(params[:id])
+    render :show, status: 200
+  end
+
+  def event
+    @ideas = Idea.all
 
     response.headers['Content-Type'] = 'text/event-stream'
 
@@ -33,12 +43,6 @@ class IdeasController < ApplicationController
     ensure
       sse.close
     end
-    #render :index, status: :ok
-  end
-
-  def show
-    @idea = Idea.find(params[:id])
-    render :show, status: 200
   end
 
   def update
