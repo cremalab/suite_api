@@ -4,5 +4,6 @@ json.user do
   json.email idea.user.email
   json.id idea.user.id
 end
+json.original idea.first_in_thread?
 
 json.votes idea.votes, partial: '/votes/vote', as: :vote
