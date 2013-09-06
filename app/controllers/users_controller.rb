@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.build_profile
 
     if @user.save
 
@@ -28,6 +29,18 @@ class UsersController < ApplicationController
     render :show, status: 200
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.profile.nil?
+      @user.build_profile
+    end
+    if @user.update_attributes(user_params)
+      render :show, status: :ok
+    else
+      render :json => @user.errors.full_messages, status: 422
+    end
+  end
+
   def me
     @user = User.find(params[:auth][:user_id])
     if @user
@@ -40,7 +53,10 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(
+        :email, :password, :password_confirmation,
+        profile_attributes: [:first_name, :last_name]
+      )
     end
 
 end

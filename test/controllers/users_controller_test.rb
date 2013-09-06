@@ -5,8 +5,8 @@ class UsersControllerTest < ActionController::TestCase
   #   assert true
   # end
   test "Create New" do
-    new_user = {email: "mattowens11@gmail.com", password: "yellowsub",
-                password_confirmation: "yellowsub" }
+    new_user = {user: {email: "mattowens11@gmail.com", password: "yellowsub",
+                password_confirmation: "yellowsub"} }
     post :create, new_user
     user = User.find_by(email: "mattowens11@gmail.com")
     assert_not_nil user
@@ -19,8 +19,8 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "Return access_token after sign up" do
-    new_user = {email: "mattowens11@gmail.com", password: "yellowsub",
-                password_confirmation: "yellowsub" }
+    new_user = {user: {email: "mattowens11@gmail.com", password: "yellowsub",
+                password_confirmation: "yellowsub" }}
     post :create, new_user
     assert_response :success
     response = JSON.parse(@response.body)
@@ -40,7 +40,9 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should get show" do
     new_user = {email: "mattowens11@gmail.com", password: "yellowsub",
-                password_confirmation: "yellowsub" }
+                password_confirmation: "yellowsub", profile_attributes: {
+                  first_name: "Matt", last_name: "Owens" }
+                }
     user = User.create(new_user)
     api_key = user.api_keys.create()
     user_id = user.id
