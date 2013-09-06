@@ -8,5 +8,7 @@ class Idea < ActiveRecord::Base
   validates_presence_of :title, :user_id
   accepts_nested_attributes_for :votes, allow_destroy: true
 
-
+  def first_in_thread?
+    self == self.idea_thread.ideas.order("created_at ASC").first
+  end
 end
