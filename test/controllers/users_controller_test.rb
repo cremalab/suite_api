@@ -10,6 +10,7 @@ class UsersControllerTest < ActionController::TestCase
     post :create, new_user
     user = User.find_by(email: "mattowens11@gmail.com")
     assert_not_nil user
+    assert_not_nil user.profile
 
     # Has API key with access token
     assert_not_nil user.api_keys.first
