@@ -9,7 +9,7 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     if @idea.save
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"ideas_create\", \'id: #{@idea.to_json}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@idea.to_json}\';")
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -18,7 +18,6 @@ class IdeasController < ApplicationController
 
   def index
     @ideas = Idea.all
-    conn = ActiveRecord::Base.connection.raw_connection
     render :index, status: :ok
   end
 
@@ -27,54 +26,11 @@ class IdeasController < ApplicationController
     render :show, status: 200
   end
 
-  def event
-    @ideas = Idea.all
-
-    sse = SSE.new(response)
-
-    logger.info "SSE"
-    logger.info sse
-
-    conn = ActiveRecord::Base.connection.raw_connection
-    conn.exec("LISTEN \"ideas_ch\";")
-    begin
-      loop do
-        conn.wait_for_notify do |event, pid, payload|
-          if event.to_s == "ideas_create"
-            logger.info event
-            logger.info pid
-            logger.info payload
-            sse.write(payload)
-          elsif event.to_s == "ideas_update"
-            logger.info event
-            logger.info pid
-            logger.info payload
-            sse.write(payload)
-          elsif event.to_s == "ideas_destroy"
-            logger.info event
-            logger.info pid
-            logger.info payload
-            sse.write(payload)
-          else
-            logger.info event
-            logger.info pid
-            logger.info payload
-            sse.write(payload)
-          end
-        end
-      end
-    rescue IOError
-      # When the client disconnects, we'll get an IOError on write
-    ensure
-      sse.close
-    end
-  end
-
   def update
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"ideas_update\", \'id: #{@idea.to_json}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@idea.to_json}\';")
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
     else
@@ -85,11 +41,31 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
-        conn.exec("NOTIFY \"ideas_destroy\", \'id: #{params[:id]}\';")
+        conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity
       end
+  end
+
+  def event
+    sse = SSE.new(response)
+    conn = ActiveRecord::Base.connection.raw_connection
+    conn.exec("LISTEN \"channel\";")
+    begin
+      loop do
+        conn.wait_for_notify do |event, pid, payload|
+          logger.info event
+          logger.info pid
+          logger.info payload
+          sse.write(payload)
+        end
+      end
+    rescue IOError
+      # When the client disconnects, we'll get an IOError on write
+    ensure
+      sse.close
+    end
   end
 
   private
