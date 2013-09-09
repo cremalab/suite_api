@@ -9,6 +9,8 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     if @idea.save
+      conn = ActiveRecord::Base.connection.raw_connection
+      conn.exec("NOTIFY \"ideas_create\", \'id: #{@idea.to_json}\';")
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -16,8 +18,8 @@ class IdeasController < ApplicationController
   end
 
   def index
-    #Live streaming
     @ideas = Idea.all
+    conn = ActiveRecord::Base.connection.raw_connection
     render :index, status: :ok
   end
 
@@ -29,14 +31,38 @@ class IdeasController < ApplicationController
   def event
     @ideas = Idea.all
 
-    response.headers['Content-Type'] = 'text/event-stream'
+    sse = SSE.new(response)
 
-    sse = SSE.new(response.stream)
+    logger.info "SSE"
+    logger.info sse
 
+    conn = ActiveRecord::Base.connection.raw_connection
+    conn.exec("LISTEN \"ideas_ch\";")
     begin
       loop do
-        sse.write(@ideas)
-        sleep 1
+        conn.wait_for_notify do |event, pid, payload|
+          if event.to_s == "ideas_create"
+            logger.info event
+            logger.info pid
+            logger.info payload
+            sse.write(payload)
+          elsif event.to_s == "ideas_update"
+            logger.info event
+            logger.info pid
+            logger.info payload
+            sse.write(payload)
+          elsif event.to_s == "ideas_destroy"
+            logger.info event
+            logger.info pid
+            logger.info payload
+            sse.write(payload)
+          else
+            logger.info event
+            logger.info pid
+            logger.info payload
+            sse.write(payload)
+          end
+        end
       end
     rescue IOError
       # When the client disconnects, we'll get an IOError on write
@@ -48,6 +74,8 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
+      conn = ActiveRecord::Base.connection.raw_connection
+      conn.exec("NOTIFY \"ideas_update\", \'id: #{@idea.to_json}\';")
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
@@ -57,6 +85,7 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
+        conn.exec("NOTIFY \"ideas_destroy\", \'id: #{params[:id]}\';")
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity

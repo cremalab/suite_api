@@ -8,5 +8,9 @@ class ListenerTest < ActiveSupport::TestCase
   test "initialize" do
     listener = Listener.new
 
+    #listener.listen()
+
+    listener.close()
+
   end
 end

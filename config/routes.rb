@@ -21,6 +21,7 @@ SuiteApi::Application.routes.draw do
   resources :ideas,      format: :json do
     resource :votes,     format: :json
   end
+  get "ideas/event" => "ideas#event"
   resources :votes,      format: :json
 
 
