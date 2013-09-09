@@ -1,4 +1,5 @@
 SuiteApi::Application.routes.draw do
+  get "idea_threads/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # You can have the root of your site routed with "root"
@@ -23,6 +24,7 @@ SuiteApi::Application.routes.draw do
   end
   get "ideas/event" => "ideas#event"
   resources :votes,      format: :json
+  resources :idea_threads, format: :json
 
 
 

@@ -12,16 +12,16 @@ milkshakes:
   idea_thread: fun
 
 sandwich:
-  title: Chicken Salad Sandwiches at Sylvia's
+  title: Chicken Salad Sandwiches at Sylvias
   when: 2013-09-01 09:26:06 -0500
-  description: "It's the best sandwich they have and I can't go on any longer without eating one."
+  description: "Its the best sandwich they have and I cant go on any longer without eating one."
   user_id: 2
   idea_thread: lunch
 
 mildreds:
   title: Chicken Salad Sandwiches at Mildreds's
   when: 2013-09-01 09:26:06 -0500
-  description: "It's the better sandwich they have and I can't go on any longer without eating one."
+  description: "Its the better sandwich they have and I cant go on any longer without eating one."
   user_id: 1
   idea_thread: lunch
 

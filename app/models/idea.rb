@@ -5,6 +5,10 @@ class Idea < ActiveRecord::Base
   belongs_to :user
 
   #Validations
-  validates_presence_of :title, :user_id, :idea_thread_id
+  validates_presence_of :title, :user_id
   accepts_nested_attributes_for :votes, allow_destroy: true
+
+  def first_in_thread?
+    self == self.idea_thread.ideas.order("created_at ASC").first
+  end
 end

@@ -75,6 +75,7 @@ class IdeasController < ApplicationController
     if @idea.update_attributes(idea_params)
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"ideas_update\", \'id: #{@idea.to_json}\';")
+      @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity

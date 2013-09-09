@@ -8,6 +8,7 @@ class IdeasControllerTest < ActionController::TestCase
       password_confirmation: 'password'
     )
     @user.api_keys.create()
+    @request.env["HTTP_X_REQUESTED_WITH"] = {}
     @request.env["HTTP_X_USER_ID"] = @user.id
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
@@ -29,15 +30,15 @@ class IdeasControllerTest < ActionController::TestCase
   test "should get show" do
     get :show, id: @idea.id
     assert_response :success
-    assert_includes @response.body, "Chicken Salad Sandwiches at Sylvia's"
-    assert_includes @response.body, "It's the best sandwich they have"
+    assert_includes @response.body, "Chicken Salad Sandwiches at Sylvias"
+    assert_includes @response.body, "Its the best sandwich they have"
   end
 
   test "should get update" do
-    put :update, id: @idea.id, idea: {title: "BLT at Mildred's"}, auth: @auth
+    post :update, id: @idea.id, idea: {title: "BLT at Mildreds"}, auth: @auth
     assert_response :success
-    assert_includes @response.body, "BLT at Mildred's"
-    Idea.find(@idea.id).title.must_equal "BLT at Mildred's"
+    assert_includes @response.body, "BLT at Mildreds"
+    Idea.find(@idea.id).title.must_equal "BLT at Mildreds"
   end
 
   test "should get destroy" do

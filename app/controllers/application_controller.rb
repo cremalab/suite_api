@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
     end
 
     def ensure_authenticated
-      if request.format == 'text/html'
+
+      if is_xhr?
         if @access_token && @user_id
           api_key = ApiKey.find_by(
             access_token: @access_token,
@@ -32,5 +33,9 @@ class ApplicationController < ActionController::Base
           head :unauthorized
         end
       end
+    end
+
+    def is_xhr?
+      return true if request.headers['HTTP_X_REQUESTED_WITH']
     end
 end
