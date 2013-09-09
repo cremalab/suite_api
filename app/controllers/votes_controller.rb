@@ -6,7 +6,7 @@ class VotesController < ApplicationController
     @vote = Vote.new(vote_params)
     if @vote.save
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote.to_json}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -21,7 +21,7 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@idea.to_json}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity

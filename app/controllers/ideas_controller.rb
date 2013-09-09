@@ -18,7 +18,6 @@ class IdeasController < ApplicationController
 
   def index
     @ideas = Idea.all
-    conn = ActiveRecord::Base.connection.raw_connection
     render :index, status: :ok
   end
 

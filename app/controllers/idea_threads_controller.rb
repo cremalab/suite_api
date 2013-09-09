@@ -6,11 +6,12 @@ class IdeaThreadsController < ApplicationController
     @idea_threads = IdeaThread.all
     render :index, status: :ok
   end
+
   def create
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\";")
+      conn.exec("NOTIFY \"channel\", \'#{@idea_thread} \';")
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422
@@ -22,7 +23,7 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.destroy
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\";")
+      conn.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity

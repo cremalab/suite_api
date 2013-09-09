@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       auto_login(@user)
       @logged_in = current_user == @user
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\";")
+      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     end
     if @user.update_attributes(user_params)
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\";")
+      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
       render :show, status: :ok
     else
       render :json => @user.errors.full_messages, status: 422
