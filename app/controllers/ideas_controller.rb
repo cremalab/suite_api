@@ -1,7 +1,5 @@
-require 'sse'
 
 class IdeasController < ApplicationController
-  include ActionController::Live
 
   before_action :ensure_authenticated
 
