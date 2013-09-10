@@ -10,8 +10,10 @@ class IdeaThreadsController < ApplicationController
   def create
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
+      @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder',
+                                            locals: { ideas: @ideas_thread})
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@idea_thread} \';")
+      conn.exec("NOTIFY \"channel\", \'#{@ideas_thread_json}\';")
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422

@@ -17,8 +17,11 @@ class UsersController < ApplicationController
 
       auto_login(@user)
       @logged_in = current_user == @user
+      @user_json = render_to_string(template: 'users/show.jbuilder',
+                                            locals: { ideas: @user})
+
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
+      conn.exec("NOTIFY \"channel\", \'#{@user_json}\';")
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -37,8 +40,11 @@ class UsersController < ApplicationController
       @user.build_profile
     end
     if @user.update_attributes(user_params)
+      @user_json = render_to_string(template: 'users/show.jbuilder',
+                                    locals: { ideas: @user})
+
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
+      conn.exec("NOTIFY \"channel\", \'#{@user_json}\';")
       render :show, status: :ok
     else
       render :json => @user.errors.full_messages, status: 422
