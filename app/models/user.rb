@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   def display_name
     if self.profile && self.profile.first_name
-      "#{self.profile.first_name}#{self.profile.last_name.empty? ? '' : self.profile.last_name}"
+      "#{self.profile.first_name}#{self.profile.last_name.empty? ? '' : ' ' + self.profile.last_name}"
     else
       email
     end
