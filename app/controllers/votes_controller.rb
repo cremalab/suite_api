@@ -5,8 +5,12 @@ class VotesController < ApplicationController
   def create
     @vote = Vote.new(vote_params)
     if @vote.save
+      #Send to PostgreSQL
+      @vote_json = render_to_string(template: 'votes/show.jbuilder',
+                                    locals: { ideas: @vote})
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@vote_json}\';")
+
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -20,8 +24,12 @@ class VotesController < ApplicationController
   def update
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
+      #Send to PostgreSQL
+      @vote_json = render_to_string(template: 'votes/show.jbuilder',
+                                    locals: { ideas: @vote})
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
+      conn.exec("NOTIFY \"channel\", \'id: #{@vote_json}\';")
+
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
@@ -33,8 +41,10 @@ class VotesController < ApplicationController
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
+      #Send to PostgreSQL
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
+
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
