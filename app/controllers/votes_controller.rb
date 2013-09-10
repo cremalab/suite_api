@@ -41,22 +41,6 @@ class VotesController < ApplicationController
     end
   end
 
-  def event
-    sse = SSE.new(response)
-    conn = ActiveRecord::Base.connection.raw_connection
-    conn.exec("LISTEN \"channel\";")
-    begin
-      loop do
-        conn.wait_for_notify do |event, pid, payload|
-        end
-      end
-    rescue IOError
-      # When the client disconnects, we'll get an IOError on write
-    ensure
-      sse.close
-    end
-  end
-
   private
     def vote_params
       params.require(:vote).permit(:idea_id, :user_id)

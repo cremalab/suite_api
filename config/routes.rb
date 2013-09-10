@@ -15,18 +15,16 @@ SuiteApi::Application.routes.draw do
   #   resources :products
   get "logout" => "sessions#destroy", :as => "logout"
   get "me" => 'users#me', :as => 'me'
-  get 'browser' => 'browser#index', :as => 'browser'
 
   resources :users,      format: :json
   resources :sessions,   format: :json
   resources :ideas,      format: :json do
     resource :votes,     format: :json
   end
-  get "ideas/event" => "ideas#event"
   resources :votes,      format: :json
   resources :idea_threads, format: :json
 
-
+  get "event" => "application#event", :as => "event"
 
   # Example resource route with options:
   #   resources :products do
