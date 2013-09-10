@@ -1,6 +1,4 @@
 SuiteApi::Application.routes.draw do
-  get "voting_rights/destroy"
-  get "voting_rights/show"
   get "idea_threads/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
