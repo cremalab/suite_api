@@ -6,10 +6,12 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     if @idea.save
+      #Send to PostgreSQL
       @idea_json = render_to_string(template: 'ideas/show.jbuilder',
                                     locals: { ideas: @ideas})
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'#{@idea_json}\';")
+
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -29,10 +31,12 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
+      #Send to PostgreSQL
       @idea_json = render_to_string(template: 'ideas/show.jbuilder',
                                     locals: { ideas: @ideas})
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'#{@idea_json}\';")
+
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
     else
@@ -43,6 +47,7 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
+        #Send to PostgreSQL
         conn = ActiveRecord::Base.connection.raw_connection
         conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
         render :json => ['Idea destroyed'], status: :ok
