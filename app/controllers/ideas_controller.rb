@@ -39,6 +39,7 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
+        conn = ActiveRecord::Base.connection.raw_connection
         conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
         render :json => ['Idea destroyed'], status: :ok
       else
