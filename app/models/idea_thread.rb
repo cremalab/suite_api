@@ -14,7 +14,7 @@ class IdeaThread < ActiveRecord::Base
 
 private
   def validate_voting_rights
-    errors.add(:voting_rights, "needs one") if voting_rights.length < 1
+    errors.add(:voting_rights, "are required") if voting_rights.length < 1
   end
 
 end

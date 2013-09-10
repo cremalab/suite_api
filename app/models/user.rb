@@ -24,4 +24,12 @@ class User < ActiveRecord::Base
     self.api_keys.last ? self.api_keys.last.access_token : nil
   end
 
+  def display_name
+    if self.profile && self.profile.first_name
+      "#{self.profile.first_name}#{self.profile.last_name.empty? ? '' : self.profile.last_name}"
+    else
+      email
+    end
+  end
+
 end
