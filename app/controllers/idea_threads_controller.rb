@@ -8,14 +8,16 @@ class IdeaThreadsController < ApplicationController
   end
 
   def create
+    user_id = idea_thread_params[:ideas_attributes][0]['user_id']
+    @user = User.find(user_id)
     @idea_thread = IdeaThread.new(idea_thread_params)
+
     if @idea_thread.save
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'#{@idea_thread} \';")
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422
-      p @idea_thread.errors.full_messages
     end
   end
 
@@ -52,6 +54,9 @@ class IdeaThreadsController < ApplicationController
 
 private
   def idea_thread_params
-    params.require(:idea_thread).permit(:user_id, ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ])
+    params.require(:idea_thread).permit(
+      ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ],
+      voting_rights_attributes: [ :user_id ]
+    )
   end
 end
