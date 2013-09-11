@@ -14,7 +14,6 @@ class SSE
       @io.write "#{k}: #{v}\n"
     end
     @io.write "id: 55\n"
-    #@io.write "data: hey, hey\n\n"
     @io.write "data: #{object}\n\n"
   end
 

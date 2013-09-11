@@ -10,7 +10,7 @@ class VotesController < ApplicationController
       #Send to PostgreSQL
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
       @vote_json = Notifier.new(@vote_json, "Vote")
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -27,7 +27,7 @@ class VotesController < ApplicationController
       #Send to PostgreSQL
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
       @vote_json = Notifier.new(@vote_json, "Vote")
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
 
       render :show, status: :ok
     else

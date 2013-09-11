@@ -3,3 +3,4 @@ json.user do
   json.id vote.user_id
   json.email vote.user.email
 end
+json.model_name "Vote"

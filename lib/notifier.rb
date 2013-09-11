@@ -5,13 +5,13 @@ class Notifier
   attr_accessor :payload
   def initialize(object, type)
     if type == "Idea"
-      @payload = "\'" + object.to_json.to_s + "\'"
+      @payload = "\'  " + object + "\'"
     elsif type == "IdeaThread"
-      @payload = "\'" + object.to_json.to_s + "\'"
+      @payload = "\'" + object + "\'"
     elsif type == "User"
-      @payload = "\'" + object.to_json.to_s + "\'"
+      @payload = "\'" + object + "\'"
     elsif type == "Vote"
-      @payload = "\'" + object.to_json.to_s + "\'"
+      @payload = "\'" + object + "\'"
     end
 
 

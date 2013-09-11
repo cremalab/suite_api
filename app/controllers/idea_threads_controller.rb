@@ -28,7 +28,7 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.destroy
       #Send to PostgreSQL
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'id: #{params[:id]} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else
