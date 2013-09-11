@@ -9,8 +9,7 @@ class IdeasController < ApplicationController
     if @idea.save
       #Send to PostgreSQL
       @idea_json = Notifier.new(@idea, "Idea")
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       render :show, status: 201
     else
@@ -33,8 +32,7 @@ class IdeasController < ApplicationController
     if @idea.update_attributes(idea_params)
       #Send to PostgreSQL
       @idea_json = Notifier.new(@idea, "Idea")
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
@@ -47,8 +45,7 @@ class IdeasController < ApplicationController
       @idea = Idea.find(params[:id])
       if @idea.destroy
         #Send to PostgreSQL
-        #conn = ActiveRecord::Base.connection.raw_connection
-        #conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
+        Idea.connection.raw_connection.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity

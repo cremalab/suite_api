@@ -14,8 +14,8 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.save
       #Send to PostgreSQL
       @idea_thread_json = Notifier.new(@idea_thread, "IdeaThread")
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
+      #conn = ActiveRecord::Base.connection.raw_connection
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
 
       render :show, status: 201
     else
@@ -29,7 +29,7 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.destroy
       #Send to PostgreSQL
       #conn = ActiveRecord::Base.connection.raw_connection
-      #conn.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else
