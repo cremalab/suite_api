@@ -1,3 +1,5 @@
+require 'notifier'
+
 class UsersController < ApplicationController
 
   before_action :ensure_authenticated, except: [:create]
@@ -18,10 +20,8 @@ class UsersController < ApplicationController
       auto_login(@user)
       @logged_in = current_user == @user
       #Send to PostgreSQL
-      @user_json = render_to_string(template: 'users/show.jbuilder',
-                                            locals: { ideas: @user})
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user_json}\';")
+      @user_json = Notifier.new(@user, "User")
+      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -41,10 +41,8 @@ class UsersController < ApplicationController
     end
     if @user.update_attributes(user_params)
       #Send to PostgreSQL
-      @user_json = render_to_string(template: 'users/show.jbuilder',
-                                    locals: { ideas: @user})
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user_json}\';")
+      @user_json = Notifier.new(@user, "User")
+      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
 
       render :show, status: :ok
     else

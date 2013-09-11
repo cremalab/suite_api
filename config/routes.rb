@@ -24,7 +24,7 @@ SuiteApi::Application.routes.draw do
   resources :votes,      format: :json
   resources :idea_threads, format: :json
 
-  get "event" => "application#event", :as => "event"
+  get "events" => "events#index", :as => "events"
 
   # Example resource route with options:
   #   resources :products do

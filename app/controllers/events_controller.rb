@@ -20,6 +20,7 @@ class EventsController < ApplicationController
     ensure
       sse.close
     end
+    render :nothing => true, :status => 200
 
   end
 end
