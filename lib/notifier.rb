@@ -8,7 +8,6 @@ class Notifier
       @payload = "\'" + object.to_json.to_s + "\'"
     elsif type == "IdeaThread"
       @payload = "\'" + object.to_json.to_s + "\'"
-
     elsif type == "User"
       @payload = "\'" + object.to_json.to_s + "\'"
     elsif type == "Vote"

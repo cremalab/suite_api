@@ -8,7 +8,8 @@ class VotesController < ApplicationController
     @vote = Vote.new(vote_params)
     if @vote.save
       #Send to PostgreSQL
-      @vote_json =  Notifier.new(@vote, "Vote")
+      @vote_json = render_to_string(template: 'votes/show.jbuilder')
+      @vote_json = Notifier.new(@vote_json, "Vote")
       Vote.connection.raw_connection.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
       render :show, status: 201
     else
@@ -24,7 +25,8 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
       #Send to PostgreSQL
-      @vote_json = Notifier.new(@vote, "Vote")
+      @vote_json = render_to_string(template: 'votes/show.jbuilder')
+      @vote_json = Notifier.new(@vote_json, "Vote")
       Vote.connection.raw_connection.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
 
       render :show, status: :ok

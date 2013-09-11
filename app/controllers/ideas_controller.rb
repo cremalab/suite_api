@@ -8,7 +8,8 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     if @idea.save
       #Send to PostgreSQL
-      @idea_json = Notifier.new(@idea, "Idea")
+      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      @idea_json = Notifier.new(@idea_json, "Idea")
       Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       render :show, status: 201
@@ -31,7 +32,8 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
       #Send to PostgreSQL
-      @idea_json = Notifier.new(@idea, "Idea")
+      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      @idea_json = Notifier.new(@idea_json, "Idea")
       Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       @idea.votes.destroy_all if params[:idea][:edited]

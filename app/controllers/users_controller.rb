@@ -20,7 +20,8 @@ class UsersController < ApplicationController
       auto_login(@user)
       @logged_in = current_user == @user
       #Send to PostgreSQL
-      @user_json = Notifier.new(@user, "User")
+      @user_json = render_to_string(template: 'users/show.jbuilder')
+      @user_json = Notifier.new(@user_json, "User")
       User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
       render :show, status: 201
     else
@@ -41,7 +42,8 @@ class UsersController < ApplicationController
     end
     if @user.update_attributes(user_params)
       #Send to PostgreSQL
-      @user_json = Notifier.new(@user, "User")
+      @user_json = render_to_string(template: 'ideas/show.jbuilder')
+      @user_json = Notifier.new(@user_json, "User")
       User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
 
       render :show, status: :ok
