@@ -1,12 +1,20 @@
+#Class to pass strings to
+
 class Notifier
-  def init(object)
-    if object.class == "Idea"
 
-    elsif object.class == "IdeaThread"
+  attr_accessor :payload
+  def initialize(object, type)
+    if type == "Idea"
+      @payload = object.to_json.to_s
+    elsif type == "IdeaThread"
+      @payload = object.to_json.to_s
 
-    elsif object.class == ""
+    elsif type == "User"
+      @payload = object.to_json.to_s
+    elsif type == "Vote"
+      @payload = object.to_json.to_s
 
-    elsif object.class == ""
+    end
 
 
 

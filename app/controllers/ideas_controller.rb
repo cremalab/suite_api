@@ -9,7 +9,6 @@ class IdeasController < ApplicationController
       #Send to PostgreSQL
       @idea_json = @idea.as_json.to_s
       #@idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      pp @idea_json
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'#{@idea_json}\';")
 
