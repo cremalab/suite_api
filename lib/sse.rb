@@ -13,8 +13,9 @@ class SSE
     options.each do |k,v|
       @io.write "#{k}: #{v}\n"
     end
-    @io.write "id: " +  55 + "\n"
-    @io.write "data: #{JSON.dump(object)}\n\n"
+    @io.write "id: 55\n"
+    #@io.write "data: hey, hey\n\n"
+    @io.write "data: #{object}\n\n"
   end
 
   def close

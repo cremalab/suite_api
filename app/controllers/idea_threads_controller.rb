@@ -11,8 +11,8 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
       #Send to PostgreSQL
-      @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder',
-                                            locals: { ideas: @ideas_thread})
+      @idea_thread_json = "Vomit"
+      #@idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
       conn = ActiveRecord::Base.connection.raw_connection
       conn.exec("NOTIFY \"channel\", \'#{@ideas_thread_json}\';")
 
