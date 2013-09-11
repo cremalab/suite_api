@@ -1,3 +1,5 @@
+require 'notifier'
+
 class VotesController < ApplicationController
 
   before_action :ensure_authenticated
@@ -6,10 +8,9 @@ class VotesController < ApplicationController
     @vote = Vote.new(vote_params)
     if @vote.save
       #Send to PostgreSQL
-      @vote_json = render_to_string(template: 'votes/show.jbuilder',
-                                    locals: { ideas: @vote})
+      @vote_json =  Notifier.new(@vote, "Vote")
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote_json}\';")
+      conn.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
 
       render :show, status: 201
     else
@@ -25,10 +26,9 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
       #Send to PostgreSQL
-      @vote_json = render_to_string(template: 'votes/show.jbuilder',
-                                    locals: { ideas: @vote})
+      @vote_json = Notifier.new(@vote, "Vote")
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote_json}\';")
+      conn.exec("NOTIFY \"channel\", id: #{@vote_json.payload};")
 
       render :show, status: :ok
     else
@@ -42,9 +42,8 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     if @vote.destroy
       #Send to PostgreSQL
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
-
+      #conn = ActiveRecord::Base.connection.raw_connection
+      #conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity

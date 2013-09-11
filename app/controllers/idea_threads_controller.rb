@@ -1,3 +1,5 @@
+require 'notifier'
+
 class IdeaThreadsController < ApplicationController
 
   before_action :ensure_authenticated
@@ -11,10 +13,9 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
       #Send to PostgreSQL
-      @idea_thread_json = "Vomit"
-      #@idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
+      @idea_thread_json = Notifier.new(@idea_thread, "IdeaThread")
       conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@ideas_thread_json}\';")
+      conn.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
 
       render :show, status: 201
     else
@@ -27,8 +28,8 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.destroy
       #Send to PostgreSQL
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
+      #conn = ActiveRecord::Base.connection.raw_connection
+      #conn.exec("NOTIFY \"channel\", \'#{params[:id]} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else
