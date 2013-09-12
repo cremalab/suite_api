@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :idea_threads, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
-  has_many :user_groups
+  has_many :user_groups, foreign_key: "user_id"
   has_many :groups, through: :user_groups
 
   #Validations

@@ -8,7 +8,7 @@ ross:
 
 rob:
   id: 2
-  email: ross@himom.com
+  email: rob@himom.com
   salt: <%= salt = "asdasdastr4325234324sdfds" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("hipoop", salt) %>
 

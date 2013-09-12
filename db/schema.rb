@@ -64,12 +64,14 @@ ActiveRecord::Schema.define(version: 20130912213244) do
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "user_groups", force: true do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "user_groups", ["users_id"], name: "index_user_groups_on_users_id", using: :btree
+  add_index "user_groups", ["group_id"], name: "index_user_groups_on_group_id", using: :btree
+  add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                        null: false
