@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :idea_threads, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
+  belongs_to :user_group
 
   #Validations
   validates_confirmation_of :password
