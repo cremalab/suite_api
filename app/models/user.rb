@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
   has_many :user_groups
-  has_many :groups, through :user_groups
+  has_many :groups, through: :user_groups
 
   #Validations
   validates_confirmation_of :password

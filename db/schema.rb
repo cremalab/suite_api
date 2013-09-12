@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903172135) do
+ActiveRecord::Schema.define(version: 20130912213244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 20130903172135) do
   create_table "api_keys", force: true do |t|
     t.string   "access_token"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -56,6 +62,14 @@ ActiveRecord::Schema.define(version: 20130903172135) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "user_groups", force: true do |t|
+    t.integer  "users_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_groups", ["users_id"], name: "index_user_groups_on_users_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                        null: false

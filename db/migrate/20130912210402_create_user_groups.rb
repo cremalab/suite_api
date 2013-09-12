@@ -4,7 +4,6 @@ class CreateUserGroups < ActiveRecord::Migration
       t.references :users, index: true
       t.references :users, index: true
 
-
       t.timestamps
     end
   end
