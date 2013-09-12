@@ -9,7 +9,8 @@ class VotesController < ApplicationController
     if @vote.save
       #Send to PostgreSQL
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      @vote_json = Notifier.new(@vote_json, "Vote")
+      @vote_json = Notifier.new(@vote_json, "IdeaThread")
+
       Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
       render :show, status: 201
     else
@@ -26,9 +27,8 @@ class VotesController < ApplicationController
     if @vote.update_attributes(vote_params)
       #Send to PostgreSQL
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      @vote_json = Notifier.new(@vote_json, "Vote")
+      @vote_json = Notifier.new(@vote_json, "IdeaThread")
       Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
-
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
@@ -42,7 +42,7 @@ class VotesController < ApplicationController
     if @vote.destroy
       #Send to PostgreSQL
       #conn = ActiveRecord::Base.connection.raw_connection
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", \'#{params[:id]}\';")
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
