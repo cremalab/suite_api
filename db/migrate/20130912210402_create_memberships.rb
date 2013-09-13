@@ -1,6 +1,6 @@
-class CreateUserGroups < ActiveRecord::Migration
+class CreateMemberships < ActiveRecord::Migration
   def change
-    create_table :user_groups do |t|
+    create_table :memberships do |t|
       t.references :user, index: true
       t.references :group, index: true
 
