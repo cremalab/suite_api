@@ -30,7 +30,7 @@ class IdeaThreadsController < ApplicationController
       #Send to PostgreSQL
       #{"model_name": "Vote", "deleted": true, "id": 120}
 
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'model_name: \"IdeaThred\", deleted: true, id: #{params[:id]} \';")
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else

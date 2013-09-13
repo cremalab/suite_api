@@ -42,7 +42,7 @@ class VotesController < ApplicationController
     if @vote.destroy
       #Send to PostgreSQL
       #conn = ActiveRecord::Base.connection.raw_connection
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'model_name: \"Vote\", deleted: true, id: #{params[:id]} \';")
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{params[:id]}} \';")
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
