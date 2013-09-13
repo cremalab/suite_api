@@ -47,7 +47,7 @@ class IdeasController < ApplicationController
       @idea = Idea.find(params[:id])
       if @idea.destroy
         #Send to PostgreSQL
-        Idea.connection.raw_connection.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
+      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity
