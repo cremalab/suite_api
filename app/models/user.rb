@@ -7,8 +7,10 @@ class User < ActiveRecord::Base
   has_many :idea_threads, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id"
   has_many :votes, foreign_key: "user_id"
-  has_many :user_groups, foreign_key: "user_id"
-  has_many :groups, through: :user_groups
+  has_many :memberships, foreign_key: "user_id"
+  has_many :groups, through: :membership
+  has_one :owner, foreign_key: "owner_id "
+
 
   #Validations
   validates_confirmation_of :password
