@@ -9,7 +9,9 @@ class VotesControllerTest < ActionController::TestCase
     @vote = votes(:ross_vote_milkshake)
     @user = User.create(
       email: 'test@cremalab.com', password: 'password',
-      password_confirmation: 'password'
+      password_confirmation: 'password', profile_attributes: {
+        first_name: 'Guy', last_name: 'Testington'
+      }
     )
     @vote.user_id = @user.id
     @user.api_keys.create()

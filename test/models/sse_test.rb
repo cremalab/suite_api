@@ -21,7 +21,7 @@ class SSETest < ActiveSupport::TestCase
     sse = SSE.new(response)
 
     sse.write("Nanu Nanu")
-    assert_equal sse.response.body, "data: \"Nanu Nanu\"\n\n"
+    assert_includes sse.response.body, "data: Nanu Nanu\n\n"
 
 
     sse.close()

@@ -11,3 +11,4 @@ end
 json.original idea.first_in_thread?
 
 json.votes idea.votes, partial: '/votes/vote', as: :vote
+json.model_name "Idea"

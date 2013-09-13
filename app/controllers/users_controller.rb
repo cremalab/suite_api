@@ -1,3 +1,5 @@
+require 'notifier'
+
 class UsersController < ApplicationController
 
   before_action :ensure_authenticated, except: [:create]
@@ -17,8 +19,10 @@ class UsersController < ApplicationController
 
       auto_login(@user)
       @logged_in = current_user == @user
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
+      #Send to PostgreSQL
+      @user_json = render_to_string(template: 'users/show.jbuilder')
+      @user_json = Notifier.new(@user_json, "User")
+      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -42,8 +46,11 @@ class UsersController < ApplicationController
       @user.build_profile
     end
     if @user.update_attributes(user_params)
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'#{@user}\';")
+      Send to PostgreSQL
+      @user_json = render_to_string(template: 'ideas/show.jbuilder')
+      @user_json = Notifier.new(@user_json, "User")
+      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
+
       render :show, status: :ok
     else
       render :json => @user.errors.full_messages, status: 422
@@ -57,26 +64,6 @@ class UsersController < ApplicationController
       render :show, status: 200
     else
       return head :no_content
-    end
-  end
-
-   def event
-    sse = SSE.new(response)
-    conn = ActiveRecord::Base.connection.raw_connection
-    conn.exec("LISTEN \"channel\";")
-    begin
-      loop do
-        conn.wait_for_notify do |event, pid, payload|
-          logger.info event
-          logger.info pid
-          logger.info payload
-          sse.write(payload)
-        end
-      end
-    rescue IOError
-      # When the client disconnects, we'll get an IOError on write
-    ensure
-      sse.close
     end
   end
 

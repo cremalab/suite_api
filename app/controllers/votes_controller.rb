@@ -1,3 +1,5 @@
+require 'notifier'
+
 class VotesController < ApplicationController
 
   before_action :ensure_authenticated
@@ -9,8 +11,11 @@ class VotesController < ApplicationController
 
     @vote = Vote.new(vote_params)
     if @vote.save
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
+      #Send to PostgreSQL
+      @vote_json = render_to_string(template: 'votes/show.jbuilder')
+      @vote_json = Notifier.new(@vote_json, "IdeaThread")
+
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -24,8 +29,10 @@ class VotesController < ApplicationController
   def update
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{@vote}\';")
+      #Send to PostgreSQL
+      @vote_json = render_to_string(template: 'votes/show.jbuilder')
+      @vote_json = Notifier.new(@vote_json, "IdeaThread")
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
@@ -37,27 +44,12 @@ class VotesController < ApplicationController
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
-      conn = ActiveRecord::Base.connection.raw_connection
-      conn.exec("NOTIFY \"channel\", \'id: #{params[:id]}\';")
+      #Send to PostgreSQL
+      #conn = ActiveRecord::Base.connection.raw_connection
+      Vote.connection.raw_connection.exec("NOTIFY \"channel\", \'#{params[:id]}\';")
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
-    end
-  end
-
-  def event
-    sse = SSE.new(response)
-    conn = ActiveRecord::Base.connection.raw_connection
-    conn.exec("LISTEN \"channel\";")
-    begin
-      loop do
-        conn.wait_for_notify do |event, pid, payload|
-        end
-      end
-    rescue IOError
-      # When the client disconnects, we'll get an IOError on write
-    ensure
-      sse.close
     end
   end
 
