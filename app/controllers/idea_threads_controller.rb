@@ -1,5 +1,3 @@
-require 'notifier'
-
 class IdeaThreadsController < ApplicationController
 
   before_action :ensure_authenticated
@@ -13,9 +11,9 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
       #Send to PostgreSQL
-      @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
-      @idea_thread_json = Notifier.new(@idea_thread_json, "IdeaThread")
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
+      # @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
+      # @idea_thread_json = Notifier.new(@idea_thread_json, "IdeaThread")
+      # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
 
       render :show, status: 201
     else
@@ -30,7 +28,7 @@ class IdeaThreadsController < ApplicationController
       #Send to PostgreSQL
       #{"model_name": "Vote", "deleted": true, "id": 120}
 
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \';")
+      # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else
