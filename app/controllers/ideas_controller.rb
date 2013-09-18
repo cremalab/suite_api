@@ -1,5 +1,4 @@
 ###############################################################################
-require 'notifier'
 class IdeasController < ApplicationController
 
   before_action :ensure_authenticated
@@ -8,9 +7,9 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     if @idea.save
       #Send to PostgreSQL
-      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      @idea_json = Notifier.new(@idea_json, "Idea")
-      Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      # @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      # @idea_json = Notifier.new(@idea_json, "Idea")
+      # Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       render :show, status: 201
     else
@@ -32,9 +31,9 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
       #Send to PostgreSQL
-      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      @idea_json = Notifier.new(@idea_json, "Idea")
-      Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      # @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      # @idea_json = Notifier.new(@idea_json, "Idea")
+      # Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
 
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
@@ -47,7 +46,7 @@ class IdeasController < ApplicationController
       @idea = Idea.find(params[:id])
       if @idea.destroy
         #Send to PostgreSQL
-      IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
+        # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity
