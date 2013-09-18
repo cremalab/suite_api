@@ -45,7 +45,7 @@ class IdeasController < ApplicationController
       @idea = Idea.find(params[:id])
       if @idea.destroy
         #Send to Faye
-        delete_json = "\'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
+        delete_json = "\'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \'"
         PrivatePub.publish_to("message/channel", message: delete_json)
 
         render :json => ['Idea destroyed'], status: :ok
