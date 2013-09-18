@@ -6,10 +6,10 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     if @idea.save
-      #Send to PostgreSQL
-      # @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      # @idea_json = Notifier.new(@idea_json, "Idea")
-      # Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      #Send to Faye
+      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      PrivatePub.publish_to("", message: @idea_thread_json)
+
 
       render :show, status: 201
     else
@@ -30,10 +30,9 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
-      #Send to PostgreSQL
-      # @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      # @idea_json = Notifier.new(@idea_json, "Idea")
-      # Idea.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_json.payload};")
+      #Send to Faye
+      @idea_json = render_to_string(template: 'ideas/show.jbuilder')
+      PrivatePub.publish_to("", message: @idea_thread_json)
 
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
@@ -45,8 +44,10 @@ class IdeasController < ApplicationController
   def destroy
       @idea = Idea.find(params[:id])
       if @idea.destroy
-        #Send to PostgreSQL
-        # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
+        #Send to Faye
+        delete_json = "\'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \';")
+        PrivatePub.publish_to("", message: delete_json)
+
         render :json => ['Idea destroyed'], status: :ok
       else
         render :show, status: :unprocessable_entity
