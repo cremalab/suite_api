@@ -10,10 +10,9 @@ class IdeaThreadsController < ApplicationController
   def create
     @idea_thread = IdeaThread.new(idea_thread_params)
     if @idea_thread.save
-      #Send to PostgreSQL
-      # @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
-      # @idea_thread_json = Notifier.new(@idea_thread_json, "IdeaThread")
-      # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", #{@idea_thread_json.payload};")
+      #Send to Faye
+      @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
+      PrivatePub.publish_to("message/channel", message: @idea_thread_json)
 
       render :show, status: 201
     else
@@ -25,10 +24,10 @@ class IdeaThreadsController < ApplicationController
   def destroy
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.destroy
-      #Send to PostgreSQL
-      #{"model_name": "Vote", "deleted": true, "id": 120}
+      #Send to Faye
+      delete_json = "\'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \'"
+      PrivatePub.publish_to("message/channel", message: delete_json)
 
-      # IdeaThread.connection.raw_connection.exec("NOTIFY \"channel\", \'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \';")
 
       render :json => ['Idea thread destroyed'], status: :ok
     else
