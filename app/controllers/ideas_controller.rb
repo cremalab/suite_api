@@ -7,8 +7,9 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     if @idea.save
       #Send to Faye
+
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @idea_thread_json)
+      PrivatePub.publish_to("/message/channel", message: @idea_json)
 
 
       render :show, status: 201
@@ -32,7 +33,7 @@ class IdeasController < ApplicationController
     if @idea.update_attributes(idea_params)
       #Send to Faye
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @idea_thread_json)
+      PrivatePub.publish_to("/message/channel", message: @idea_json)
 
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
@@ -45,8 +46,8 @@ class IdeasController < ApplicationController
       @idea = Idea.find(params[:id])
       if @idea.destroy
         #Send to Faye
-        delete_json = "\'{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} \'"
-        PrivatePub.publish_to("message/channel", message: delete_json)
+        delete_json = "{\"model_name\": \"Idea\", \"deleted\": true, \"id\": #{params[:id]}} "
+        PrivatePub.publish_to("/message/channel", message: delete_json)
 
         render :json => ['Idea destroyed'], status: :ok
       else

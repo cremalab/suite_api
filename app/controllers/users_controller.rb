@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       @logged_in = current_user == @user
       #Send to Faye
       @user_json = render_to_string(template: 'users/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @user_json)
+      PrivatePub.publish_to("/message/channel", message: @user_json)
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       #Send to Faye
       @user_json = render_to_string(template: 'users/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @user_json)
+      PrivatePub.publish_to("/message/channel", message: @user_json)
       render :show, status: :ok
     else
       render :json => @user.errors.full_messages, status: 422

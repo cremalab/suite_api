@@ -7,7 +7,7 @@ class VotesController < ApplicationController
     if @vote.save
       #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @vote_json)
+      PrivatePub.publish_to("/message/channel", message: @vote_json)
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -23,7 +23,7 @@ class VotesController < ApplicationController
     if @vote.update_attributes(vote_params)
       #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @vote_json)
+      PrivatePub.publish_to("/message/channel", message: @vote_json)
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
@@ -36,8 +36,8 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     if @vote.destroy
       #Send to Faye
-      delete_json = "\'{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{params[:id]}} \'"
-      PrivatePub.publish_to("message/channel", message: @delete_json)
+      delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{params[:id]}}"
+      PrivatePub.publish_to("/message/channel", message: delete_json)
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity

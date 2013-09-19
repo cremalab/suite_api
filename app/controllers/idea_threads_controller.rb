@@ -12,7 +12,7 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.save
       #Send to Faye
       @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
-      PrivatePub.publish_to("message/channel", message: @idea_thread_json)
+      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
       render :show, status: 201
     else
@@ -25,8 +25,8 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.destroy
       #Send to Faye
-      delete_json = "\'{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}} \'"
-      PrivatePub.publish_to("message/channel", message: delete_json)
+      delete_json = "{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}}"
+      PrivatePub.publish_to("/message/channel", message: delete_json)
 
 
       render :json => ['Idea thread destroyed'], status: :ok
