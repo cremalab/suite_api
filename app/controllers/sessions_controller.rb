@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
     @user = login(params[:email], params[:password], params[:remember_me])
     if @user
       @subscription = PrivatePub.subscription(:channel => '/message/channel')
+      @subscription['signature'] = ''
       @logged_in = current_user == @user
       render "users/show", status: 200
     else
