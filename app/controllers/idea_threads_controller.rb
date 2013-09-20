@@ -43,7 +43,9 @@ class IdeaThreadsController < ApplicationController
 
 private
   def idea_thread_params
+
     params.require(:idea_thread).permit(
+      :title,
       ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ],
       voting_rights_attributes: [ :user_id ]
     )
