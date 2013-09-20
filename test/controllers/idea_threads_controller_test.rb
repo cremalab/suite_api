@@ -21,7 +21,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   test "should post create" do
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: 1}
-    params = { user_id: 1, ideas_attributes: [meatloaf] }
+    params = { user_id: 1, status: "open", ideas_attributes: [meatloaf] }
     idea_thread_count = IdeaThread.all.count
     post :create, idea_thread: params
     assert_response :success
