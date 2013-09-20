@@ -1,1 +1,1 @@
-json.partial! 'idea_thread', idea_thread: @idea_thread
+json.partial! '/idea_threads/idea_thread', idea_thread: @idea_thread

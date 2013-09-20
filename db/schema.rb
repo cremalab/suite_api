@@ -80,4 +80,11 @@ ActiveRecord::Schema.define(version: 20130920161149) do
   add_index "votes", ["idea_id"], name: "index_votes_on_idea_id", using: :btree
   add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
 
+  create_table "voting_rights", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "idea_thread_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end
