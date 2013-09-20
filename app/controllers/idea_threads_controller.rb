@@ -3,7 +3,11 @@ class IdeaThreadsController < ApplicationController
   before_action :ensure_authenticated
 
   def index
-    @idea_threads = IdeaThread.all
+    if @current_auth_user
+      @idea_threads = current_auth_user.idea_threads
+    else
+      @idea_threads = IdeaThread.all
+    end
     render :index, status: :ok
   end
 
