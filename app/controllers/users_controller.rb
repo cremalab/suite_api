@@ -1,5 +1,3 @@
-require 'notifier'
-
 class UsersController < ApplicationController
 
   before_action :ensure_authenticated, except: [:create]
@@ -19,10 +17,9 @@ class UsersController < ApplicationController
 
       auto_login(@user)
       @logged_in = current_user == @user
-      #Send to PostgreSQL
+      #Send to Faye
       @user_json = render_to_string(template: 'users/show.jbuilder')
-      @user_json = Notifier.new(@user_json, "User")
-      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
+      PrivatePub.publish_to("/message/channel", message: @user_json)
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -46,11 +43,9 @@ class UsersController < ApplicationController
       @user.build_profile
     end
     if @user.update_attributes(user_params)
-      Send to PostgreSQL
-      @user_json = render_to_string(template: 'ideas/show.jbuilder')
-      @user_json = Notifier.new(@user_json, "User")
-      User.connection.raw_connection.exec("NOTIFY \"channel\", #{@user_json.payload};")
-
+      #Send to Faye
+      @user_json = render_to_string(template: 'users/show.jbuilder')
+      PrivatePub.publish_to("/message/channel", message: @user_json)
       render :show, status: :ok
     else
       render :json => @user.errors.full_messages, status: 422
