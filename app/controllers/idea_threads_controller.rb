@@ -37,6 +37,10 @@ class IdeaThreadsController < ApplicationController
     end
   end
 
+  def show
+    @idea_thread = IdeaThread.find(params[:id])
+  end
+
 private
   def idea_thread_params
     params.require(:idea_thread).permit(
