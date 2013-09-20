@@ -41,6 +41,17 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
   end
 
+  def update
+    @idea_thread = IdeaThread.find(params[:id])
+    if @idea_thread.update_attributes(title: params[:idea_thread][:title])
+      @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
+      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
+      render :show, status: 201
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
 private
   def idea_thread_params
 
