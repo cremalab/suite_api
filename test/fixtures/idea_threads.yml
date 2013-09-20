@@ -6,5 +6,7 @@
 #
 fun:
   user_id: 1
+  title: "Fun Fun Fun"
 lunch:
   user_id: 2
+  title: "Lunch"

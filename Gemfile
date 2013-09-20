@@ -51,5 +51,6 @@ gem 'rack-cors', :require => 'rack/cors'
 # gem 'debugger', group: [:development, :test]
 
 #For app server
-gem 'puma'
+gem 'thin'
+gem 'private_pub'
 gem 'rb-fsevent'

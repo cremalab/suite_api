@@ -1,17 +1,17 @@
-require 'notifier'
-
 class VotesController < ApplicationController
 
   before_action :ensure_authenticated
 
   def create
+    # @idea_thread = Idea.find(vote_params.idea_id).idea_thread
+    # @voting_right = VotingRight.where(user_id: vote_params.user_id, idea_thread: vote_params.idea_id)
+    # if @voting_right.length
+
     @vote = Vote.new(vote_params)
     if @vote.save
-      #Send to PostgreSQL
+      #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      @vote_json = Notifier.new(@vote_json, "IdeaThread")
-
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
+      PrivatePub.publish_to("/message/channel", message: @vote_json)
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -25,10 +25,9 @@ class VotesController < ApplicationController
   def update
     @vote = Vote.find(params[:id])
     if @vote.update_attributes(vote_params)
-      #Send to PostgreSQL
+      #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      @vote_json = Notifier.new(@vote_json, "IdeaThread")
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", #{@vote_json.payload};")
+      PrivatePub.publish_to("/message/channel", message: @vote_json)
       render :show, status: :ok
     else
       render :json, status: :unprocessable_entity
@@ -40,9 +39,9 @@ class VotesController < ApplicationController
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
-      #Send to PostgreSQL
-      #conn = ActiveRecord::Base.connection.raw_connection
-      Vote.connection.raw_connection.exec("NOTIFY \"channel\", \'#{params[:id]}\';")
+      #Send to Faye
+      delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{params[:id]}}"
+      PrivatePub.publish_to("/message/channel", message: delete_json)
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
