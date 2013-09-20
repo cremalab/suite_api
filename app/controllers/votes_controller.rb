@@ -3,6 +3,10 @@ class VotesController < ApplicationController
   before_action :ensure_authenticated
 
   def create
+    # @idea_thread = Idea.find(vote_params.idea_id).idea_thread
+    # @voting_right = VotingRight.where(user_id: vote_params.user_id, idea_thread: vote_params.idea_id)
+    # if @voting_right.length
+
     @vote = Vote.new(vote_params)
     if @vote.save
       #Send to Faye

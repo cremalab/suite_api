@@ -27,6 +27,11 @@ class UsersController < ApplicationController
 
   end
 
+  def index
+    @users = User.all
+    render :index, status: :ok
+  end
+
   def show
     @user = User.find(params[:id])
     render :show, status: 200
