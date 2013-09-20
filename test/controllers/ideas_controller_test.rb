@@ -14,9 +14,13 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should create new idea" do
+    @user = users(:rob)
+    @idea_thread = idea_threads(:lunch)
+    @idea_thread.voters << @user
+
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
-                description: "Mmmmm... eatloaf", user_id: 1,
-                idea_thread_id: idea_threads(:lunch).id}
+                description: "Mmmmm... eatloaf", user_id: @user.id,
+                idea_thread_id: @idea_thread.id}
     idea_count = Idea.all.count
     post :create, idea: meatloaf
     assert_response :success
@@ -25,6 +29,17 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes @response.body, "description"
     assert_includes @response.body, "when"
     Idea.all.count.must_equal idea_count + 1
+  end
+
+  test "should require voting_right" do
+    @user = users(:rob)
+    @idea_thread = idea_threads(:lunch)
+    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+                description: "Mmmmm... eatloaf", user_id: @user.id,
+                idea_thread_id: @idea_thread.id}
+    post :create, idea: meatloaf
+    assert_response :unprocessable_entity
+    assert_includes @response.body, "You do not have permission to add an idea to this thread"
   end
 
   test "should get show" do
