@@ -54,3 +54,5 @@ gem 'rack-cors', :require => 'rack/cors'
 gem "unicorn", "~> 4.6.3"
 gem 'private_pub'
 gem 'rb-fsevent'
+
+gem 'symbolize'
