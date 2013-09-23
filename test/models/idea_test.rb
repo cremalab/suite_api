@@ -5,6 +5,7 @@ class IdeaTest < ActiveSupport::TestCase
     @user = users(:rob)
     @idea_thread = IdeaThread.new()
     @idea_thread.voters << @user
+    @idea_thread.status = "open"
     @idea_thread.save
   end
 

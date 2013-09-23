@@ -4,6 +4,7 @@ class IdeaThreadTest < ActiveSupport::TestCase
   test "validations" do
     @user = users(:rob)
     new_idea_thread_attr = {
+      status: "open",
       voting_rights_attributes: [{user_id: @user.id}],
       ideas_attributes: [{title: "Get", user_id: @user.id}]
     }
