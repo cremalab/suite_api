@@ -8,6 +8,10 @@ class IdeasController < ApplicationController
     if @idea.save
       #Send to Faye
 
+      vote    = Vote.new(idea_id: @idea.id, user_id: @idea.user_id)
+      checker = UserVoteChecker.new
+      checker.create_vote(vote)
+
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_json)
 
@@ -57,6 +61,6 @@ class IdeasController < ApplicationController
 
   private
     def idea_params
-      params.require(:idea).permit(:title, :when, :user_id, :idea_thread_id ,:description, votes_attributes: [ :user_id ])
+      params.require(:idea).permit(:title, :when, :user_id, :idea_thread_id ,:description)
     end
 end

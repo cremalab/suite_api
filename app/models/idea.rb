@@ -7,7 +7,7 @@ class Idea < ActiveRecord::Base
   #Validations
   validates_presence_of :title, :user_id
   validate :validate_voting_right, on: :create
-  accepts_nested_attributes_for :votes, allow_destroy: true
+  # accepts_nested_attributes_for :votes, allow_destroy: true
 
   def first_in_thread?
     self == self.idea_thread.ideas.order("created_at ASC").first

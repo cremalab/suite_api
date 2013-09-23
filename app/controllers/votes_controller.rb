@@ -8,9 +8,9 @@ class VotesController < ApplicationController
     user         = User.find(vote_params[:user_id])
 
     @vote = Vote.new(vote_params)
-    checker = UserVoteChecker.new(user, idea_thread)
+    checker = UserVoteChecker.new
 
-    if checker.save(@vote)
+    if checker.create_vote(@vote)
       #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @vote_json)

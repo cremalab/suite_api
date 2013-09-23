@@ -19,13 +19,13 @@ class UserVoteCheckerTest < ActiveSupport::TestCase
   test "should destroy existing vote on new vote" do
     @idea_thread.votes.count.must_equal 0
 
-    checker = UserVoteChecker.new(@user, @idea_thread)
-    checker.save(@first_vote)
+    checker = UserVoteChecker.new
+    checker.create_vote(@first_vote)
 
     @first_idea.votes.where(user_id: @user.id).length.must_equal 1
     @idea_thread.votes.count.must_equal 1
 
-    checker.save(@second_vote)
+    checker.create_vote(@second_vote)
 
     @idea_thread.votes.count.must_equal 1
     @first_idea.votes.where(user_id: @user.id).length.must_equal 0
