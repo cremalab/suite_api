@@ -3,12 +3,14 @@ class VotesController < ApplicationController
   before_action :ensure_authenticated
 
   def create
-    # @idea_thread = Idea.find(vote_params.idea_id).idea_thread
-    # @voting_right = VotingRight.where(user_id: vote_params.user_id, idea_thread: vote_params.idea_id)
-    # if @voting_right.length
+    idea         = Idea.find(vote_params[:idea_id])
+    idea_thread  = idea.idea_thread
+    user         = User.find(vote_params[:user_id])
 
     @vote = Vote.new(vote_params)
-    if @vote.save
+    checker = UserVoteChecker.new(user, idea_thread)
+
+    if checker.save(@vote)
       #Send to Faye
       @vote_json = render_to_string(template: 'votes/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @vote_json)
