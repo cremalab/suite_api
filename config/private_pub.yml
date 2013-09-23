@@ -7,4 +7,4 @@ test:
 production:
   server: "http://cremalab-ideas-live.herokuapp.com"
   secret_token: "secret"
-  signature_expiration: 3600 # one hour
+  # signature_expiration: 3600 # one hour
