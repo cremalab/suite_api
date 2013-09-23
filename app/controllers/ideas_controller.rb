@@ -7,10 +7,8 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     if @idea.save
       #Send to Faye
-
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_json)
-
 
       render :show, status: 201
     else

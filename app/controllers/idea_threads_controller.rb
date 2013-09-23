@@ -34,7 +34,6 @@ class IdeaThreadsController < ApplicationController
       delete_json = "{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}}"
       PrivatePub.publish_to("/message/channel", message: delete_json)
 
-
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
@@ -60,7 +59,7 @@ private
   def idea_thread_params
 
     params.require(:idea_thread).permit(
-      :title,
+      :title, :status,
       ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ],
       voting_rights_attributes: [ :user_id ]
     )
