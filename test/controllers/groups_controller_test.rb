@@ -2,19 +2,25 @@ require 'test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
   test "create" do
-    assert false
+    group = {name: "Lords of the Dance"}
+
+    get :create
+    assert response :success
   end
 
   test "show" do
-    assert false
+    get :index
+    assert_response :success
   end
 
   test "update" do
-    assert false
+    get :update
+    assert response :success
   end
 
   test "destroy" do
-    assert false
+    get :destroy
+    assert response :success
   end
 
 
