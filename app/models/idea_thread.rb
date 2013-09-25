@@ -10,7 +10,7 @@ class IdeaThread < ActiveRecord::Base
   validate :validate_voting_rights
 
   #Status
-  symbolize :status, :in => [:open, :archived], :scopes => true
+  symbolize :status, :in => [:open, :archived], :scopes => true, default: :open
 
 
   accepts_nested_attributes_for :ideas
