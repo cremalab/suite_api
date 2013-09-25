@@ -5,6 +5,6 @@ test:
   server: "http://localhost:9292/faye"
   secret_token: "ef86e27e03206aae17f800e700fa98ff0e8ac779c1741d1dbf90d3a3d34df2b8"
 production:
-  server: "http://ec2-50-19-73-11.compute-1.amazonaws.com"
+  server: "http://ec2-50-19-73-11.compute-1.amazonaws.com/faye"
   secret_token: "ef86e27e03206aae17f800e700fa98ff0e8ac779c1741d1dbf90d3a3d34df2b8"
   # signature_expiration: 3600 # one hour
