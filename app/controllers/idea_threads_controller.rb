@@ -4,9 +4,18 @@ class IdeaThreadsController < ApplicationController
 
   def index
     if @current_auth_user
-      @idea_threads = current_auth_user.idea_threads
+      @idea_threads = current_auth_user.idea_threads.status(:open)
     else
-      @idea_threads = IdeaThread.all
+      @idea_threads = IdeaThread.status(:open)
+    end
+    render :index, status: :ok
+  end
+
+  def archived
+    if @current_auth_user
+      @idea_threads = current_auth_user.idea_threads.status(:archived)
+    else
+      @idea_threads = IdeaThread.status(:archived)
     end
     render :index, status: :ok
   end
@@ -46,7 +55,7 @@ class IdeaThreadsController < ApplicationController
 
   def update
     @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.update_attributes(title: params[:idea_thread][:title])
+    if @idea_thread.update_attributes(title: params[:idea_thread][:title], status: params[:idea_thread][:status])
       @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
       render :show, status: 201
