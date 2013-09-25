@@ -11,15 +11,6 @@ class IdeaThreadsController < ApplicationController
     render :index, status: :ok
   end
 
-  def archived
-    if @current_auth_user
-      @idea_threads = current_auth_user.idea_threads.status(:archived)
-    else
-      @idea_threads = IdeaThread.status(:archived)
-    end
-    render :index, status: :ok
-  end
-
   def create
     user_id = idea_thread_params[:ideas_attributes][0]['user_id']
     @user = User.find(user_id)
