@@ -23,8 +23,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: @user.id}
     voting_rights = {user_id: @user.id}
-    params = { title: "Lunch" ,ideas_attributes: [meatloaf], voting_rights_attributes: [voting_rights] }
-
+    params = { title: "Lunch", status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [voting_rights] }
     idea_thread_count = IdeaThread.all.count
     voting_rights_count = VotingRight.all.count
 
@@ -43,7 +42,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: 1
               }
-    params = { user_id: 1, ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
+    params = { user_id: 1, status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
     thread = IdeaThread.create(params)
     delete :destroy, id: thread.id
     assert_response :success

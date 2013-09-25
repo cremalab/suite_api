@@ -18,7 +18,7 @@ class IdeasControllerTest < ActionController::TestCase
     @idea_thread = idea_threads(:lunch)
     @idea_thread.voters << @user
 
-    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: @user.id,
                 idea_thread_id: @idea_thread.id}
     idea_count = Idea.all.count
@@ -34,7 +34,7 @@ class IdeasControllerTest < ActionController::TestCase
   test "should require voting_right" do
     @user = users(:rob)
     @idea_thread = idea_threads(:lunch)
-    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: @user.id,
                 idea_thread_id: @idea_thread.id}
     post :create, idea: meatloaf
@@ -46,7 +46,7 @@ class IdeasControllerTest < ActionController::TestCase
     get :show, id: @idea.id
     assert_response :success
     assert_includes @response.body, "Chicken Salad Sandwiches at Sylvias"
-    assert_includes @response.body, "Its the best sandwich they have"
+    assert_includes @response.body, "It's the best sandwich they have"
   end
 
   test "should get update" do

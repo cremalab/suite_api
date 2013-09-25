@@ -15,7 +15,6 @@ class IdeasController < ApplicationController
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_json)
 
-
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422

@@ -4,9 +4,9 @@ class IdeaThreadsController < ApplicationController
 
   def index
     if @current_auth_user
-      @idea_threads = current_auth_user.idea_threads
+      @idea_threads = current_auth_user.idea_threads.status(:open)
     else
-      @idea_threads = IdeaThread.all
+      @idea_threads = IdeaThread.status(:open)
     end
     render :index, status: :ok
   end
@@ -34,7 +34,6 @@ class IdeaThreadsController < ApplicationController
       delete_json = "{\"model_name\": \"IdeaThread\", \"deleted\": true, \"id\": #{params[:id]}}"
       PrivatePub.publish_to("/message/channel", message: delete_json)
 
-
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
@@ -47,7 +46,7 @@ class IdeaThreadsController < ApplicationController
 
   def update
     @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.update_attributes(title: params[:idea_thread][:title])
+    if @idea_thread.update_attributes(title: params[:idea_thread][:title], status: params[:idea_thread][:status])
       @idea_thread_json = render_to_string(template: 'idea_threads/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
       render :show, status: 201
@@ -60,7 +59,7 @@ private
   def idea_thread_params
 
     params.require(:idea_thread).permit(
-      :title, :user_id,
+      :title, :status, :user_id,
       ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ],
       voting_rights_attributes: [ :user_id ]
     )
