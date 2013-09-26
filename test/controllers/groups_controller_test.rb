@@ -8,7 +8,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "create" do
-    group = {name: "Lords of the Dance", memberships_attributes: [{user_id: 1}, {user_id: 2}]}
+    group = {name: "Lords of the Dance", owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
     post :create, group: group
     assert_response :success
     assert_includes @response.body, "name"
@@ -31,7 +31,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "destroy" do
-    group = {name: "Lords of the Dance", memberships_attributes: [{user_id: 1}, {user_id: 2}]}
+    group = {name: "Lords of the Dance", owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
     group = Group.create(group)
     group_count = Group.all.count
 
