@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :votes, foreign_key: "user_id"
   has_many :memberships, foreign_key: "user_id"
   has_many :groups, through: :membership
-  has_many :groups, foreign_key: "owner_id "
+  has_many :groups, foreign_key: "owner_id"
 
 
 
