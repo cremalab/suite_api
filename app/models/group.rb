@@ -10,6 +10,6 @@ class Group < ActiveRecord::Base
   validates_associated :memberships
   validates_associated :users
 
-  validates :name, :owner_id, presence: true
+  validates_presence_of :name, :owner_id
 
 end

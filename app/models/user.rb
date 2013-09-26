@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 
 
   #Validations
+  validates_associated  :profile, :ideas, :voting_rights, :idea_threads,
+                        :api_keys, :memberships, :groups#, :votes
+
+
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
   validates_presence_of :password_confirmation, :on => :create

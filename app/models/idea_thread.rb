@@ -7,6 +7,7 @@ class IdeaThread < ActiveRecord::Base
   belongs_to :user
 
   #Validations
+  validates_associated :ideas, :votes, :voting_rights, :voters
   validate :validate_voting_rights
   validates_presence_of :title
 

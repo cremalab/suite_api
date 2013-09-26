@@ -6,6 +6,7 @@ class Idea < ActiveRecord::Base
 
   #Validations
   validates_presence_of :title, :user_id
+  # validates_associated :votes
   validate :validate_voting_right, on: :create
   accepts_nested_attributes_for :votes, allow_destroy: true
 
