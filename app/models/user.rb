@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :idea_threads, through: :voting_rights, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id", dependent: :destroy
   has_many :votes, foreign_key: "user_id"
+  has_many :memberships, foreign_key: "user_id"
+  has_many :groups, through: :membership
+  has_many :groups, foreign_key: "owner_id"
+
 
 
   #Validations

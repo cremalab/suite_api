@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920163243) do
+ActiveRecord::Schema.define(version: 20130926162704) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +23,15 @@ ActiveRecord::Schema.define(version: 20130920163243) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "owner_id"
+  end
+
+  add_index "groups", ["owner_id"], name: "index_groups_on_owner_id", using: :btree
 
   create_table "idea_threads", force: true do |t|
     t.integer  "user_id"
@@ -45,6 +55,16 @@ ActiveRecord::Schema.define(version: 20130920163243) do
 
   add_index "ideas", ["idea_thread_id"], name: "index_ideas_on_idea_thread_id", using: :btree
   add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "first_name"
