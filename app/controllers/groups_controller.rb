@@ -8,7 +8,6 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    p @group
     if @group.save
       render :show, status: 201
     else

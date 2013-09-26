@@ -1,1 +1,1 @@
-json
+json.(@group, :name, :id)
