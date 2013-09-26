@@ -7,4 +7,9 @@ class Group < ActiveRecord::Base
   accepts_nested_attributes_for :memberships
 
   #Validation
+  validates_associated :memberships
+  validates_associated :users
+
+  validates :name, presence: true
+
 end
