@@ -1,1 +1,2 @@
-json.(membership, :id, :user_id, :created_at, :updated_at)
+json.(membership, :id, :user_id, :updated_at)
+json.autocomplete_search membership.user.display_name
