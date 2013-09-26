@@ -1,9 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 milkshakes:
   title: Milkshakes from Town Topic
   when: 2013-08-28 09:26:06 -0500
@@ -14,14 +8,14 @@ milkshakes:
 sandwich:
   title: Chicken Salad Sandwiches at Sylvias
   when: 2013-09-01 09:26:06 -0500
-  description: "Its the best sandwich they have and I cant go on any longer without eating one."
+  description: "It's the best sandwich they have and I cant go on any longer without eating one."
   user_id: 2
   idea_thread: lunch
 
 mildreds:
   title: Chicken Salad Sandwiches at Mildreds's
   when: 2013-09-01 09:26:06 -0500
-  description: "Its the better sandwich they have and I cant go on any longer without eating one."
+  description: "It's the better sandwich they have and I cant go on any longer without eating one."
   user_id: 1
   idea_thread: lunch
 

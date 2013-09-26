@@ -1,3 +1,4 @@
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -51,6 +52,9 @@ gem 'rack-cors', :require => 'rack/cors'
 # gem 'debugger', group: [:development, :test]
 
 #For app server
-gem 'thin'
+# gem "unicorn", "~> 4.6.3"
+gem "thin", "~> 1.5.1"
 gem 'private_pub'
 gem 'rb-fsevent'
+
+gem 'symbolize'

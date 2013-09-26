@@ -10,6 +10,7 @@ class VoteTest < ActiveSupport::TestCase
     @idea_thread = IdeaThread.new()
     @idea_thread.voters << @user
     @idea_thread.ideas << @idea
+    @idea_thread.status = "open"
     @idea_thread.save
 
     new_vote_attr = {user_id: @user.id, idea_id: @idea.id}
