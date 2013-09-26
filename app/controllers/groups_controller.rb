@@ -19,15 +19,27 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @group = Group.find(params[:id])
+    render :show, status: 200
 
   end
 
   def update
-
+    @group = Group.find(params[:id])
+    if @group.update_attributes(group_params)
+       render :show, status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   def destroy
-
+    @group = Group.find(params[:id])
+    if @group.destroy
+      render :json => ['Group destroyed'], status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
 private
