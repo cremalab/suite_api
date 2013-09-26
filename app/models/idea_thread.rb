@@ -8,6 +8,7 @@ class IdeaThread < ActiveRecord::Base
 
   #Validations
   validate :validate_voting_rights
+  validates_presence_of :title
 
   #Status
   symbolize :status, :in => [:open, :archived], :scopes => true, default: :open
