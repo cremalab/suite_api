@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20130926162704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.string   "status"
   end
 
   add_index "idea_threads", ["user_id"], name: "index_idea_threads_on_user_id", using: :btree
