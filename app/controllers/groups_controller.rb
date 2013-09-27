@@ -13,14 +13,11 @@ class GroupsController < ApplicationController
     else
       render :json => @idea_thread.errors.full_messages, status: 422
     end
-
-
   end
 
   def show
     @group = Group.find(params[:id])
     render :show, status: 200
-
   end
 
   def update

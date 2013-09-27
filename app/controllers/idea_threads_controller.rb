@@ -42,6 +42,7 @@ class IdeaThreadsController < ApplicationController
 
   def show
     @idea_thread = IdeaThread.find(params[:id])
+    render :show, status: 201
   end
 
   def update
@@ -57,7 +58,6 @@ class IdeaThreadsController < ApplicationController
 
 private
   def idea_thread_params
-
     params.require(:idea_thread).permit(
       :title, :status, :user_id,
       ideas_attributes: [ :title, :when, :user_id, :description, votes_attributes: [ :user_id ] ],
