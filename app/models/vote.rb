@@ -4,8 +4,8 @@ class Vote < ActiveRecord::Base
   belongs_to :user
 
   #Validations
-  validates_presence_of :idea_id, :user_id
   validate :validate_voting_right
+  validates_presence_of :idea_id, :user_id
 
 private
   def validate_voting_right

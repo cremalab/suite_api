@@ -1,9 +1,10 @@
 class Membership < ActiveRecord::Base
+  #Relationships
   belongs_to :user
   belongs_to :groups
 
   #Validation
-  validates :user_id, presence: true
+  validates_presence_of :user_id
 
 
 end

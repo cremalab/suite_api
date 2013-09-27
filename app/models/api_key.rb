@@ -1,4 +1,5 @@
 class ApiKey < ActiveRecord::Base
+  #Relationships
   belongs_to :user
 
   before_create :generate_access_token

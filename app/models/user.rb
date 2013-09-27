@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   has_many :groups, through: :membership
   has_many :groups, foreign_key: "owner_id"
 
+  accepts_nested_attributes_for :profile
+
+
 
 
   #Validations
@@ -26,7 +29,6 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :email
 
-  accepts_nested_attributes_for :profile
 
   def current_access_token
     self.api_keys.last ? self.api_keys.last.access_token : nil
