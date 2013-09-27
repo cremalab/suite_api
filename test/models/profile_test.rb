@@ -3,7 +3,7 @@ require 'test_helper'
 class ProfileTest < ActiveSupport::TestCase
   test "validations" do
 
-    # Removing these for now since these might be optional.
+    #Removing these for now since these might be optional.
 
     # profile_attr = {first_name: "Matt", last_name: "Owens", user_id: 3}
 

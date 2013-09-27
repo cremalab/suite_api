@@ -1,23 +1,25 @@
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  def setup
+    @new_group_attr = {name: "Yellow Submarine", owner_id: 1}
+  end
+
   test "validations" do
-    #Setup Attributes
-    new_group_attr = {name: "Yellow Submarine", owner_id: 1}
-
     #With all necessary values
-    new_group = Group.new(new_group_attr)
+    new_group = Group.new(@new_group_attr)
     assert new_group.valid?
+  end
 
-    #Without Name
+  test "presence of name" do
+    new_group = Group.new(@new_group_attr)
     new_group.name = nil
     refute new_group.valid?
-    new_group = Group.new(new_group_attr)
+  end
 
-    #Without owner_id
+  test "presence of owner id" do
+    new_group = Group.new(@new_group_attr)
     new_group.owner_id = nil
     refute new_group.valid?
   end
