@@ -1,6 +1,7 @@
 class Idea < ActiveRecord::Base
   #Relationships
   has_many :votes, foreign_key: "idea_id", autosave: true, dependent: :destroy, validate: false
+
   belongs_to :idea_thread
   belongs_to :user
 

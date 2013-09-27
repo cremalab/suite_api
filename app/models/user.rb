@@ -2,20 +2,18 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
   #Relationships
-  has_one :profile, foreign_key: "user_id"
-  has_many :ideas, foreign_key: "user_id"
-  has_many :voting_rights
-  has_many :idea_threads, through: :voting_rights, foreign_key: "user_id"
   has_many :api_keys, foreign_key: "user_id", dependent: :destroy
-  has_many :votes, foreign_key: "user_id"
-  has_many :memberships, foreign_key: "user_id"
   has_many :groups, through: :membership
   has_many :groups, foreign_key: "owner_id"
+  has_many :ideas, foreign_key: "user_id"
+  has_many :idea_threads, through: :voting_rights, foreign_key: "user_id"
+  has_many :memberships, foreign_key: "user_id"
+  has_many :votes, foreign_key: "user_id"
+  has_many :voting_rights
+
+  has_one :profile, foreign_key: "user_id"
 
   accepts_nested_attributes_for :profile
-
-
-
 
   #Validations
   validates_associated  :profile, :ideas, :voting_rights, :idea_threads,
