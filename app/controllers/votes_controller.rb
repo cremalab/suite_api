@@ -44,11 +44,6 @@ class VotesController < ApplicationController
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
-
-      #Send to Faye
-      delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{params[:id]}}"
-      PrivatePub.publish_to("/message/channel", message: delete_json)
-
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
