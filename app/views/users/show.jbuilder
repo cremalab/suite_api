@@ -1,4 +1,4 @@
-json.(@user, :id, :email)
+json.(@user, :id, :email, :notifications)
 
 json.logged_in @logged_in
 json.subscription @subscription
