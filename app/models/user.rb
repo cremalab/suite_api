@@ -16,8 +16,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
 
   #Validations
-  validates_associated  :profile, :ideas, :voting_rights, :idea_threads,
-                        :api_keys, :memberships, :groups#, :votes
+  validates_associated  :profile
 
 
   validates_confirmation_of :password
