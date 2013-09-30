@@ -42,15 +42,14 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @logged_in = true
-    # if @user.profile.nil?
-    #   @user.build_profile
-    # end
+    if @user.profile.nil?
+      @user.build_profile
+    end
     if @user.update_attributes(user_params)
 
       #Send to Faye
-      # @user_json = render_to_string(template: 'users/show.jbuilder')
-      # @user_json = {thing: true}
-      # PrivatePub.publish_to("/message/channel", message: @user_json)
+      @user_json = render_to_string(template: 'users/show.jbuilder')
+      PrivatePub.publish_to("/message/channel", message: @user_json)
 
       render :show, status: :ok
     else
