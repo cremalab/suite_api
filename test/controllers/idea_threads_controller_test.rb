@@ -42,7 +42,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
                 description: "Mmmmm... eatloaf", user_id: 1
               }
-    params = { user_id: 1, status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
+    params = {title: "Lunch", user_id: 1, status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
     thread = IdeaThread.create(params)
     delete :destroy, id: thread.id
     assert_response :success

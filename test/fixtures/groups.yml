@@ -6,5 +6,6 @@
 #
 developer_group:
   id: 1
+  owner: ross
   name: "Developers"
 
