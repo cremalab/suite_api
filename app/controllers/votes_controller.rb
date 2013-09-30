@@ -12,7 +12,7 @@ class VotesController < ApplicationController
 
     if checker.create_vote(@vote)
       #Send to Faye
-      @vote_json = render_to_string(template: 'votes/show.jbuilder')
+      @vote_json = render_to_string(template: 'votes/full.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @vote_json)
 
       render :show, status: 201
@@ -30,8 +30,8 @@ class VotesController < ApplicationController
     if @vote.update_attributes(vote_params)
 
       #Send to Faye
-      @vote_json = render_to_string(template: 'votes/show.jbuilder')
-      PrivatePub.publish_to("/message/channel", message: @vote_json)
+      @vote_json = render_to_string(template: 'votes/full.jbuilder')
+      # PrivatePub.publish_to("/message/channel", message: @vote_json)
 
       render :show, status: :ok
     else

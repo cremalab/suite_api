@@ -41,6 +41,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @logged_in = true
     if @user.profile.nil?
       @user.build_profile
     end
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit(
-        :email, :password, :password_confirmation,
+        :email, :password, :password_confirmation, :notifications,
         profile_attributes: [:first_name, :last_name]
       )
     end
