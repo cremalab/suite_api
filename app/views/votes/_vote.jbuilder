@@ -1,4 +1,5 @@
 json.(vote, :idea_id, :user_id, :created_at, :id)
+json.thread_id vote.idea.idea_thread_id
 json.user do
   json.id vote.user_id
   json.email vote.user.email
