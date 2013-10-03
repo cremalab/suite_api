@@ -20,6 +20,19 @@ class VotingRightsController < ApplicationController
     if @voting_right.destroy
       @idea_thread = @voting_right.idea_thread
 
+      #This is bad but it will work for now!
+      @ideas = @idea_thread.ideas
+
+      votes = Vote.where(user_id: @voting_right.user_id)
+
+      @ideas.each do |idea|
+        destroy_vote = votes.where(idea_id: idea[:id])
+        destroy_vote.each do |vote|
+          vote.destroy
+        end
+      end
+
+
       #Send to Faye
       @idea_thread_json = render_to_string(template: '/idea_threads/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
