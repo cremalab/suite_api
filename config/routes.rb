@@ -27,6 +27,7 @@ SuiteApi::Application.routes.draw do
   resources :idea_threads, format: :json
 
   resources :groups, format: :json
+  resources :memberships, format: :json
 
   get "events" => "events#index", :as => "events"
   resources :voting_rights, format: :json
