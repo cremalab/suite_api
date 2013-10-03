@@ -19,11 +19,6 @@ class VotingRightsController < ApplicationController
     @voting_right = VotingRight.find(params[:id])
     if @voting_right.destroy
       @idea_thread = @voting_right.idea_thread
-      @user = @voting_right.user
-
-      #Destroy Votes
-      p @user
-
       #Send to Faye
       @idea_thread_json = render_to_string(template: '/idea_threads/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
