@@ -1,3 +1,5 @@
+# application_controller.rb
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -10,12 +12,20 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    # Pre: None
+    # Post: A formatted message should be pushed to the faye server.
     def faye_publish(model_name, channel)
       model_name = model_name.underscore.pluralize
-      @json = render_to_string(template: "/#{model_name}/show.jbuilder")
+      if model_name == "votes"
+         @json = render_to_string(template: "/#{model_name}/full.jbuilder")
+      else
+        @json = render_to_string(template: "/#{model_name}/show.jbuilder")
+      end
       PrivatePub.publish_to(channel, message: @json)
     end
 
+    # Pre: Must have the id of the deleted item
+    # Post: A formatted message should be pushed to the faye server.
     def faye_destroy(id, model_name, channel)
       model_name = model_name.underscore.pluralize
       @json = '{\"model_name\": \"#{model_name}\", \"deleted\": true,' +
@@ -29,6 +39,8 @@ class ApplicationController < ActionController::Base
       @user_id      = headers['HTTP_X_USER_ID']
     end
 
+    # Pre:
+    # Post:
     def ensure_authenticated
       if is_xhr?
         if @access_token && @user_id
@@ -38,7 +50,7 @@ class ApplicationController < ActionController::Base
         if api_key
           @current_auth_user = api_key.user
         else
-          head :unauthorized unless api_key
+          head :unauthorized
         end
       end
     end
