@@ -28,8 +28,9 @@ class ApplicationController < ActionController::Base
     # Post: A formatted message should be pushed to the faye server.
     def faye_destroy(id, model_name, channel)
       model_name = model_name.underscore.pluralize
-      @json = '{\"model_name\": \"#{model_name}\", \"deleted\": true,' +
-              ' \"id\": #{id}}'
+      @json = "{\"model_name\": \"#{model_name}\", \"deleted\": true," +
+              " \"id\": #{id}}"
+      p @json
       PrivatePub.publish_to(channel, message: @json)
     end
 
