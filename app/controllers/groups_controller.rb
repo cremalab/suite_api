@@ -40,7 +40,10 @@ class GroupsController < ApplicationController
 
 private
   def group_params
-    params.require(:group).permit(:name, :owner_id, memberships_attributes: [:id, :user_id])
+    params.require(:group).permit(:name,
+                                  :owner_id,
+                                  memberships_attributes:
+                                    [:id, :user_id])
   end
 
 end

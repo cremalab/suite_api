@@ -1,6 +1,8 @@
 class Idea < ActiveRecord::Base
   #Relationships
-  has_many :votes, foreign_key: "idea_id", autosave: true, dependent: :destroy, validate: false
+  has_many  :votes, foreign_key: "idea_id",
+              autosave: true, dependent: :destroy,
+              validate: false
 
   belongs_to :idea_thread
   belongs_to :user
@@ -22,7 +24,8 @@ private
   def validate_voting_right
     if idea_thread_id
       has_voting_right = idea_thread.voter_ids.include?(user_id)
-      errors.add(:base, "You do not have permission to add an idea to this thread") unless has_voting_right
+      warning_text = "You do not have permission to add an idea to this thread"
+      errors.add(:base, warning_text) unless has_voting_right
     end
   end
 end

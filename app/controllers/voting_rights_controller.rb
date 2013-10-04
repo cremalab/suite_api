@@ -6,7 +6,7 @@ class VotingRightsController < ApplicationController
     if @voting_right.save
       @idea_thread = @voting_right.idea_thread
       #Send to Faye
-      @idea_thread_json = render_to_string(template: '/idea_threads/show.jbuilder')
+      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
       render :show, status: :ok
@@ -34,7 +34,7 @@ class VotingRightsController < ApplicationController
 
 
       #Send to Faye
-      @idea_thread_json = render_to_string(template: '/idea_threads/show.jbuilder')
+      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
       render :json => ['Voting Right destroyed'], status: :ok
@@ -49,6 +49,7 @@ class VotingRightsController < ApplicationController
   end
 
 private
+  @SHOW_VIEW = '/idea_threads/show.jbuilder'
   def voting_right_params
     params.require(:voting_right).permit(:idea_thread_id, :user_id)
   end
