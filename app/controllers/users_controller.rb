@@ -4,19 +4,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.build_profile
-
     if @user.save
 
       @user.generate_api_key
-      auto_login(@user)
-      @logged_in = current_user == @user
+      @logged_in = true
 
-
-      #Send to Faye
-      @user_json = render_to_string(template: 'users/show.jbuilder')
-      PrivatePub.publish_to("/message/channel", message: @user_json)
-
+      faye_publish("User", "/message/channel")
       render :show, status: 201
     else
       render :json => @user.errors.full_messages, status: 422
@@ -37,9 +30,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @logged_in = true
-    if @user.profile.nil?
-      @user.build_profile
-    end
     if @user.update_attributes(user_params)
 
       #Send to Faye

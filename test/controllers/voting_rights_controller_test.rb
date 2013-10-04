@@ -24,7 +24,6 @@ class VotingRightsControllerTest < ActionController::TestCase
 
 
     # Delete the voting right
-    pp idea_thread.voting_rights[1].id
     delete :destroy, id: idea_thread.voting_rights[1].id
     assert_response :success
 
