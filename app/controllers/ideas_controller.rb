@@ -6,12 +6,9 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
     if @idea.save
+      @idea.create_associated_vote
+
       #Send to Faye
-
-      vote    = Vote.new(idea_id: @idea.id, user_id: @idea.user_id)
-      checker = UserVoteChecker.new
-      checker.create_vote(vote)
-
       @idea_json = render_to_string(template: 'ideas/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @idea_json)
 

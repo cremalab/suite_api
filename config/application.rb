@@ -7,7 +7,11 @@ require 'rails/all'
 Bundler.require(:default, Rails.env)
 
 module SuiteApi
+    SHOW_VIEW_VR = 'idea_threads/show.jbuilder'
+    SHOW_VIEW_IT = 'idea_threads/show.jbuilder'
+
   class Application < Rails::Application
+    #Constants
 
     config.middleware.use Rack::Cors do
       allow do

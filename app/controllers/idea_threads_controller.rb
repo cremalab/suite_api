@@ -18,7 +18,7 @@ class IdeaThreadsController < ApplicationController
 
     if @idea_thread.save
       #Send to Faye
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
+      @idea_thread_json = render_to_string(template: SuiteApi::SHOW_VIEW_IT)
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
       render :show, status: 201
@@ -50,7 +50,7 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.update_attributes(title: params[:idea_thread][:title],
                                       status: params[:idea_thread][:status])
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
+      @idea_thread_json = render_to_string(template: SuiteApi::SHOW_VIEW_IT)
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
       render :show, status: 201
     else
@@ -59,7 +59,6 @@ class IdeaThreadsController < ApplicationController
   end
 
 private
-  @SHOW_VIEW = 'idea_threads/show.jbuilder'
   def idea_thread_params
     params.require(:idea_thread).permit(
       :title, :status, :user_id,

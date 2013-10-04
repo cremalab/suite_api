@@ -40,4 +40,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def generate_api_key
+    if self.api_keys.length > 0
+      self.api_keys.last.destroy
+    end
+
+    @api_key = self.api_keys.create()
+
+
+  end
+
 end

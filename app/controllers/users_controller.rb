@@ -8,15 +8,10 @@ class UsersController < ApplicationController
 
     if @user.save
 
-      # May want to refactor this
-      if @user.api_keys.length > 0
-        @user.api_keys.last.destroy
-      end
-
-      @api_key = @user.api_keys.create()
-
+      @user.generate_api_key
       auto_login(@user)
       @logged_in = current_user == @user
+
 
       #Send to Faye
       @user_json = render_to_string(template: 'users/show.jbuilder')
