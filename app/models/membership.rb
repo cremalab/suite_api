@@ -1,6 +1,6 @@
 class Membership < ActiveRecord::Base
   #Relationships
-  belongs_to :groups
+  belongs_to :group
   belongs_to :user
 
   #Validation

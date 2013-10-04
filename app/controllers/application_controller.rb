@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
     end
 
     def ensure_authenticated
-
       if is_xhr?
         if @access_token && @user_id
           api_key = ApiKey.find_by(
