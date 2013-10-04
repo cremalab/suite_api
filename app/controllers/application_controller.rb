@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
     def faye_publish(model_name, channel)
       model_name = model_name.underscore.pluralize
       @json = render_to_string(template: "/#{model_name}/show.jbuilder")
@@ -24,10 +23,8 @@ class ApplicationController < ActionController::Base
       PrivatePub.publish_to(channel, message: @json)
     end
 
-
     def get_header_info
       headers = request.headers
-
       @access_token = headers['HTTP_X_ACCESS_TOKEN']
       @user_id      = headers['HTTP_X_USER_ID']
     end
@@ -37,13 +34,11 @@ class ApplicationController < ActionController::Base
         if @access_token && @user_id
           api_key = ApiKey.find_by( access_token: @access_token,
                                     user_id: @user_id)
-          if api_key
-            @current_auth_user = api_key.user
-          else
-            head :unauthorized unless api_key
-          end
+        end
+        if api_key
+          @current_auth_user = api_key.user
         else
-          head :unauthorized
+          head :unauthorized unless api_key
         end
       end
     end
