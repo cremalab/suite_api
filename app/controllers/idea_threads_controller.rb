@@ -17,27 +17,11 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
-      #Send to Faye
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
-      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
+      faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422
-    end
-  end
-
-  def destroy
-    @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.destroy
-      #Send to Faye
-      delete_json = '{\"model_name\": \"IdeaThread\", \"deleted\": true,' +
-                    ' \"id\": #{params[:id]}}'
-      PrivatePub.publish_to("/message/channel", message: delete_json)
-
-      render :json => ['Idea thread destroyed'], status: :ok
-    else
-      render :show, status: :unprocessable_entity
     end
   end
 
@@ -47,19 +31,32 @@ class IdeaThreadsController < ApplicationController
   end
 
   def update
+    param_idea_thread = params[:idea_thread]
     @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.update_attributes(title: params[:idea_thread][:title],
-                                      status: params[:idea_thread][:status])
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
-      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
+    if @idea_thread.update_attributes(title: param_idea_thread[:title],
+                                      status: param_idea_thread[:status])
+      faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
       render :show, status: :unprocessable_entity
     end
   end
 
+  def destroy
+    id = params[:id]
+    @idea_thread = IdeaThread.find(id)
+    if @idea_thread.destroy
+
+      faye_destroy(id, "IdeaThread", "/message/channel")
+      render :json => ['Idea thread destroyed'], status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
+
+
 private
-  @SHOW_VIEW = 'idea_threads/show.jbuilder'
   def idea_thread_params
     params.require(:idea_thread).permit(
       :title, :status, :user_id,

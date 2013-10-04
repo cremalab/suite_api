@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
+  before_create :build_profile
 
   #Relationships
   has_many :api_keys, foreign_key: "user_id", dependent: :destroy
@@ -26,18 +27,34 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :email
 
-
   def current_access_token
-    self.api_keys.last ? self.api_keys.last.access_token : nil
+    last_key = self.api_keys.last
+    last_key ? last_key.access_token : nil
   end
 
   def display_name
-    if self.profile && self.profile.first_name
-      "#{self.profile.first_name}" +
-      "#{self.profile.last_name.empty? ? '' : ' ' + self.profile.last_name}"
+    profile = self.profile
+    first_name = profile.first_name
+    last_name = profile.last_name
+
+    if profile && first_name
+      "#{first_name}" +
+      "#{last_name.empty? ? '' : ' ' + last_name}"
     else
       email
     end
+  end
+
+  def generate_api_key
+    api_keys = self.api_keys
+
+    if api_keys.length > 0
+      api_keys.last.destroy
+    end
+
+    @api_key = api_keys.create()
+
+
   end
 
 end

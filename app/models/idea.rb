@@ -20,6 +20,12 @@ class Idea < ActiveRecord::Base
     self == self.idea_thread.ideas.order("created_at ASC").first
   end
 
+  def create_associated_vote
+    vote    = Vote.new(idea_id: self.id, user_id: self.user_id)
+    checker = UserVoteChecker.new
+    checker.create_vote(vote)
+  end
+
 private
   def validate_voting_right
     if idea_thread_id

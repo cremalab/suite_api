@@ -6,7 +6,9 @@ class VotingRightsController < ApplicationController
     if @voting_right.save
       @idea_thread = @voting_right.idea_thread
       #Send to Faye
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
+      #show_view = 'idea_threads/show.jbuilder'
+
+      @idea_thread_json = render_to_string(template: SHOW_VIEW_VR)
       PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
 
       render :show, status: :ok
@@ -16,26 +18,10 @@ class VotingRightsController < ApplicationController
   end
 
   def destroy
+
     @voting_right = VotingRight.find(params[:id])
     if @voting_right.destroy
-      @idea_thread = @voting_right.idea_thread
-
-      #This is bad but it will work for now!
-      @ideas = @idea_thread.ideas
-
-      votes = Vote.where(user_id: @voting_right.user_id)
-
-      @ideas.each do |idea|
-        destroy_vote = votes.where(idea_id: idea[:id])
-        destroy_vote.each do |vote|
-          vote.destroy
-        end
-      end
-
-
-      #Send to Faye
-      @idea_thread_json = render_to_string(template: @SHOW_VIEW)
-      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
+      @voting_right.destroy_associtated_votes
 
       render :json => ['Voting Right destroyed'], status: :ok
     else
@@ -49,7 +35,6 @@ class VotingRightsController < ApplicationController
   end
 
 private
-  @SHOW_VIEW = '/idea_threads/show.jbuilder'
   def voting_right_params
     params.require(:voting_right).permit(:idea_thread_id, :user_id)
   end
