@@ -30,7 +30,6 @@ class ApplicationController < ActionController::Base
       model_name = model_name.underscore.pluralize
 
       @json = {model_name: model_name, deleted: true, id: id}
-      @json[:model_name] = model_name
       PrivatePub.publish_to(channel, message: @json.as_json)
     end
 
