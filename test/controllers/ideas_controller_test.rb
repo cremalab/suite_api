@@ -18,7 +18,7 @@ class IdeasControllerTest < ActionController::TestCase
     @idea_thread = idea_threads(:lunch)
     @idea_thread.voters << @user
 
-    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJ's",
                 description: "Mmmmm... eatloaf", user_id: @user.id,
                 idea_thread_id: @idea_thread.id}
     idea_count = Idea.all.count
@@ -27,14 +27,13 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes @response.body, "id"
     assert_includes @response.body, "title"
     assert_includes @response.body, "description"
-    assert_includes @response.body, "when"
     Idea.all.count.must_equal idea_count + 1
   end
 
   test "should require voting_right" do
     @user = users(:rob)
     @idea_thread = idea_threads(:lunch)
-    meatloaf = {title: "Meatloaf at YJ's", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJ's",
                 description: "Mmmmm... eatloaf", user_id: @user.id,
                 idea_thread_id: @idea_thread.id}
     post :create, idea: meatloaf
