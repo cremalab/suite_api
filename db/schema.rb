@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20131007194729) do
     t.string   "title"
     t.string   "status"
     t.text     "description"
-    t.datetime "experation"
+    t.datetime "expiration"
   end
 
   add_index "idea_threads", ["user_id"], name: "index_idea_threads_on_user_id", using: :btree
