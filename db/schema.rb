@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007193522) do
+ActiveRecord::Schema.define(version: 20131007194729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20131007193522) do
     t.string   "title"
     t.string   "status"
     t.text     "description"
+    t.datetime "experation"
   end
 
   add_index "idea_threads", ["user_id"], name: "index_idea_threads_on_user_id", using: :btree
