@@ -1,6 +1,18 @@
 require 'test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
+  def setup
+    @user = User.create(
+      email: 'test@cremalab.com', password: 'password',
+      password_confirmation: 'password', profile_attributes:
+        {first_name: 'Fred', last_name: 'Flintstone'}
+    )
+    @user.api_keys.create()
+    @request.env["HTTP_X_REQUESTED_WITH"] = {}
+    @request.env["HTTP_X_USER_ID"] = @user.id
+    @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
+    Group.create(owner: @user, name: "Mellow Yellow")
+  end
   test "index" do
     get :index
     assert_response :success
