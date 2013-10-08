@@ -21,8 +21,7 @@ private
 
   def swan_song
     # Let Faye know it's about to go bye-bye
-    delete_json = "{\"model_name\": \"Vote\"," +
-                  " \"deleted\": true, \"id\": #{id}}"
+    delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{id}}"
     PrivatePub.publish_to("/message/channel", message: delete_json)
   end
 

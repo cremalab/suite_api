@@ -11,7 +11,6 @@ class IdeaTest < ActiveSupport::TestCase
 
     @new_idea_attr = {title: "Meatloaf at YJ's",
                       idea_thread_id: @idea_thread.id,
-                      when: "2013-08-28 09:26:06 -0500",
                       description: "Mmmmm... eatloaf", user_id: @user.id,
                     }
   end

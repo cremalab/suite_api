@@ -20,7 +20,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   end
 
   test "should post create" do
-    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf", user_id: @user.id}
     voting_rights = {user_id: @user.id}
     params = {  title: "Lunch", status: "open", user_id:  @user.id,
@@ -41,7 +41,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   end
 
   test "should destroy" do
-    meatloaf = {title: "Meatloaf at YJs", when: "2013-08-28 09:26:06 -0500",
+    meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf", user_id: 1
               }
     params = {title: "Lunch", user_id: 1, status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
