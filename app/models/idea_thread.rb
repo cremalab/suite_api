@@ -22,6 +22,13 @@ class IdeaThread < ActiveRecord::Base
   #Status
   symbolize :status, :in => [:open, :archived], :scopes => true, default: :open
 
+  def self.auto_archive(id)
+    find(id).auto_archive
+  end
+
+  def auto_archive
+    update_attribute(:status, :archived)
+  end
 
 
 private

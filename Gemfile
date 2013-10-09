@@ -42,9 +42,6 @@ gem "factory_girl", "~> 4.2.0"
 gem "sorcery", "~> 0.8.2"
 gem 'rack-cors', :require => 'rack/cors'
 
-# Use unicorn as the app server
-#gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
@@ -52,9 +49,10 @@ gem 'rack-cors', :require => 'rack/cors'
 # gem 'debugger', group: [:development, :test]
 
 #For app server
-# gem "unicorn", "~> 4.6.3"
 gem "thin", "~> 1.5.1"
 gem 'private_pub'
 gem 'rb-fsevent'
 
 gem 'symbolize'
+
+gem 'delayed_job_active_record'
