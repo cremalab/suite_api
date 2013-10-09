@@ -42,10 +42,16 @@ class IdeaThreadsControllerTest < ActionController::TestCase
 
   test "should destroy" do
     meatloaf = {title: "Meatloaf at YJs",
-                description: "Mmmmm... eatloaf", user_id: 1
+                description: "Mmmmm... eatloaf",
+                user_id: 1
               }
-    params = {title: "Lunch", user_id: 1, status: "open", ideas_attributes: [meatloaf], voting_rights_attributes: [{user_id: 1}] }
+    params = {title: "Lunch", user_id: 1, status: "open",
+                expiration: "2014-02-11 11:25:00",
+                ideas_attributes: [meatloaf],
+                voting_rights_attributes: [{user_id: 1}] }
     thread = IdeaThread.create(params)
+    p thread
+    IdeaThread.delay(run_at: thread.expiration, queue: thread.id).auto_archive(thread.id)
     delete :destroy, id: thread.id
     assert_response :success
     assert_includes @response.body, "Idea thread destroyed"
