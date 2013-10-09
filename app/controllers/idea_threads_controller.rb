@@ -17,7 +17,10 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
-
+      expiration = @idea_thread.expiration
+      if expiration != nil
+        IdeaThread.delay(run_at: expiration).auto_archive(@idea_thread.id)
+      end
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
