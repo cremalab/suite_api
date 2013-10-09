@@ -48,6 +48,9 @@ class IdeaThreadsController < ApplicationController
   def destroy
     id = params[:id]
     @idea_thread = IdeaThread.find(id)
+    if @idea_thread.status == :open
+      #Destroy job in queue
+    end
     if @idea_thread.destroy
 
       faye_destroy(id, "IdeaThread", "/message/channel")
