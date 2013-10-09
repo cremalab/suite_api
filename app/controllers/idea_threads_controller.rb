@@ -18,8 +18,10 @@ class IdeaThreadsController < ApplicationController
 
     if @idea_thread.save
       expiration = @idea_thread.expiration
+      p expiration
       if expiration != nil
-        IdeaThread.delay(run_at: expiration, queue: thread.id).auto_archive(@idea_thread.id)
+        IdeaThread.delay(run_at: expiration, queue: @idea_thread.id).auto_archive(@idea_thread.id)
+        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
@@ -44,6 +46,7 @@ class IdeaThreadsController < ApplicationController
         job = Delayed::Job.find_by(queue: id)
         job.delete
         IdeaThread.delay(run_at: expiration, queue: id).auto_archive(@idea_thread.id)
+        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
 
       end
 
@@ -57,7 +60,6 @@ class IdeaThreadsController < ApplicationController
   def destroy
     id = params[:id]
     @idea_thread = IdeaThread.find(id)
-    p @idea_thread.status
     if @idea_thread.status == :open
       job = Delayed::Job.find_by(queue: id)
       job.delete
@@ -76,7 +78,7 @@ class IdeaThreadsController < ApplicationController
 private
   def idea_thread_params
     params.require(:idea_thread).permit(
-      :title, :status, :user_id,
+      :title, :status, :user_id, :expiration,
       ideas_attributes: [ :title, :when, :user_id, :description,
       votes_attributes: [ :user_id ] ],
       voting_rights_attributes: [ :user_id ]

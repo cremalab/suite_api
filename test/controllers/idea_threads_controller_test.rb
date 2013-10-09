@@ -24,6 +24,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
                 description: "Mmmmm... eatloaf", user_id: @user.id}
     voting_rights = {user_id: @user.id}
     params = {  title: "Lunch", status: "open", user_id:  @user.id,
+                expiration: "2014-02-11 11:25:00",
                 ideas_attributes: [meatloaf],
                 voting_rights_attributes: [voting_rights]  }
     idea_thread_count = IdeaThread.all.count
