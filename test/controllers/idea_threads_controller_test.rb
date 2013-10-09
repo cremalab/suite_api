@@ -50,7 +50,6 @@ class IdeaThreadsControllerTest < ActionController::TestCase
                 ideas_attributes: [meatloaf],
                 voting_rights_attributes: [{user_id: 1}] }
     thread = IdeaThread.create(params)
-    p thread
     IdeaThread.delay(run_at: thread.expiration, queue: thread.id).auto_archive(thread.id)
     delete :destroy, id: thread.id
     assert_response :success
