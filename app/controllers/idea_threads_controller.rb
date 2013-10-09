@@ -18,7 +18,6 @@ class IdeaThreadsController < ApplicationController
 
     if @idea_thread.save
       expiration = @idea_thread.expiration
-      p expiration
       if expiration != nil
         IdeaThread.delay(run_at: expiration, queue: @idea_thread.id).auto_archive(@idea_thread.id)
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
