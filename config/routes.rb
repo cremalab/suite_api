@@ -10,6 +10,7 @@ SuiteApi::Application.routes.draw do
   resources :sessions,   format: :json
   resources :ideas,      format: :json do
     resource :votes,     format: :json
+    resources :comments, format: :json
   end
   resources :votes,      format: :json
   resources :idea_threads, format: :json
