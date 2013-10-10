@@ -21,6 +21,12 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @comment = Comment.find(params[:id])
+    if @comment.update_attributes(comment_params)
+       render :show, status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
 
   end
 

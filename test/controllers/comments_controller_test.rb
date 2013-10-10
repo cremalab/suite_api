@@ -25,7 +25,10 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "update" do
-    assert false, "Hasn't been written"
+    post :update, id: @comment.id, comment: {content: "Red"}
+    assert_response :success
+    assert_includes @response.body, "Red"
+    Comment.find(@comment.id).content.must_equal "Red"
   end
 
   test "destroy" do
