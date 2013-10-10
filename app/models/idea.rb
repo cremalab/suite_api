@@ -3,6 +3,7 @@ class Idea < ActiveRecord::Base
   has_many  :votes, foreign_key: "idea_id",
               autosave: true, dependent: :destroy,
               validate: false
+  has_many :comments, foreign_key: "idea_id"
 
   belongs_to :idea_thread
   belongs_to :user

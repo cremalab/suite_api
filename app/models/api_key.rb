@@ -1,3 +1,8 @@
+# api_key.rb
+#
+# This class generates access tokens for the user when he is logs in to the
+# site.
+#
 class ApiKey < ActiveRecord::Base
   #Relationships
   belongs_to :user
