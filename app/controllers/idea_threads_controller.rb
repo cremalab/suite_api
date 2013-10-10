@@ -16,7 +16,11 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
-
+      expiration = @idea_thread.expiration
+      if expiration != nil
+        IdeaThread.delay(run_at: expiration, queue: @idea_thread.id).auto_archive(@idea_thread.id)
+        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+      end
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
@@ -32,6 +36,17 @@ class IdeaThreadsController < ApplicationController
   def update
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.update_attributes(update_params)
+                                      status: param_idea_thread[:status],
+                                      expiration: param_idea_thread[:expiration])
+      if param_idea_thread[:expiration] != nil
+        id = @idea_thread.id
+        job = Delayed::Job.find_by(queue: id)
+        job.delete
+        IdeaThread.delay(run_at: expiration, queue: id).auto_archive(@idea_thread.id)
+        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+
+      end
+
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
@@ -42,6 +57,10 @@ class IdeaThreadsController < ApplicationController
   def destroy
     id = params[:id]
     @idea_thread = IdeaThread.find(id)
+    if @idea_thread.status == :open
+      job = Delayed::Job.find_by(queue: id)
+      job.delete
+    end
     if @idea_thread.destroy
 
       faye_destroy(id, "IdeaThread", "/message/channel")
