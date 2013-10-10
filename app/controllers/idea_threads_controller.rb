@@ -36,10 +36,13 @@ class IdeaThreadsController < ApplicationController
   def update
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.update_attributes(update_params)
-      if param_idea_thread[:expiration] != nil
+      if update_params[:expiration] != nil
+        expiration = @idea_thread.expiration
         id = @idea_thread.id
-        job = Delayed::Job.find_by(queue: id)
-        job.delete
+        job = Delayed::Job.find_by(queue: id.to_s)
+        if job
+          job.delete
+        end
         IdeaThread.delay(run_at: expiration, queue: id).auto_archive(@idea_thread.id)
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
