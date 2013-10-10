@@ -12,8 +12,7 @@ class IdeaThreadsController < ApplicationController
   end
 
   def create
-    user_id = idea_thread_params[:ideas_attributes][0]['user_id']
-    @user = User.find(user_id)
+    @user = User.find(idea_thread_params[:user_id])
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
@@ -31,10 +30,8 @@ class IdeaThreadsController < ApplicationController
   end
 
   def update
-    param_idea_thread = params[:idea_thread]
     @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.update_attributes(title: param_idea_thread[:title],
-                                      status: param_idea_thread[:status])
+    if @idea_thread.update_attributes(update_params)
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
@@ -60,9 +57,15 @@ private
   def idea_thread_params
     params.require(:idea_thread).permit(
       :title, :status, :user_id, :expiration, :description,
-      ideas_attributes: [ :title, :when, :user_id, :description,
-      votes_attributes: [ :user_id ] ],
+      ideas_attributes: [ :title, :user_id, :description,
+        votes_attributes: [ :user_id ]
+      ],
       voting_rights_attributes: [ :user_id ]
+    )
+  end
+  def update_params
+    params.require(:idea_thread).permit(
+      :title, :status, :expiration, :description
     )
   end
 end
