@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   #Relationships
   has_many :api_keys, foreign_key: "user_id", dependent: :destroy
+  has_many :comments, foreign_key: "user_id"
   has_many :groups, through: :membership
   has_many :groups, foreign_key: "owner_id"
   has_many :ideas, foreign_key: "user_id"
