@@ -2,7 +2,8 @@ require 'test_helper'
 
 class CommentsControllerTest < ActionController::TestCase
   test "index" do
-    assert false, "Hasn't been written"
+    get :index
+    assert_response :success
   end
 
   test "create" do

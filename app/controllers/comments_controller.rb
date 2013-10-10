@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   def index
+    @comments = Comment.all
+    render :index, status: :ok
 
   end
 
