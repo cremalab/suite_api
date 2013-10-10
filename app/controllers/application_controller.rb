@@ -26,7 +26,8 @@ class ApplicationController < ActionController::Base
     # Pre: Must have the id of the deleted item
     # Post: A formatted message should be pushed to the faye server.
     def faye_destroy(id, model_name, channel)
-      @model = {model_name: model_name, id: id, deleted: true}
+      klass = model_name.constantize
+      @model = klass.new(id: id)
       @json = render_to_string(template: "deleted.jbuilder")
       PrivatePub.publish_to(channel, message: @json)
     end
