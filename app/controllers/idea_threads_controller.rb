@@ -59,7 +59,9 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(id)
     if @idea_thread.status == :open
       job = Delayed::Job.find_by(queue: id)
-      job.delete
+      if job
+        job.delete
+      end
     end
     if @idea_thread.destroy
 
