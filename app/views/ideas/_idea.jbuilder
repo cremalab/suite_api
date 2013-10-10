@@ -1,4 +1,4 @@
-json.(idea, :id, :title, :description, :idea_thread_id, :user_id)
+json.(idea, :id, :title, :description, :idea_thread_id, :user_id, :updated_at, :created_at)
 json.total_votes idea.votes.count
 json.user do
   json.email idea.user.email

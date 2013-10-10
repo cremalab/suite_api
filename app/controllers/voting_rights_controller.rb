@@ -8,8 +8,7 @@ class VotingRightsController < ApplicationController
       #Send to Faye
       #show_view = 'idea_threads/show.jbuilder'
 
-      @idea_thread_json = render_to_string(template: SHOW_VIEW_VR)
-      PrivatePub.publish_to("/message/channel", message: @idea_thread_json)
+      faye_publish("IdeaThread", "/message/channel")
 
       render :show, status: :ok
     else
@@ -23,6 +22,8 @@ class VotingRightsController < ApplicationController
     if @voting_right.destroy
       @voting_right.destroy_associtated_votes
 
+      @idea_thread = @voting_right.idea_thread
+      faye_publish("IdeaThread", "/message/channel")
       render :json => ['Voting Right destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
