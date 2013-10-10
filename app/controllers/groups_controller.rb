@@ -1,7 +1,9 @@
 class GroupsController < ApplicationController
 
+  before_action :ensure_authenticated
+
   def index
-    @groups = Group.all
+    @groups = Group.where(owner_id: current_auth_user.id)#current user
     render :index, status: :ok
   end
 
