@@ -12,8 +12,7 @@ class IdeaThreadsController < ApplicationController
   end
 
   def create
-    user_id = idea_thread_params[:ideas_attributes][0]['user_id']
-    @user = User.find(user_id)
+    @user = User.find(idea_thread_params[:user_id])
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
@@ -35,18 +34,17 @@ class IdeaThreadsController < ApplicationController
   end
 
   def update
-    param_idea_thread = params[:idea_thread]
     @idea_thread = IdeaThread.find(params[:id])
-    if @idea_thread.update_attributes(title: param_idea_thread[:title],
-                                      status: param_idea_thread[:status],
-                                      expiration: param_idea_thread[:expiration])
-      if param_idea_thread[:expiration] != nil
+    if @idea_thread.update_attributes(update_params)
+      if update_params[:expiration] != nil
+        expiration = @idea_thread.expiration
         id = @idea_thread.id
-        job = Delayed::Job.find_by(queue: id)
-        job.delete
+        job = Delayed::Job.find_by(queue: id.to_s)
+        if job
+          job.delete
+        end
         IdeaThread.delay(run_at: expiration, queue: id).auto_archive(@idea_thread.id)
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
-
       end
 
       faye_publish("IdeaThread", "/message/channel")
@@ -61,7 +59,9 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(id)
     if @idea_thread.status == :open
       job = Delayed::Job.find_by(queue: id)
-      job.delete
+      if job
+        job.delete
+      end
     end
     if @idea_thread.destroy
 
@@ -77,10 +77,16 @@ class IdeaThreadsController < ApplicationController
 private
   def idea_thread_params
     params.require(:idea_thread).permit(
-      :title, :status, :user_id, :expiration,
-      ideas_attributes: [ :title, :when, :user_id, :description,
-      votes_attributes: [ :user_id ] ],
+      :title, :status, :user_id, :expiration, :description,
+      ideas_attributes: [ :title, :user_id, :description,
+        votes_attributes: [ :user_id ]
+      ],
       voting_rights_attributes: [ :user_id ]
+    )
+  end
+  def update_params
+    params.require(:idea_thread).permit(
+      :title, :status, :expiration, :description
     )
   end
 end
