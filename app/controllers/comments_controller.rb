@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
+      faye_publish("Comment", "/message/channel")
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422
@@ -23,7 +24,8 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
-       render :show, status: :ok
+      faye_publish("Comment", "/message/channel")
+      render :show, status: :ok
     else
       render :show, status: :unprocessable_entity
     end
