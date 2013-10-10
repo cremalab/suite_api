@@ -16,7 +16,8 @@ class CommentsController < ApplicationController
   end
 
   def show
-
+    @comment = Comment.find(params[:id])
+    render :show, status: 200
   end
 
   def update
@@ -24,6 +25,14 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    id = params[:id]
+    @comment = Comment.find(id)
+    if @comment.destroy
+      faye_destroy(id, "Comment", "/message/channel")
+      render :json => ['Comment destroyed'], status: :ok
+    else
+      render :show, status: :unprocessable_entity
+    end
 
   end
 

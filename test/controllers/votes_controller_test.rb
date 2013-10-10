@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
     @vote = votes(:ross_vote_milkshake)
     @user = User.create(
