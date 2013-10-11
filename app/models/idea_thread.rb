@@ -30,6 +30,21 @@ class IdeaThread < ActiveRecord::Base
     update_attribute(:status, :archived)
   end
 
+  def set_expiration
+    self.delay(run_at: expiration, queue: self.id).auto_archive(self.id)
+  end
+
+  def update_expiration
+    expiration = @idea_thread.expiration
+    id = self.id
+    job = Delayed::Job.find_by(queue: id.to_s)
+    if job
+      job.delete
+    end
+    self.delay(run_at: expiration, queue: id).auto_archive(id)
+  end
+
+
 
 private
   def validate_voting_rights

@@ -18,7 +18,7 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.save
       expiration = @idea_thread.expiration
       if expiration != nil
-        IdeaThread.delay(run_at: expiration, queue: @idea_thread.id).auto_archive(@idea_thread.id)
+        @idea_thread.set_expiration
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
       faye_publish("IdeaThread", "/message/channel")
@@ -37,16 +37,9 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
-        expiration = @idea_thread.expiration
-        id = @idea_thread.id
-        job = Delayed::Job.find_by(queue: id.to_s)
-        if job
-          job.delete
-        end
-        IdeaThread.delay(run_at: expiration, queue: id).auto_archive(@idea_thread.id)
+        @idea_thread.update_expiration
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
-
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
