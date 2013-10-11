@@ -6,7 +6,12 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    if params[:idea_id]
+      @idea    = Idea.find(params[:idea_id])
+      @comment = @idea.comments.new(comment_params)
+    else
+      @comment = Comment.new(comment_params)
+    end
     if @comment.save
       faye_publish("Comment", "/message/channel")
       render :show, status: 201
