@@ -21,6 +21,7 @@ class IdeaThreadsController < ApplicationController
         IdeaThread.delay(run_at: expiration, queue: @idea_thread.id).auto_archive(@idea_thread.id)
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
+      Notifier.new_thread(@user).deliver
       faye_publish("IdeaThread", "/message/channel")
       render :show, status: 201
     else
