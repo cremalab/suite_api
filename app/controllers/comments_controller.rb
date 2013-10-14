@@ -1,12 +1,16 @@
 class CommentsController < ApplicationController
-  def index
-    @comments = Comment.all
-    render :index, status: :ok
 
+  before_action :get_comment, only: [:show, :update]
+  before_action :get_comments, only: [:index]
+
+  def index
+    render :index, status: :ok
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    #get_idea
+    @comment = @idea.comments.new(comment_params)
+
     if @comment.save
       faye_publish("Comment", "/message/channel")
       render :show, status: 201
@@ -41,7 +45,6 @@ class CommentsController < ApplicationController
     else
       render :show, status: :unprocessable_entity
     end
-
   end
 
   private
@@ -50,5 +53,17 @@ class CommentsController < ApplicationController
 
     end
 
+    def get_comments
+      if params[:idea_id]
+        get_idea
+        @comments = @idea.comments
+      else
+        @comments = Comment.all
+      end
+    end
+
+    def get_idea
+      @idea    = Idea.find(params[:idea_id])
+    end
 
 end

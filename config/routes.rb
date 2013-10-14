@@ -5,6 +5,8 @@ SuiteApi::Application.routes.draw do
 
   resources :ideas,      format: :json,     except: [:new, :edit] do
     resource :votes,     format: :json,     only:   [:show, :create, :destroy]
+    resources :comments, format: :json
+
   end
 
   resources :idea_threads, format: :json,   except: [:new, :edit]
@@ -19,6 +21,7 @@ SuiteApi::Application.routes.draw do
   get "me" => 'users#me', :as => 'me'
 
   resources :votes,      format: :json,     only:   [:show, :create, :destroy]
+
 
   resources :voting_rights, format: :json,  only:  [:show, :create, :destroy]
 end
