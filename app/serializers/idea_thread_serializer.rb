@@ -1,3 +1,19 @@
 class IdeaThreadSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes  :id, :title, :created_at, :updated_at, :user_id, :status,
+              :description, :expiration, :original_idea_id, :model_name,
+              :user_name
+
+  has_many :ideas, :voting_rights
+
+  def original_idea_id
+    idea_thread.ideas.order("created_at ASC").first.id if idea_thread.ideas.any?
+  end
+
+  def model_name
+    "IdeaThread"
+  end
+
+  def user_name
+    object.user.display_name
+  end
 end

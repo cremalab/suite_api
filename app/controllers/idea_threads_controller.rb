@@ -8,7 +8,7 @@ class IdeaThreadsController < ApplicationController
     else
       @idea_threads = IdeaThread.status(:open)
     end
-    render :index, status: :ok
+    render json: @idea_threads
   end
 
   def create
@@ -22,7 +22,7 @@ class IdeaThreadsController < ApplicationController
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
       faye_publish("IdeaThread", "/message/channel")
-      render :show, status: 201
+      render json: @idea_threads
     else
       render :json => @idea_thread.errors.full_messages, status: 422
     end
@@ -30,7 +30,7 @@ class IdeaThreadsController < ApplicationController
 
   def show
     @idea_thread = IdeaThread.find(params[:id])
-    render :show, status: 201
+    render json: @idea_threads
   end
 
   def update
@@ -41,7 +41,7 @@ class IdeaThreadsController < ApplicationController
         faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
       end
       faye_publish("IdeaThread", "/message/channel")
-      render :show, status: 201
+      render json: @idea_threads
     else
       render :show, status: :unprocessable_entity
     end
