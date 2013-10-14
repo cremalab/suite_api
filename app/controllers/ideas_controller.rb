@@ -5,7 +5,7 @@ class IdeasController < ApplicationController
 
   def index
     @ideas = Idea.all
-    render :index, status: :ok
+    render json: @ideas
   end
 
   def create
@@ -14,7 +14,7 @@ class IdeasController < ApplicationController
       @idea.create_associated_vote
 
       faye_publish("Idea", "/message/channel")
-      render :show, status: 201
+      render json: @idea
     else
       render :json => @idea.errors.full_messages, status: 422
     end
@@ -31,7 +31,7 @@ class IdeasController < ApplicationController
       faye_publish("Idea", "/message/channel")
 
       @idea.votes.destroy_all if params[:idea][:edited]
-      render :show, status: :ok
+      render json: @idea
     else
       render :show, status: :unprocessable_entity
     end

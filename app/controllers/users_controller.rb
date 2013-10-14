@@ -5,12 +5,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-
       @user.generate_api_key
       @logged_in = true
-
       faye_publish("User", "/message/channel")
-      render :show, status: 201
+      render json: @user
     else
       render :json => @user.errors.full_messages, status: 422
     end

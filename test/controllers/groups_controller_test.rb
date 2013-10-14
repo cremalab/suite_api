@@ -16,7 +16,12 @@ class GroupsControllerTest < ActionController::TestCase
   test "index" do
     get :index
     assert_response :success
+    assert_includes @response.body, "id"
     assert_includes @response.body, "name"
+    assert_includes @response.body, "created_at"
+    assert_includes @response.body, "updated_at"
+    assert_includes @response.body, "owner_id"
+    assert_includes @response.body, "membership"
   end
 
   test "create" do

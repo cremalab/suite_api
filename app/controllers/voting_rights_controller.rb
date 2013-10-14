@@ -10,7 +10,7 @@ class VotingRightsController < ApplicationController
 
       faye_publish("IdeaThread", "/message/channel")
 
-      render :show, status: :ok
+      render json: @voting_right
     else
       render :json => @voting_right.errors.full_messages, status: 422
     end
@@ -32,7 +32,7 @@ class VotingRightsController < ApplicationController
 
   def show
     @voting_right = VotingRight.find(params[:id])
-    render :show, status: :ok
+    render json: @voting_right
   end
 
 private
