@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 
    def index
     @comments = Comment.all
-    render :index, status: :ok
+    render json: @comments
 
   end
 
@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
       faye_publish("Comment", "/message/channel")
-      render :show, status: 201
+      render json: @comment
     else
       render :json => @idea_thread.errors.full_messages, status: 422
     end
@@ -19,14 +19,14 @@ class CommentsController < ApplicationController
 
   def show
     @comment = Comment.find(params[:id])
-    render :show, status: 200
+    render json: @comment
   end
 
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
       faye_publish("Comment", "/message/channel")
-      render :show, status: :ok
+      render json: @comment
     else
       render :show, status: :unprocessable_entity
     end
