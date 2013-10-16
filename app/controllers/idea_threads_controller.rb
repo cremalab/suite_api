@@ -19,9 +19,9 @@ class IdeaThreadsController < ApplicationController
       expiration = @idea_thread.expiration
       if expiration != nil
         @idea_thread.set_expiration
-        #faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+        @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
-      #faye_publish("IdeaThread", "/message/channel")
+      @idea_thread.message
       render json: @idea_thread
     else
       render :json => @idea_thread.errors.full_messages, status: 422
@@ -38,9 +38,9 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
         @idea_thread.update_expiration
-        #faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+        @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
-      #faye_publish("IdeaThread", "/message/channel")
+      @idea_thread.message
       render json: @idea_thread
     else
       render :show, status: :unprocessable_entity
@@ -58,7 +58,7 @@ class IdeaThreadsController < ApplicationController
     end
     if @idea_thread.destroy
 
-      #faye_destroy(id, "IdeaThread", "/message/channel")
+      @idea_thread.destroy_message
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
