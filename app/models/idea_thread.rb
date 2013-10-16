@@ -53,7 +53,6 @@ class IdeaThread < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: j)
 
   end
-end
 
 
 

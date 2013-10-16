@@ -58,11 +58,12 @@ class IdeaThreadsController < ApplicationController
     end
     if @idea_thread.destroy
 
-      @idea_thread.destroy_message
+      @idea_thread.delete_message
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
     end
+
   end
 
 
