@@ -9,10 +9,10 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      faye_publish("Comment", "/message/channel")
+      #faye_publish("Comment", "/message/channel")
       render json: @comment
     else
-      render :json => @idea_thread.errors.full_messages, status: 422
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end
@@ -25,10 +25,10 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
-      faye_publish("Comment", "/message/channel")
+      #faye_publish("Comment", "/message/channel")
       render json: @comment
     else
-      render :show, status: :unprocessable_entity
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end
@@ -37,10 +37,10 @@ class CommentsController < ApplicationController
     id = params[:id]
     @comment = Comment.find(id)
     if @comment.destroy
-      faye_destroy(id, "Comment", "/message/channel")
+      #faye_destroy(id, "Comment", "/message/channel")
       render :json => ['Comment destroyed'], status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end

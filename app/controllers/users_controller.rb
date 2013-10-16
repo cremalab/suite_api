@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_api_key
-      faye_publish("User", "/message/channel")
+      #faye_publish("User", "/message/channel")
       render json: @user
     else
       render :json => @user.errors.full_messages, status: 422
@@ -29,8 +29,8 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
 
       #Send to Faye
-      @user_json = render_to_string(template: 'users/show.jbuilder')
-      PrivatePub.publish_to("/message/channel", message: @user_json)
+      # @user_json = render_to_string(template: 'users/show.jbuilder')
+      # PrivatePub.publish_to("/message/channel", message: @user_json)
 
       render json: @user
     else

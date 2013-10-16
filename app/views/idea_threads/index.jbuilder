@@ -1,1 +1,0 @@
-json.array! @idea_threads, partial: 'idea_thread', as: :idea_thread
