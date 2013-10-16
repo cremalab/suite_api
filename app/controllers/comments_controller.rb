@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      #faye_publish("Comment", "/message/channel")
+      @comment.message
       render json: @comment
     else
       render :json => @comment.errors.full_messages, status: 422
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
-      #faye_publish("Comment", "/message/channel")
+      @comment.message
       render json: @comment
     else
       render :json => @comment.errors.full_messages, status: 422
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
     id = params[:id]
     @comment = Comment.find(id)
     if @comment.destroy
-      #faye_destroy(id, "Comment", "/message/channel")
+      @comment.delete_message
       render :json => ['Comment destroyed'], status: :ok
     else
       render :json => @comment.errors.full_messages, status: 422
