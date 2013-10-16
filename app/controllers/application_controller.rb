@@ -11,27 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    # Pre: None
-    # Post: A formatted message should be pushed to the faye server.
-    def faye_publish(model_name, channel)
-      model_name = model_name.underscore.pluralize
-      if model_name == "votes"
-        @json = render_to_string(template: "/#{model_name}/full.jbuilder")
-      else
-        @json = render_to_string(template: "/#{model_name}/show.jbuilder")
-      end
-      PrivatePub.publish_to(channel, message: @json)
-    end
-
-    # Pre: Must have the id of the deleted item
-    # Post: A formatted message should be pushed to the faye server.
-    def faye_destroy(id, model_name, channel)
-      klass = model_name.constantize
-      @model = klass.new(id: id)
-      @json = render_to_string(template: "deleted.jbuilder")
-      PrivatePub.publish_to(channel, message: @json)
-    end
-
     def get_header_info
       headers = request.headers
       @access_token = headers['HTTP_X_ACCESS_TOKEN']
