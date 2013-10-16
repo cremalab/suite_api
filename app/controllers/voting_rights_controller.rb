@@ -6,8 +6,8 @@ class VotingRightsController < ApplicationController
     if @voting_right.save
       @idea_thread = @voting_right.idea_thread
       #Send to Faye
+      @idea_thread.message
 
-      #faye_publish("IdeaThread", "/message/channel")
 
       render json: @voting_right, status: :ok
     else
@@ -27,7 +27,7 @@ class VotingRightsController < ApplicationController
       @voting_right.destroy_associtated_votes
 
       @idea_thread = @voting_right.idea_thread
-      #faye_publish("IdeaThread", "/message/channel")
+      @idea_thread.delete_message
       render :json => ['Voting Right destroyed'], status: :ok
     else
       render :json => @voting_right.errors.full_messages, status: 422
