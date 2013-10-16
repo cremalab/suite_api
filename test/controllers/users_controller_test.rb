@@ -30,7 +30,6 @@ class UsersControllerTest < ActionController::TestCase
                 password_confirmation: "yellowsub" }}
     post :create, new_user
     assert_response :success
-    p @response.body
     response = JSON.parse(@response.body)
     assert_includes @response.body, "access_token"
     assert_equal response['logged_in'], true

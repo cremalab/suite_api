@@ -6,7 +6,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_api_key
-      @logged_in = true
       faye_publish("User", "/message/channel")
       render json: @user
     else
@@ -17,24 +16,23 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    render :index, status: :ok
+      render json: @users
   end
 
   def show
     @user = User.find(params[:id])
-    render :show, status: 200
+      render json: @user
   end
 
   def update
     @user = User.find(params[:id])
-    @logged_in = true
     if @user.update_attributes(user_params)
 
       #Send to Faye
       @user_json = render_to_string(template: 'users/show.jbuilder')
       PrivatePub.publish_to("/message/channel", message: @user_json)
 
-      render :show, status: :ok
+      render json: @user
     else
       render :json => @user.errors.full_messages, status: 422
     end
@@ -43,8 +41,7 @@ class UsersController < ApplicationController
   def me
     @user = User.find(params[:auth][:user_id])
     if @user
-      @logged_in = true
-      render :show, status: 200
+      render json: @user
     else
       return head :no_content
     end
