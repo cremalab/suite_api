@@ -8,7 +8,7 @@ class VotesController < ApplicationController
 
     if checker.create_vote(@vote)
 
-      #faye_publish("Vote", "/message/channel")
+      @vote.message
       render json: @vote, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
