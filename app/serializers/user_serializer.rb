@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes  :id, :email, :notifications,  :auth , :current_access_token, :name,
+  attributes  :id, :email, :notifications,  :auth, :name,
               :logged_in, :autocomplete_search, :autocomplete_value
 
   #Need to add auth somehow
@@ -16,8 +16,8 @@ class UserSerializer < ActiveModel::Serializer
 
   def auth
     {
-      current_access_token: :current_access_token,
-      user_id: :id
+      access_token: object.current_access_token,
+      user_id: object.id
     }
   end
 
