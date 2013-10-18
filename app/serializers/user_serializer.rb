@@ -1,3 +1,11 @@
+# Public:
+#
+# Example:
+#
+#
+#
+#
+#
 class UserSerializer < ActiveModel::Serializer
   attributes  :id, :email, :notifications,  :auth, :name,
               :logged_in, :autocomplete_search, :autocomplete_value

@@ -1,4 +1,8 @@
+# comment.rb
 # Public: Comments are a part of idea. They help discuss the idea being used.
+#
+#
+# Example:
 #
 #
 #

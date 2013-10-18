@@ -1,3 +1,7 @@
+# vote.rb
+# Public:
+#
+# Example:
 class Vote < ActiveRecord::Base
   #Relationships
   belongs_to :idea

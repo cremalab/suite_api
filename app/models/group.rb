@@ -1,3 +1,7 @@
+# group.rb
+# Public:
+#
+# Example:
 class Group < ActiveRecord::Base
   #Relationships
   has_many :memberships, foreign_key: "group_id"

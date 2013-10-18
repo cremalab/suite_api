@@ -1,3 +1,12 @@
+# Public: This class generates access tokens for the user when he is logs in to
+# the site.
+#
+# Example:
+#
+#
+#
+#
+#
 class CommentsController < ApplicationController
 
    def index

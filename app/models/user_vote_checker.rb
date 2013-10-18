@@ -1,3 +1,7 @@
+# user_vote_checker.rb
+# Public:
+#
+# Example:
 class UserVoteChecker
 
   def get_existing_user_votes(new_vote)

@@ -1,9 +1,12 @@
+# notifier.rb
+# Public:
+#
+# Example:
 class Notifier < ActionMailer::Base
-  default :from => 'any_from_address@example.com'
+  default :from => 'no-reply@vot.io'
 
-  # send a signup email to the user, pass in the user object that contains the user's email address
   def new_thread(user)
     mail( :to => user.email,
-    :subject => 'Thanks for signing up' )
+    :subject => 'New Thread Created' )
   end
 end

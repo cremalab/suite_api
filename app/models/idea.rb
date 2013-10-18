@@ -1,3 +1,7 @@
+# idea.rb
+# Public:
+#
+# Example:
 class Idea < ActiveRecord::Base
   #Relationships
   has_many  :votes, foreign_key: "idea_id",

@@ -1,3 +1,7 @@
+# idea_thread.rb
+# Public:
+#
+# Example:
 class IdeaThread < ActiveRecord::Base
   #Relationships
   has_many  :ideas, dependent: :destroy, dependent: :destroy
