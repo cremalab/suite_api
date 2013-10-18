@@ -56,3 +56,5 @@ gem 'rb-fsevent'
 gem 'symbolize'
 
 gem 'delayed_job_active_record'
+
+gem 'active_model_serializers'

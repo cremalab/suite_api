@@ -5,10 +5,10 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  user: rob
+  user_id: 2
   idea: mildreds
   content: "Shut up ROSS!"
 two:
-  user: ross
+  user_id: 1
   idea: mildreds
   content: "You shut up ROB!"

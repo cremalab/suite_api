@@ -27,6 +27,20 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes @response.body, "id"
     assert_includes @response.body, "title"
     assert_includes @response.body, "description"
+    assert_includes @response.body, "idea_thread_id"
+    assert_includes @response.body, "user_id"
+    assert_includes @response.body, "updated_at"
+    assert_includes @response.body, "created_at"
+    assert_includes @response.body, "total_votes"
+    assert_includes @response.body, "user"
+    assert_includes @response.body, "id"
+    assert_includes @response.body, "profile"
+    assert_includes @response.body, "first_name"
+    assert_includes @response.body, "last_name"
+    assert_includes @response.body, "original"
+    assert_includes @response.body, "votes"
+    assert_includes @response.body, "model_name"
+
     Idea.all.count.must_equal idea_count + 1
   end
 

@@ -1,1 +1,0 @@
-json.(comment, :id, :content, :created_at, :updated_at, :user_id, :idea_id)

@@ -4,14 +4,14 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.where(owner_id: current_auth_user.id)#current user
-    render :index, status: :ok
+    render json: @groups
   end
 
 
   def create
     @group = Group.new(group_params)
     if @group.save
-      render :show, status: 201
+      render json: @group
     else
       render :json => @idea_thread.errors.full_messages, status: 422
     end
@@ -19,13 +19,13 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    render :show, status: 200
+    render json: @group
   end
 
   def update
     @group = Group.find(params[:id])
     if @group.update_attributes(group_params)
-       render :show, status: :ok
+      render json: @group
     else
       render :show, status: :unprocessable_entity
     end

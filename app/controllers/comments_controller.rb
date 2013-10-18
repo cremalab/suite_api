@@ -1,33 +1,34 @@
 class CommentsController < ApplicationController
-  def index
+
+   def index
     @comments = Comment.all
-    render :index, status: :ok
+    render json: @comments
 
   end
 
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      faye_publish("Comment", "/message/channel")
-      render :show, status: 201
+      @comment.message
+      render json: @comment
     else
-      render :json => @idea_thread.errors.full_messages, status: 422
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end
 
   def show
     @comment = Comment.find(params[:id])
-    render :show, status: 200
+    render json: @comment
   end
 
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(comment_params)
-      faye_publish("Comment", "/message/channel")
-      render :show, status: :ok
+      @comment.message
+      render json: @comment
     else
-      render :show, status: :unprocessable_entity
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end
@@ -36,10 +37,10 @@ class CommentsController < ApplicationController
     id = params[:id]
     @comment = Comment.find(id)
     if @comment.destroy
-      faye_destroy(id, "Comment", "/message/channel")
+      @comment.delete_message
       render :json => ['Comment destroyed'], status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :json => @comment.errors.full_messages, status: 422
     end
 
   end
@@ -49,6 +50,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:content, :user_id, :idea_id)
 
     end
+
 
 
 end

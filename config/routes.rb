@@ -1,23 +1,27 @@
 SuiteApi::Application.routes.draw do
-  get "idea_threads/index"
+  resources :comments, format: :json,       except: [:new, :edit]
 
+  resources :groups, format: :json,         except: [:new, :edit]
+
+  resources :ideas,      format: :json,     except: [:new, :edit] do
+    resource :votes,     format: :json,     only:   [:show, :create, :destroy]
+    resources :comments, format: :json
+
+  end
+
+  resources :idea_threads, format: :json,   except: [:new, :edit]
+
+  resources :memberships, format: :json,    only:   [:destroy]
+
+  resources :sessions,   format: :json,     only:   [:create, :destroy]
   get "logout" => "sessions#destroy", :as => "logout"
+
+  resources :users,      format: :json,     except: [:new, :edit, :destroy]
+  get 'user_search' => 'users#index'
   get "me" => 'users#me', :as => 'me'
 
-  get 'user_search' => 'users#index'
+  resources :votes,      format: :json,     only:   [:show, :create, :destroy]
 
-  resources :users,      format: :json
-  resources :sessions,   format: :json
-  resources :ideas,      format: :json do
-    resource :votes,     format: :json
-  end
-  resources :votes,      format: :json
-  resources :idea_threads, format: :json
-  resources :comments, format: :json
 
-  resources :groups, format: :json
-  resources :memberships, format: :json, only: ['destroy']
-
-  get "events" => "events#index", :as => "events"
-  resources :voting_rights, format: :json
+  resources :voting_rights, format: :json,  only:  [:show, :create, :destroy]
 end

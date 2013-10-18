@@ -6,7 +6,7 @@ class MembershipsController < ApplicationController
     if @membership.destroy
       render :json => ['Membership destroyed'], status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :json => @membership.errors.full_messages, status: 422
     end
   end
 
