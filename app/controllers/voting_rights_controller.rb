@@ -6,14 +6,18 @@ class VotingRightsController < ApplicationController
     if @voting_right.save
       @idea_thread = @voting_right.idea_thread
       #Send to Faye
-      #show_view = 'idea_threads/show.jbuilder'
+      @idea_thread.message
 
-      faye_publish("IdeaThread", "/message/channel")
 
-      render :show, status: :ok
+      render json: @voting_right, status: :ok
     else
       render :json => @voting_right.errors.full_messages, status: 422
     end
+  end
+
+  def show
+    @voting_right = VotingRight.find(params[:id])
+    render json: @voting_right
   end
 
   def destroy
@@ -23,17 +27,14 @@ class VotingRightsController < ApplicationController
       @voting_right.destroy_associtated_votes
 
       @idea_thread = @voting_right.idea_thread
-      faye_publish("IdeaThread", "/message/channel")
+      @idea_thread.delete_message
       render :json => ['Voting Right destroyed'], status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :json => @voting_right.errors.full_messages, status: 422
     end
   end
 
-  def show
-    @voting_right = VotingRight.find(params[:id])
-    render :show, status: :ok
-  end
+
 
 private
   def voting_right_params

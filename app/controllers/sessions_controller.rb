@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       @subscription = PrivatePub.subscription(:channel => '/message/channel')
       @subscription['signature'] = ''
       @logged_in = current_user == @user
-      render "users/show", status: 200
+      render json: @user, status: 200
     else
       render :json => ['Invalid email or password'], status: 401
     end

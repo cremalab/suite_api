@@ -16,6 +16,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil user.api_keys.first
     assert_not_nil user.api_keys.first.access_token
     assert_response :success
+    assert_includes @response.body, "id"
+    assert_includes @response.body, "name"
+    assert_includes @response.body, "notifications"
+    assert_includes @response.body, "logged_in"
+    assert_includes @response.body, "access_token"
+    assert_includes @response.body, "user_id"
     assert_includes @response.body, "access_token"
   end
 

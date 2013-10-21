@@ -7,8 +7,13 @@ require 'rails/all'
 Bundler.require(:default, Rails.env)
 
 module SuiteApi
-    SHOW_VIEW_VR = 'idea_threads/show.jbuilder'
-    SHOW_VIEW_IT = 'idea_threads/show.jbuilder'
+    ActiveSupport.on_load(:active_model_serializers) do
+      # Disable for all serializers (except ArraySerializer)
+      ActiveModel::Serializer.root = false
+
+      # Disable for ArraySerializer
+      ActiveModel::ArraySerializer.root = false
+    end
 
   class Application < Rails::Application
     #Constants

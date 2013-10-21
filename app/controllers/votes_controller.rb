@@ -8,8 +8,8 @@ class VotesController < ApplicationController
 
     if checker.create_vote(@vote)
 
-      faye_publish("Vote", "/message/channel")
-      render :show, status: 201
+      @vote.message
+      render json: @vote, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
     end
@@ -17,15 +17,15 @@ class VotesController < ApplicationController
 
   def show
     @vote = Vote.find(params[:id])
-    render :show, status: 200
+    render json: @vote
   end
 
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
-      render :show, status: :ok
+      render :json => ['Vote destroyed'], status: :ok
     else
-      render :show, status: :unprocessable_entity
+      render :json => @voting_right.errors.full_messages, status: 422
     end
   end
 

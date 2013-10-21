@@ -8,7 +8,7 @@ class IdeaThreadsController < ApplicationController
     else
       @idea_threads = IdeaThread.status(:open)
     end
-    render :index, status: :ok
+    render json: @idea_threads
   end
 
   def create
@@ -19,10 +19,10 @@ class IdeaThreadsController < ApplicationController
       expiration = @idea_thread.expiration
       if expiration != nil
         @idea_thread.set_expiration
-        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+        @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
-      faye_publish("IdeaThread", "/message/channel")
-      render :show, status: 201
+      @idea_thread.message
+      render json: @idea_thread
     else
       render :json => @idea_thread.errors.full_messages, status: 422
     end
@@ -30,7 +30,7 @@ class IdeaThreadsController < ApplicationController
 
   def show
     @idea_thread = IdeaThread.find(params[:id])
-    render :show, status: 201
+    render json: @idea_thread
   end
 
   def update
@@ -38,10 +38,10 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
         @idea_thread.update_expiration
-        faye_publish("IdeaThread", "/message/channel").delay(run_at: expiration, queue: @idea_thread.id)
+        @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
-      faye_publish("IdeaThread", "/message/channel")
-      render :show, status: 201
+      @idea_thread.message
+      render json: @idea_thread
     else
       render :show, status: :unprocessable_entity
     end
@@ -58,11 +58,12 @@ class IdeaThreadsController < ApplicationController
     end
     if @idea_thread.destroy
 
-      faye_destroy(id, "IdeaThread", "/message/channel")
+      @idea_thread.delete_message
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
     end
+
   end
 
 
