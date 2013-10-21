@@ -54,5 +54,6 @@ gem 'private_pub'
 gem 'rb-fsevent'
 
 gem 'symbolize'
+gem "public_activity", "~> 1.4.0"
 
 gem 'delayed_job_active_record'
