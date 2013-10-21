@@ -1,4 +1,7 @@
 class IdeaThread < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   has_many  :ideas, dependent: :destroy, dependent: :destroy
   has_many  :voting_rights, dependent: :destroy

@@ -10,6 +10,8 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
       faye_publish("Comment", "/message/channel")
+      # Activity Feed
+      @idea.create_activity :create, owner: current_auth_user
       render :show, status: 201
     else
       render :json => @idea_thread.errors.full_messages, status: 422

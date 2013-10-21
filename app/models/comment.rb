@@ -3,6 +3,9 @@
 #
 #
 class Comment < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   belongs_to :idea
   belongs_to :user
 end

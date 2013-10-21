@@ -1,4 +1,7 @@
 class Vote < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   belongs_to :idea
   belongs_to :user

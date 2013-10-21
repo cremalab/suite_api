@@ -9,6 +9,10 @@ class VotesController < ApplicationController
     if checker.create_vote(@vote)
 
       faye_publish("Vote", "/message/channel")
+
+      # Activity Feed
+      @idea.create_activity :create, owner: current_auth_user
+
       render :show, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -23,6 +27,10 @@ class VotesController < ApplicationController
   def destroy
     @vote = Vote.find(params[:id])
     if @vote.destroy
+
+      # Activity Feed
+      @idea.create_activity :create, owner: current_auth_user
+
       render :show, status: :ok
     else
       render :show, status: :unprocessable_entity

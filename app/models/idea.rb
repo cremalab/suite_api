@@ -1,4 +1,8 @@
 class Idea < ActiveRecord::Base
+
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   has_many  :votes, foreign_key: "idea_id",
               autosave: true, dependent: :destroy,

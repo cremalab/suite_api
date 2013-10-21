@@ -14,6 +14,10 @@ class IdeasController < ApplicationController
       @idea.create_associated_vote
 
       faye_publish("Idea", "/message/channel")
+
+      # Activity Feed
+      @idea.create_activity :create, owner: current_auth_user
+
       render :show, status: 201
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -30,6 +34,9 @@ class IdeasController < ApplicationController
     if @idea.update_attributes(idea_params)
       faye_publish("Idea", "/message/channel")
 
+      # Activity Feed
+      @idea.create_activity :update, owner: current_auth_user
+
       @idea.votes.destroy_all if params[:idea][:edited]
       render :show, status: :ok
     else
@@ -42,6 +49,10 @@ class IdeasController < ApplicationController
     @idea = Idea.find(id)
     if @idea.destroy
       faye_destroy(id, "Idea", "/message/channel")
+
+      # Activity Feed
+      @idea.create_activity :destroy, owner: current_auth_user
+
       render :json => ['Idea destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
