@@ -37,8 +37,20 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     VotingRight.all.count.must_equal voting_rights_count + 1
     IdeaThread.last.voters.count.must_equal 1
 
-    assert_includes @response.body, "Meatloaf"
+    assert_includes @response.body, "id"
+    assert_includes @response.body, "title"
     assert_includes @response.body, "created_at"
+    assert_includes @response.body, "updated_at"
+    assert_includes @response.body, "user_id"
+    assert_includes @response.body, "status"
+    assert_includes @response.body, "description"
+    assert_includes @response.body, "expiration"
+    assert_includes @response.body, "original_idea_id"
+    assert_includes @response.body, "ideas"
+    assert_includes @response.body, "model_name"
+    assert_includes @response.body, "voting_rights"
+
+
   end
 
   test "should destroy" do

@@ -16,12 +16,18 @@ class GroupsControllerTest < ActionController::TestCase
   test "index" do
     get :index
     assert_response :success
+    assert_includes @response.body, "id"
     assert_includes @response.body, "name"
+    assert_includes @response.body, "created_at"
+    assert_includes @response.body, "updated_at"
+    assert_includes @response.body, "owner_id"
+    assert_includes @response.body, "membership"
   end
 
   test "create" do
     group = {name: "Lords of the Dance", owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
     post :create, group: group
+
     assert_response :success
     assert_includes @response.body, "name"
     assert_includes @response.body, "id"
@@ -30,6 +36,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   test "show" do
     get :show, id: 1
+
     assert_response :success
     assert_includes @response.body, "name"
 

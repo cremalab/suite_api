@@ -47,6 +47,16 @@ class IdeaThread < ActiveRecord::Base
     self.delay(run_at: expiration, queue: id).auto_archive(id)
   end
 
+  def message
+    PrivatePub.publish_to("/message/channel", message: self.to_json)
+  end
+
+  def delete_message
+    j = {comment: self, id: self.id, model_name: "idea_thread", deleted: true}
+    PrivatePub.publish_to("/message/channel", message: j)
+
+  end
+
 
 
 private

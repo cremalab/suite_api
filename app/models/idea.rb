@@ -31,6 +31,15 @@ class Idea < ActiveRecord::Base
     checker.create_vote(vote)
   end
 
+  def message
+    PrivatePub.publish_to("/message/channel", message: self.to_json)
+  end
+
+  def delete_message
+    j = {comment: self, id: self.id, model_name: "idea", deleted: true}
+    PrivatePub.publish_to("/message/channel", message: j)
+  end
+
 private
   def validate_voting_right
     if idea_thread_id

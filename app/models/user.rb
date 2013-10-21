@@ -58,4 +58,8 @@ class User < ActiveRecord::Base
 
   end
 
+  def message
+    PrivatePub.publish_to("/message/channel", message: self.to_json)
+  end
+
 end

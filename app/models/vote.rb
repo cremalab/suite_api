@@ -12,6 +12,12 @@ class Vote < ActiveRecord::Base
   validate :validate_voting_right
   validates_presence_of :idea_id, :user_id
 
+
+  def message
+    PrivatePub.publish_to("/message/channel", message: self.to_json)
+  end
+
+
 private
   def validate_voting_right
     if idea_id
@@ -27,5 +33,6 @@ private
     delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{id}}"
     PrivatePub.publish_to("/message/channel", message: delete_json)
   end
+
 
 end

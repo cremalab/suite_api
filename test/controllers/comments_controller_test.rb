@@ -10,6 +10,16 @@ class CommentsControllerTest < ActionController::TestCase
   test "index" do
     get :index
     assert_response :success
+
+    assert_includes @response.body, "id"
+    assert_includes @response.body, "content"
+    assert_includes @response.body, "created_at"
+    assert_includes @response.body, "updated_at"
+    assert_includes @response.body, "user_id"
+    assert_includes @response.body, "idea_id"
+    assert_includes @response.body, "user_name"
+    assert_includes @response.body, "model_name"
+
   end
 
   test "create" do
