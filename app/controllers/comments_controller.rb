@@ -1,12 +1,16 @@
 class CommentsController < ApplicationController
 
-   def index
-    render json: @comments
+  before_action :get_comment, only: [:show, :update]
+  before_action :get_comments, only: [:index]
 
+  def index
+    render json: @comments
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    get_idea
+    @comment = @idea.comments.new(comment_params)
+
     if @comment.save
       @comment.message
       # Activity Feed
