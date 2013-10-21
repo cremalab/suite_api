@@ -11,7 +11,7 @@ class VotesController < ApplicationController
       @vote.message
 
       # Activity Feed
-      @idea.create_activity :create, owner: current_auth_user
+      @vote.create_activity :create, owner: current_auth_user, recipient: @vote.idea
 
       render json: @vote, status: 201
     else
@@ -26,10 +26,10 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
+    @vote.create_activity :destroy, owner: current_auth_user, recipient: @vote.idea
     if @vote.destroy
-      @vote.delete_message
+
       # Activity Feed
-      @idea.create_activity :create, owner: current_auth_user
 
       render :json => ['Vote destroyed'], status: :ok
     else

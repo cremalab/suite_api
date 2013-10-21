@@ -22,7 +22,7 @@ class Idea < ActiveRecord::Base
   validates_presence_of :title, :user_id
 
   def first_in_thread?
-    self == self.idea_thread.ideas.order("created_at ASC").first
+    self == self.idea_thread.ideas.order("created_at ASC").first if self.idea_thread
   end
 
   def create_associated_vote
@@ -38,6 +38,10 @@ class Idea < ActiveRecord::Base
   def delete_message
     j = {comment: self, id: self.id, model_name: "idea", deleted: true}
     PrivatePub.publish_to("/message/channel", message: j)
+  end
+
+  def related_activities
+    PublicActivity::Activity.where("recipient_type = 'Idea' AND recipient_id = #{id} OR trackable_type = 'Idea' AND trackable_id = #{id}")
   end
 
 private
