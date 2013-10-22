@@ -32,6 +32,7 @@ class Idea < ActiveRecord::Base
   end
 
   def message
+    Notifier.new_idea(self.user).deliver
     PrivatePub.publish_to("/message/channel", message: self.to_json)
   end
 

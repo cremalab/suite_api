@@ -15,6 +15,8 @@ class Vote < ActiveRecord::Base
 
 
   def message
+    Notifier.new_vote(self.user).deliver
+
     PrivatePub.publish_to("/message/channel", message: self.to_json)
   end
 
