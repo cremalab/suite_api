@@ -39,4 +39,13 @@ class IdeaTest < ActiveSupport::TestCase
     refute new_idea.valid?
 
   end
+
+  test "related activities" do
+    idea = Idea.create(@new_idea_attr)
+    idea.create_activity :create, owner: @user
+
+    idea.related_activities.count.must_equal 1
+    @idea_thread.related_activities.count.must_equal 1
+  end
+
 end

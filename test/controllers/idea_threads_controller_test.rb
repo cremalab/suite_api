@@ -36,6 +36,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     IdeaThread.all.count.must_equal idea_thread_count + 1
     VotingRight.all.count.must_equal voting_rights_count + 1
     IdeaThread.last.voters.count.must_equal 1
+    IdeaThread.last.related_activities.last.key.must_equal 'idea_thread.create'
 
     assert_includes @response.body, "id"
     assert_includes @response.body, "title"

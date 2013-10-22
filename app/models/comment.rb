@@ -3,11 +3,16 @@
 #
 #
 class Comment < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   belongs_to :idea
   belongs_to :user
 
   def message
     PrivatePub.publish_to("/message/channel", message: self.to_json)
+    # Activity Feed
+    self.create_activity :create, owner: self.user, recipient: self.idea
   end
 
   def delete_message

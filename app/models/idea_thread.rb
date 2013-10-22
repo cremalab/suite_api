@@ -1,4 +1,7 @@
 class IdeaThread < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   has_many  :ideas, dependent: :destroy, dependent: :destroy
   has_many  :voting_rights, dependent: :destroy
@@ -46,12 +49,23 @@ class IdeaThread < ActiveRecord::Base
 
   def message
     PrivatePub.publish_to("/message/channel", message: self.to_json)
+    is_new = self.updated_at == self.created_at
+    action = is_new ? :create : :update
+    activity = self.create_activity action, owner: self.user
+    PrivatePub.publish_to("/message/channel", message: activity.to_json)
   end
 
   def delete_message
     j = {comment: self, id: self.id, model_name: "idea_thread", deleted: true}
     PrivatePub.publish_to("/message/channel", message: j)
 
+  end
+
+  def related_activities
+    thread_activities = PublicActivity::Activity.where("trackable_type = 'IdeaThread' AND trackable_id = #{id}")
+    idea_activities   = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: self.ideas.pluck(:id))
+    other_activities  = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: self.ideas.pluck(:id))
+    thread_activities + idea_activities + other_activities
   end
 
 
