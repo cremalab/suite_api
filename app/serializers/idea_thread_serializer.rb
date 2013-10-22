@@ -3,7 +3,7 @@ class IdeaThreadSerializer < ActiveModel::Serializer
               :description, :expiration, :original_idea_id, :model_name,
               :user_name
 
-  has_many :ideas, :voting_rights
+  has_many :ideas, :voting_rights, :related_activities
 
   def original_idea_id
     object.ideas.order("created_at ASC").first.id if object.ideas.any?

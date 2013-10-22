@@ -57,6 +57,12 @@ class IdeaThread < ActiveRecord::Base
 
   end
 
+  def related_activities
+    thread_activities = PublicActivity::Activity.where("trackable_type = 'IdeaThread' AND trackable_id = #{id}")
+    idea_activities   = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: self.ideas.pluck(:id))
+    thread_activities + idea_activities
+  end
+
 
 
 private

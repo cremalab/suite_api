@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
 
-  before_action :get_comment, only: [:show, :update]
   before_action :get_comments, only: [:index]
 
   def index

@@ -41,7 +41,9 @@ class Idea < ActiveRecord::Base
   end
 
   def related_activities
-    PublicActivity::Activity.where("recipient_type = 'Idea' AND recipient_id = #{id} OR trackable_type = 'Idea' AND trackable_id = #{id}")
+    recipient = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: id)
+    trackable = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: id)
+    recipient + trackable
   end
 
 private

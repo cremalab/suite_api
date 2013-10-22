@@ -14,6 +14,7 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should create new idea" do
+
     @user = users(:rob)
     @idea_thread = idea_threads(:lunch)
     @idea_thread.voters << @user
@@ -41,6 +42,9 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes @response.body, "votes"
     assert_includes @response.body, "model_name"
 
+    assert_equal Idea.last.related_activities.count, 1
+    assert_includes Idea.last.related_activities.last.key, "idea.create"
+
     Idea.all.count.must_equal idea_count + 1
   end
 
@@ -63,10 +67,15 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should get update" do
+
     post :update, id: @idea.id, idea: {title: "BLT at Mildreds"}, auth: @auth
     assert_response :success
     assert_includes @response.body, "BLT at Mildreds"
-    Idea.find(@idea.id).title.must_equal "BLT at Mildreds"
+    idea = Idea.find(@idea.id)
+    idea.title.must_equal "BLT at Mildreds"
+
+    assert_equal idea.related_activities.count, 1
+    assert_includes idea.related_activities.last.key, "idea.update"
   end
 
   test "should get destroy" do
@@ -74,6 +83,7 @@ class IdeasControllerTest < ActionController::TestCase
     delete :destroy, id: @idea.id
     assert_response :success
     Idea.all.count.must_equal idea_count - 1
+    assert_equal PublicActivity::Activity.last.key, 'idea.destroy'
   end
 
   test "should return unauthorized if no access_token" do

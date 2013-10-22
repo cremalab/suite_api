@@ -22,9 +22,8 @@ class IdeaThreadsController < ApplicationController
         @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
       @idea_thread.message
-      @idea.create_activity :create, owner: current_auth_user
+      @idea_thread.create_activity :create, owner: current_auth_user
 
-      faye_publish("IdeaThread", "/message/channel")
       render json: @idea_thread
     else
       render :json => @idea_thread.errors.full_messages, status: 422
@@ -42,7 +41,7 @@ class IdeaThreadsController < ApplicationController
       if update_params[:expiration] != nil
         @idea_thread.update_expiration
         # Activity Feed
-        @idea.create_activity :update, owner: current_auth_user
+        @idea_thread.create_activity :update, owner: current_auth_user
         @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
       @idea_thread.message
@@ -55,6 +54,7 @@ class IdeaThreadsController < ApplicationController
   def destroy
     id = params[:id]
     @idea_thread = IdeaThread.find(id)
+    @idea_thread.create_activity :destroy, owner: current_auth_user
     if @idea_thread.status == :open
       job = Delayed::Job.find_by(queue: id)
       if job
@@ -65,7 +65,6 @@ class IdeaThreadsController < ApplicationController
 
       @idea_thread.delete_message
       # Activity Feed
-      @idea.create_activity :destroy, owner: current_auth_user
       render :json => ['Idea thread destroyed'], status: :ok
     else
       render :show, status: :unprocessable_entity
