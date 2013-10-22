@@ -37,7 +37,7 @@ class Idea < ActiveRecord::Base
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
     activity = self.create_activity action, owner: self.user
-    PrivatePub.publish_to("/message/channel", message: activity.as_json)
+    PrivatePub.publish_to("/message/channel", message: activity.to_json)
   end
 
   def delete_message

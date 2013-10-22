@@ -17,7 +17,7 @@ class Vote < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     # Activity Feed
     activity = self.create_activity :create, owner: self.user, recipient: self.idea
-    PrivatePub.publish_to("/message/channel", message: activity.as_json)
+    PrivatePub.publish_to("/message/channel", message: activity.to_json)
   end
 
 
