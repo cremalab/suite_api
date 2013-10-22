@@ -52,7 +52,8 @@ class IdeaThread < ActiveRecord::Base
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
     activity = self.create_activity action, owner: self.user
-    PrivatePub.publish_to("/message/channel", message: activity.to_json)
+    activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
+    PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
   def delete_message
