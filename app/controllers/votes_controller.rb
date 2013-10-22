@@ -10,9 +10,6 @@ class VotesController < ApplicationController
 
       @vote.message
 
-      # Activity Feed
-      @vote.create_activity :create, owner: current_auth_user, recipient: @vote.idea
-
       render json: @vote, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422

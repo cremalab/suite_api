@@ -22,7 +22,6 @@ class IdeaThreadsController < ApplicationController
         @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
       @idea_thread.message
-      @idea_thread.create_activity :create, owner: current_auth_user
 
       render json: @idea_thread
     else
@@ -40,8 +39,7 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
         @idea_thread.update_expiration
-        # Activity Feed
-        @idea_thread.create_activity :update, owner: current_auth_user
+
         @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
       @idea_thread.message

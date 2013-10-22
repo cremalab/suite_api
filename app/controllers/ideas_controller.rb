@@ -15,9 +15,6 @@ class IdeasController < ApplicationController
 
       @idea.message
 
-      # Activity Feed
-      @idea.create_activity :create, owner: current_auth_user
-
       render json: @idea
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -33,9 +30,6 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     if @idea.update_attributes(idea_params)
       @idea.message
-
-      # Activity Feed
-      @idea.create_activity :update, owner: current_auth_user
 
       @idea.votes.destroy_all if params[:idea][:edited]
       render json: @idea

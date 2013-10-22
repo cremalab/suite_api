@@ -68,7 +68,7 @@ class IdeasControllerTest < ActionController::TestCase
 
   test "should get update" do
 
-    post :update, id: @idea.id, idea: {title: "BLT at Mildreds"}, auth: @auth
+    put :update, id: @idea.id, idea: {title: "BLT at Mildreds"}, auth: @auth
     assert_response :success
     assert_includes @response.body, "BLT at Mildreds"
     idea = Idea.find(@idea.id)

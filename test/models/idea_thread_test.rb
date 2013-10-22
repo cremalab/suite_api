@@ -26,7 +26,7 @@ class IdeaThreadTest < ActiveSupport::TestCase
 
   test "related activities" do
     idea_thread = IdeaThread.create(@new_idea_thread_attr)
-    idea_thread.create_activity :create, owner: @user
+    idea_thread.message
 
     # Activity for thread creation
     idea_thread.related_activities.count.must_equal 1
@@ -37,7 +37,7 @@ class IdeaThreadTest < ActiveSupport::TestCase
                     }
 
     idea = Idea.create(new_idea_attr)
-    idea.create_activity :create, owner: @user
+    idea.message
 
     # Activity for idea creation
     idea.related_activities.count.must_equal 1
