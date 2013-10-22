@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20131021213545) do
     t.boolean  "idea"
     t.boolean  "idea_thread"
     t.boolean  "sound"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -13,6 +13,9 @@ SuiteApi::Application.routes.draw do
 
   resources :memberships, format: :json,    only:   [:destroy]
 
+  resources :notification_settings, format: :json,    only:   [:update]
+
+
   resources :sessions,   format: :json,     only:   [:create, :destroy]
   get "logout" => "sessions#destroy", :as => "logout"
 

@@ -5,6 +5,7 @@ class CreateNotificationSettings < ActiveRecord::Migration
       t.boolean :idea
       t.boolean :idea_thread
       t.boolean :sound
+      t.references :user
 
 
       t.timestamps
