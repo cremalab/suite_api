@@ -12,8 +12,6 @@ class CommentsController < ApplicationController
 
     if @comment.save
       @comment.message
-      # Activity Feed
-      @comment.create_activity :create, owner: current_auth_user, recipient: @comment.idea
       render json: @comment
     else
       render :json => @comment.errors.full_messages, status: 422
