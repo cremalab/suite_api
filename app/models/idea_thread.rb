@@ -35,7 +35,8 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def set_expiration
-    self.delay(run_at: expiration, queue: self.id).auto_archive(self.id)
+    id = self.id
+    self.delay(run_at: expiration, queue: id).auto_archive(id)
   end
 
   def update_expiration
@@ -54,8 +55,13 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def delete_message
-    j = {comment: self, id: self.id, model_name: "idea_thread", deleted: true}
-    PrivatePub.publish_to("/message/channel", message: j)
+    delete_message =  {
+                        comment: self,
+                        id: self.id,
+                        model_name: "idea_thread",
+                        deleted: true
+                      }
+    PrivatePub.publish_to("/message/channel", message: delete_message)
 
   end
 
