@@ -66,7 +66,8 @@ class IdeaThread < ActiveRecord::Base
     thread_activities = PublicActivity::Activity.where("trackable_type = 'IdeaThread' AND trackable_id = #{id}")
     idea_activities   = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: self.ideas.pluck(:id))
     other_activities  = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: self.ideas.pluck(:id))
-    thread_activities + idea_activities + other_activities
+    activities = thread_activities + idea_activities + other_activities
+    activities.sort{|a,b| a.created_at <=> b.created_at }
   end
 
 
