@@ -63,11 +63,14 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def related_activities
-    thread_activities = PublicActivity::Activity.where("trackable_type = 'IdeaThread' AND trackable_id = #{id}")
-    idea_activities   = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: self.ideas.pluck(:id))
-    other_activities  = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: self.ideas.pluck(:id))
-    activities = thread_activities + idea_activities + other_activities
-    activities.sort{|a,b| a.created_at <=> b.created_at }
+    activities = PublicActivity::Activity.where("
+      trackable_type = 'IdeaThread' AND trackable_id = #{id}
+      OR
+      trackable_type = 'Idea' AND trackable_id IN (?)
+      OR
+      recipient_type = 'Idea' AND recipient_id IN (?)
+    ", self.ideas.pluck(:id), self.ideas.pluck(:id) )
+    activities.order("created_at DESC").limit(10)
   end
 
 

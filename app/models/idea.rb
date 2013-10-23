@@ -47,10 +47,11 @@ class Idea < ActiveRecord::Base
   end
 
   def related_activities
-    recipient = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: id)
-    trackable = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: id)
-    activities = recipient + trackable
-    activities.sort{|a,b| a.created_at <=> b.created_at }
+    activities = PublicActivity::Activity.where("
+      recipient_type = 'Idea' AND recipient_id = #{id}
+      OR
+      trackable_type = 'Idea' AND trackable_id = #{id}
+    ").order("created_at DESC").limit(10)
   end
 
 private
