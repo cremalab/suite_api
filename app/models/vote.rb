@@ -36,6 +36,9 @@ private
     # Let Faye know it's about to go bye-bye
     delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{id}}"
     PrivatePub.publish_to("/message/channel", message: delete_json)
+    activity = self.create_activity :destroy, owner: self.user, recipient: self.idea
+    activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
+    PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
 
