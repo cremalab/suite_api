@@ -1,3 +1,7 @@
+# voting_right.rb
+# Public:
+#
+# Example:
 class VotingRight < ActiveRecord::Base
   #Relationships
   belongs_to :idea_thread

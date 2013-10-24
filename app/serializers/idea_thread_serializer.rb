@@ -1,3 +1,11 @@
+# Public:
+#
+# Example:
+#
+#
+#
+#
+#
 class IdeaThreadSerializer < ActiveModel::Serializer
   attributes  :id, :title, :created_at, :updated_at, :user_id, :status,
               :description, :expiration, :original_idea_id, :model_name,

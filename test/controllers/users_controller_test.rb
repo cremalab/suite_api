@@ -23,6 +23,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_includes @response.body, "access_token"
     assert_includes @response.body, "user_id"
     assert_includes @response.body, "access_token"
+    assert_includes @response.body, "auth"
+
   end
 
   test "Return access_token after sign up" do

@@ -7,8 +7,8 @@
 #
 #
 class UserSerializer < ActiveModel::Serializer
-  attributes  :id, :email, :notifications, :current_access_token, :name,
-              :logged_in, :autocomplete_search, :autocomplete_value, :auth,
+  attributes  :id, :email, :notifications, :auth, :name,
+              :logged_in, :autocomplete_search, :autocomplete_value
               :user_id, :subscription
 
   has_one :profile

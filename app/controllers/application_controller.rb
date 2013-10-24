@@ -1,4 +1,13 @@
 # application_controller.rb
+# Public: This class generates access tokens for the user when he is logs in to
+# the site.
+#
+# Example:
+#
+#
+#
+#
+#
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

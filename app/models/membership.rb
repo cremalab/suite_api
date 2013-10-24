@@ -1,3 +1,7 @@
+# member.rb
+# Public:
+#
+# Example:
 class Membership < ActiveRecord::Base
   #Relationships
   belongs_to :group
