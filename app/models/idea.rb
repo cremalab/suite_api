@@ -51,13 +51,14 @@ class Idea < ActiveRecord::Base
   end
 
   def delete_message
-    delete_message =  {
+    message =  {
                         comment: self,
                         id: self.id,
-                        model_name: "idea",
+                        model_name: "Idea",
                         deleted: true
                       }
-    PrivatePub.publish_to("/message/channel", message: delete_message)
+    p message.to_json
+    PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 
   def related_activities

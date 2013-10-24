@@ -8,7 +8,8 @@
 #
 class IdeaSerializer < ActiveModel::Serializer
   attributes  :id, :title, :description, :idea_thread_id, :user_id,
-              :updated_at, :created_at, :total_votes, :original, :model_name
+              :updated_at, :created_at, :total_votes, :original, :model_name,
+              :comment_count
 
   has_many :votes
   has_many :related_activities
@@ -30,6 +31,10 @@ class IdeaSerializer < ActiveModel::Serializer
     # Alias this method so only last 10 are delivered
     # in this JSON payload
     object.recent_activities
+  end
+
+  def comment_count
+    object.comments.size
   end
 
 end
