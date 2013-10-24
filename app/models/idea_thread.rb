@@ -55,7 +55,9 @@ class IdeaThread < ActiveRecord::Base
   def message
     emails = self.voting_rights.map {|a| a.voter.email}
     #Notifier.new_thread(emails).deliver
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+
+    thread_json = IdeaThreadSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: thread_json)
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
     activity = self.create_activity action, owner: self.user
