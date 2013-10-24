@@ -54,7 +54,7 @@ class Idea < ActiveRecord::Base
   def email_list
     email_list = []
     self.idea_thread.voting_rights.each do |vr|
-      if vr.voter.notification_setting.idea_thread
+      if vr.voter.notification_setting.idea
         email_list << vr.voter.email
       end
 
