@@ -58,7 +58,7 @@ class IdeaThread < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
-    if emails != [] && action == :create
+    if emails.any? && action == :create
       Notifier.new_thread(emails).deliver
     end
     activity = self.create_activity action, owner: self.user
