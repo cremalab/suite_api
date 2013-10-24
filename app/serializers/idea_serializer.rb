@@ -27,12 +27,6 @@ class IdeaSerializer < ActiveModel::Serializer
     "Idea"
   end
 
-  def related_activities
-    # Alias this method so only last 10 are delivered
-    # in this JSON payload
-    object.recent_activities
-  end
-
   def comment_count
     object.comments.size
   end

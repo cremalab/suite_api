@@ -5,6 +5,7 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   before_create :build_profile
+  before_create :build_notification_setting
 
   #Relationships
   has_many :api_keys, foreign_key: "user_id", dependent: :destroy
@@ -19,6 +20,8 @@ class User < ActiveRecord::Base
 
   has_one :profile, foreign_key: "user_id"
   has_one :notification_setting, foreign_key: "user_id"
+
+  accepts_nested_attributes_for :notification_setting
 
   accepts_nested_attributes_for :profile
 

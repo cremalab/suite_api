@@ -70,7 +70,6 @@ class Idea < ActiveRecord::Base
                         model_name: "Idea",
                         deleted: true
                       }
-    p message.to_json
     PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 
