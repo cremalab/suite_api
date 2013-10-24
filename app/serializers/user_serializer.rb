@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes  :id, :email, :notifications, :current_access_token, :name,
-              :logged_in, :autocomplete_search, :autocomplete_value
+              :logged_in, :autocomplete_search, :autocomplete_value, :auth
 
   has_one :profile
 
@@ -18,6 +18,13 @@ class UserSerializer < ActiveModel::Serializer
 
   def autocomplete_value
     object.id
+  end
+
+  def auth
+    data              = {}
+    data[:access_token] = object.current_access_token
+    data[:user_id]      = object.id
+    data
   end
 
 end
