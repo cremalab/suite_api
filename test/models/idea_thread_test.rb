@@ -51,4 +51,12 @@ class IdeaThreadTest < ActiveSupport::TestCase
     idea_thread.related_activities.count.must_equal 3
   end
 
+  test "email_list" do
+    idea_thread = idea_threads(:fun)
+    list = idea_thread.email_list
+    p list
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
+
+  end
+
 end

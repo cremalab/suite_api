@@ -53,8 +53,11 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def message
-    emails = self.voting_rights.map {|a| a.voter.email}
-    #Notifier.new_thread(emails).deliver
+    emails = self.email_list
+    p emails
+    if emails != []
+      Notifier.new_thread(emails).deliver
+    end
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
@@ -63,11 +66,17 @@ class IdeaThread < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
-  def check_emails
+  def email_list
     #If the user wants emails (user.noification_settings.idea_thread == true)
     #Then add to the list
-    #self.voting_rights.each |user|
+    email_list = []
+    self.voting_rights.each do |vr|
+      if vr.voter.notification_setting.idea_thread
+        email_list << vr.voter.email
+      end
 
+    end
+    return email_list
   end
 
   def delete_message

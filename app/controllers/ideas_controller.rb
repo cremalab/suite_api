@@ -36,7 +36,6 @@ class IdeasController < ApplicationController
 
   def update
     @idea = Idea.find(params[:id])
-    p @idea.idea_thread
     if @idea.update_attributes(idea_params)
       @idea.message
 

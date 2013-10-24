@@ -5,3 +5,18 @@ one:
   sound: true
   user_id: 1
 
+two:
+  vote: false
+  idea: false
+  idea_thread: false
+  sound: false
+  user_id: 2
+
+
+three:
+  vote: true
+  idea: true
+  idea_thread: true
+  sound: true
+  user_id: 3
+

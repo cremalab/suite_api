@@ -36,7 +36,6 @@ class Idea < ActiveRecord::Base
   end
 
   def message
-    p self.idea_thread.voting_rights.map {|a| a.voter.email}
     emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
     #Notifier.new_idea(emails).deliver
     PrivatePub.publish_to("/message/channel", message: self.to_json)
