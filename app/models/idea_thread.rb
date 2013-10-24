@@ -1,3 +1,7 @@
+# idea_thread.rb
+# Public:
+#
+# Example:
 class IdeaThread < ActiveRecord::Base
   # Activity Tracking
   include PublicActivity::Common
@@ -34,7 +38,8 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def set_expiration
-    self.delay(run_at: expiration, queue: self.id).auto_archive(self.id)
+    id = self.id
+    self.delay(run_at: expiration, queue: id).auto_archive(id)
   end
 
   def update_expiration
@@ -48,6 +53,8 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def message
+    emails = self.voting_rights.map {|a| a.voter.email}
+    #Notifier.new_thread(emails).deliver
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
@@ -56,9 +63,21 @@ class IdeaThread < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
+  def check_emails
+    #If the user wants emails (user.noification_settings.idea_thread == true)
+    #Then add to the list
+    #self.voting_rights.each |user|
+
+  end
+
   def delete_message
-    j = {comment: self, id: self.id, model_name: "idea_thread", deleted: true}
-    PrivatePub.publish_to("/message/channel", message: j)
+    delete_message =  {
+                        comment: self,
+                        id: self.id,
+                        model_name: "idea_thread",
+                        deleted: true
+                      }
+    PrivatePub.publish_to("/message/channel", message: delete_message)
 
   end
 

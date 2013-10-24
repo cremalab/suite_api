@@ -1,3 +1,11 @@
+# Public:
+#
+# Example:
+#
+#
+#
+#
+#
 class IdeaSerializer < ActiveModel::Serializer
   attributes  :id, :title, :description, :idea_thread_id, :user_id,
               :updated_at, :created_at, :total_votes, :original, :model_name

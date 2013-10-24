@@ -1,4 +1,12 @@
-###############################################################################
+# Public: This class generates access tokens for the user when he is logs in to
+# the site.
+#
+# Example:
+#
+#
+#
+#
+#
 class IdeasController < ApplicationController
 
   before_action :ensure_authenticated
@@ -28,6 +36,7 @@ class IdeasController < ApplicationController
 
   def update
     @idea = Idea.find(params[:id])
+    p @idea.idea_thread
     if @idea.update_attributes(idea_params)
       @idea.message
 

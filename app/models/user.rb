@@ -1,3 +1,7 @@
+# user.rb
+# Public:
+#
+# Example:
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   before_create :build_profile
@@ -14,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :voting_rights
 
   has_one :profile, foreign_key: "user_id"
+  has_one :notification_setting, foreign_key: "user_id"
 
   accepts_nested_attributes_for :profile
 

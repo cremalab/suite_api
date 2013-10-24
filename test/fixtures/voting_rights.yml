@@ -5,3 +5,7 @@ one:
 two:
   user_id: 1
   idea_thread_id: 1
+
+three:
+  user_id: 2
+  idea_thread: lunch

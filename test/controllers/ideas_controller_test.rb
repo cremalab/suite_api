@@ -49,7 +49,7 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "should require voting_right" do
-    @user = users(:rob)
+    @user = users(:michael)
     @idea_thread = idea_threads(:lunch)
     meatloaf = {title: "Meatloaf at YJ's",
                 description: "Mmmmm... eatloaf", user_id: @user.id,

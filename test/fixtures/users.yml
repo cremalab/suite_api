@@ -10,3 +10,10 @@ rob:
   salt: <%= salt = "asdasdastr4325234324sdfds" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("hipoop", salt) %>
 
+#This is for Michael Luchen birthday!
+michael:
+  id: 3
+  email: michael@theverge.com
+  salt: <%= salt = "asdasdastr4325234324sdfds" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("gina", salt) %>
+

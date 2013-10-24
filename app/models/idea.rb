@@ -1,3 +1,7 @@
+# idea.rb
+# Public:
+#
+# Example:
 class Idea < ActiveRecord::Base
 
   # Activity Tracking
@@ -32,6 +36,9 @@ class Idea < ActiveRecord::Base
   end
 
   def message
+    p self.idea_thread.voting_rights.map {|a| a.voter.email}
+    emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
+    #Notifier.new_idea(emails).deliver
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     # Activity Feed
     is_new = self.updated_at == self.created_at
@@ -42,8 +49,13 @@ class Idea < ActiveRecord::Base
   end
 
   def delete_message
-    j = {comment: self, id: self.id, model_name: "idea", deleted: true}
-    PrivatePub.publish_to("/message/channel", message: j)
+    delete_message =  {
+                        comment: self,
+                        id: self.id,
+                        model_name: "idea",
+                        deleted: true
+                      }
+    PrivatePub.publish_to("/message/channel", message: delete_message)
   end
 
   def related_activities

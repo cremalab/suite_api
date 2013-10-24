@@ -1,3 +1,12 @@
+# Public: This class generates access tokens for the user when he is logs in to
+# the site.
+#
+# Example:
+#
+#
+#
+#
+#
 class UsersController < ApplicationController
 
   before_action :ensure_authenticated, except: [:create]
@@ -21,7 +30,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-      render json: @user
+    render json: @user
   end
 
   def update

@@ -38,7 +38,5 @@ class VoteTest < ActiveSupport::TestCase
     new_vote = Vote.new(@new_vote_attr)
     @idea_thread.voters.destroy_all
     refute new_vote.valid?
-
   end
-
 end
