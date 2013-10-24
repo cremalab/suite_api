@@ -2,6 +2,8 @@
 # Public:
 #
 # Example:
+#
+#
 class Idea < ActiveRecord::Base
 
   # Activity Tracking
@@ -36,8 +38,10 @@ class Idea < ActiveRecord::Base
   end
 
   def message
-    emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
-    #Notifier.new_idea(emails).deliver
+    emails = self.email_list
+    if emails != []
+      Notifier.new_idea(emails).deliver
+    end
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     # Activity Feed
     is_new = self.updated_at == self.created_at
@@ -45,6 +49,18 @@ class Idea < ActiveRecord::Base
     activity = self.create_activity action, owner: self.user
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
+  end
+
+  def email_list
+    email_list = []
+    self.idea_thread.voting_rights.each do |vr|
+      if vr.voter.notification_setting.idea_thread
+        email_list << vr.voter.email
+      end
+
+    end
+    return email_list
+
   end
 
   def delete_message

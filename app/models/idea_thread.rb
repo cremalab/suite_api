@@ -54,7 +54,6 @@ class IdeaThread < ActiveRecord::Base
 
   def message
     emails = self.email_list
-    p emails
     if emails != []
       Notifier.new_thread(emails).deliver
     end

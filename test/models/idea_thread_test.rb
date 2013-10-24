@@ -54,7 +54,6 @@ class IdeaThreadTest < ActiveSupport::TestCase
   test "email_list" do
     idea_thread = idea_threads(:fun)
     list = idea_thread.email_list
-    p list
     assert_equal list, ["ross@poop.com", "michael@theverge.com"]
 
   end

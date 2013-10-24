@@ -17,7 +17,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    # assert_includes @response.body, "ideas"
+    #assert_includes @response.body, "ideas"
   end
 
   test "should post create" do
