@@ -75,9 +75,15 @@ class Idea < ActiveRecord::Base
   end
 
   def related_activities
-    recipient = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: id)
-    trackable = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: id)
-    recipient + trackable
+    activities = PublicActivity::Activity.where("
+      recipient_type = 'Idea' AND recipient_id = #{id}
+      OR
+      trackable_type = 'Idea' AND trackable_id = #{id}
+    ").order("created_at DESC")
+  end
+
+  def recent_activities
+    related_activities.limit(10)
   end
 
 private

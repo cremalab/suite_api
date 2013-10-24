@@ -24,4 +24,10 @@ class IdeaThreadSerializer < ActiveModel::Serializer
   def user_name
     object.user.display_name
   end
+
+  def related_activities
+    # Alias this method so only last 10 are delivered
+    # in this JSON payload
+    object.recent_activities
+  end
 end

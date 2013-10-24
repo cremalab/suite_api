@@ -17,7 +17,8 @@ class Comment < ActiveRecord::Base
     comment_json = CommentSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: comment_json)
     # Activity Feed
-    activity = self.create_activity :create, owner: self.user, recipient: self.idea
+    activity = self.create_activity :create, owner: self.user, recipient: self.idea,
+      parameters: {content: self.content}
 
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)

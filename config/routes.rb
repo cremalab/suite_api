@@ -3,10 +3,10 @@ SuiteApi::Application.routes.draw do
 
   resources :groups, format: :json,         except: [:new, :edit]
 
-  resources :ideas,      format: :json,     except: [:new, :edit] do
-    resource :votes,     format: :json,     only:   [:show, :create, :destroy]
-    resources :comments, format: :json
-
+  resources :ideas,        format: :json,   except: [:new, :edit] do
+    resource :votes,       format: :json,   only:   [:show, :create, :destroy]
+    resources :comments,   format: :json
+    resources :activities, format: :json,   only:   [:show, :index]
   end
 
   resources :idea_threads, format: :json,   except: [:new, :edit]
