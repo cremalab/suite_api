@@ -3,6 +3,9 @@
 #
 # Example:
 class Vote < ActiveRecord::Base
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   belongs_to :idea
   belongs_to :user
@@ -20,6 +23,10 @@ class Vote < ActiveRecord::Base
     #Notifier.new_vote(emails).deliver
 
     PrivatePub.publish_to("/message/channel", message: self.to_json)
+    # Activity Feed
+    activity = self.create_activity :create, owner: self.user, recipient: self.idea
+    activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
+    PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
 private

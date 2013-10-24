@@ -22,6 +22,7 @@ class IdeasController < ApplicationController
       @idea.create_associated_vote
 
       @idea.message
+
       render json: @idea
     else
       render :json => @idea.errors.full_messages, status: 422
@@ -38,6 +39,7 @@ class IdeasController < ApplicationController
     p @idea.idea_thread
     if @idea.update_attributes(idea_params)
       @idea.message
+
       @idea.votes.destroy_all if params[:idea][:edited]
       render json: @idea
     else
@@ -48,8 +50,12 @@ class IdeasController < ApplicationController
   def destroy
     id = params[:id]
     @idea = Idea.find(id)
+    @idea.create_activity :destroy, owner: current_auth_user
     if @idea.destroy
       @idea.delete_message
+
+      # Activity Feed
+
       render :json => ['Idea destroyed'], status: :ok
     else
       render :json => @idea.errors.full_messages, status: 422

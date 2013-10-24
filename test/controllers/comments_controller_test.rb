@@ -24,9 +24,10 @@ class CommentsControllerTest < ActionController::TestCase
 
   test "create" do
     comment_params = {user_id: 1, idea_id: @idea_id, content: "Blue"}
-    post :create, comment: comment_params
+    post :create, comment: comment_params, idea_id: @idea_id
     assert_response :success
-
+    assert_equal @comment.idea.related_activities.count, 1
+    assert_includes @comment.idea.related_activities.last.key, "comment.create"
   end
 
   test "show" do

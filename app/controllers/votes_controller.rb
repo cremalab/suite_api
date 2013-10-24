@@ -18,6 +18,7 @@ class VotesController < ApplicationController
     if checker.create_vote(@vote)
 
       @vote.message
+
       render json: @vote, status: 201
     else
       render :json => @vote.errors.full_messages, status: 422
@@ -31,7 +32,11 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
+    @vote.create_activity :destroy, owner: current_auth_user, recipient: @vote.idea
     if @vote.destroy
+
+      # Activity Feed
+
       render :json => ['Vote destroyed'], status: :ok
     else
       render :json => @voting_right.errors.full_messages, status: 422

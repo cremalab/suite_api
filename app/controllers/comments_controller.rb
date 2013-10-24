@@ -9,14 +9,16 @@
 #
 class CommentsController < ApplicationController
 
-   def index
-    @comments = Comment.all
-    render json: @comments
+  before_action :get_comments, only: [:index]
 
+  def index
+    render json: @comments
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    get_idea
+    @comment = @idea.comments.new(comment_params)
+
     if @comment.save
       @comment.message
       render json: @comment
@@ -57,7 +59,19 @@ class CommentsController < ApplicationController
   private
     def comment_params
       params.require(:comment).permit(:content, :user_id, :idea_id)
+    end
 
+    def get_comments
+      if params[:idea_id]
+        get_idea
+        @comments = @idea.comments
+      else
+        @comments = Comment.all
+      end
+    end
+
+    def get_idea
+      @idea    = Idea.find(params[:idea_id])
     end
 
 

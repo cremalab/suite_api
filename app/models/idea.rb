@@ -3,6 +3,10 @@
 #
 # Example:
 class Idea < ActiveRecord::Base
+
+  # Activity Tracking
+  include PublicActivity::Common
+
   #Relationships
   has_many  :votes, foreign_key: "idea_id",
               autosave: true, dependent: :destroy,
@@ -22,7 +26,7 @@ class Idea < ActiveRecord::Base
   validates_presence_of :title, :user_id
 
   def first_in_thread?
-    self == self.idea_thread.ideas.order("created_at ASC").first
+    self == self.idea_thread.ideas.order("created_at ASC").first if self.idea_thread
   end
 
   def create_associated_vote
@@ -36,6 +40,12 @@ class Idea < ActiveRecord::Base
     emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
     #Notifier.new_idea(emails).deliver
     PrivatePub.publish_to("/message/channel", message: self.to_json)
+    # Activity Feed
+    is_new = self.updated_at == self.created_at
+    action = is_new ? :create : :update
+    activity = self.create_activity action, owner: self.user
+    activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
+    PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
   def delete_message
@@ -46,6 +56,12 @@ class Idea < ActiveRecord::Base
                         deleted: true
                       }
     PrivatePub.publish_to("/message/channel", message: delete_message)
+  end
+
+  def related_activities
+    recipient = PublicActivity::Activity.where(recipient_type: 'Idea', recipient_id: id)
+    trackable = PublicActivity::Activity.where(trackable_type: 'Idea', trackable_id: id)
+    recipient + trackable
   end
 
 private
