@@ -36,7 +36,7 @@ class VotingRightsController < ApplicationController
       @voting_right.destroy_associtated_votes
 
       @idea_thread = @voting_right.idea_thread
-      @idea_thread.delete_message
+      @idea_thread.message
       render :json => ['Voting Right destroyed'], status: :ok
     else
       render :json => @voting_right.errors.full_messages, status: 422
