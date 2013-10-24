@@ -59,8 +59,12 @@ class User < ActiveRecord::Base
     end
 
     @api_key = api_keys.create()
+  end
 
-
+  def subscription
+    subscription = PrivatePub.subscription(:channel => '/message/channel')
+    subscription['signature'] = ''
+    subscription
   end
 
   def message
