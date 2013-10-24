@@ -8,19 +8,19 @@
 class Notifier < ActionMailer::Base
   default :from => 'no-reply@vot.io'
 
-  def new_thread(user)
-    mail( :to => user.email,
-    :subject => 'New Thread Created' )
+  def new_thread(emails)
+    mail( to: emails,
+          subject: 'New Thread Created' )
   end
 
-  def new_idea(user)
-    mail( :to => user.email,
-    :subject => 'New Idea Created' )
+  def new_idea(emails)
+    mail( to: emails,
+          subject: 'New Idea Created' )
   end
 
-  def new_vote(user)
-    mail( :to => user.email,
-    :subject => 'New Vote Created' )
+  def new_vote(emails)
+    mail( to: emails,
+          subject: 'New Vote Created' )
   end
 
 
