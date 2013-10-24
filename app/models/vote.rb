@@ -18,14 +18,28 @@ class Vote < ActiveRecord::Base
 
 
   def message
-    emails = self.idea.idea_thread.voting_rights.map {|a| a.voter.email}
-    #Notifier.new_vote(emails).deliver
-
+    emails = self.email_list
+    if emails != []
+      Notifier.new_vote(emails).deliver
+    end
     PrivatePub.publish_to("/message/channel", message: self.to_json)
     # Activity Feed
     activity = self.create_activity :create, owner: self.user, recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
+  end
+
+  def email_list
+    email_list = []
+    self.idea.idea_thread.voting_rights.each do |vr|
+      if vr.voter.notification_setting.idea_thread
+        email_list << vr.voter.email
+      end
+
+    end
+    return email_list
+
+
   end
 
 private
