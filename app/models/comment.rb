@@ -14,7 +14,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   def message
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+    comment_json = CommentSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: comment_json)
     # Activity Feed
     activity = self.create_activity :create, owner: self.user, recipient: self.idea
 

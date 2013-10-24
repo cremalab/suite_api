@@ -1,7 +1,7 @@
 class PublicActivity::ActivitySerializer < ActiveModel::Serializer
   attributes  :id, :created_at, :trackable_id, :trackable_type,
               :recipient_type, :recipient_id, :key, :model_name,
-              :user_id
+              :user_id, :parameters
 
   has_one :owner
 
