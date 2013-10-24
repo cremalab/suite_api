@@ -2,6 +2,8 @@
 # Public:
 #
 # Example:
+#
+#
 class Idea < ActiveRecord::Base
 
   # Activity Tracking
@@ -36,10 +38,10 @@ class Idea < ActiveRecord::Base
   end
 
   def message
-    p self.idea_thread.voting_rights.map {|a| a.voter.email}
-    emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
-    #Notifier.new_idea(emails).deliver
-
+    emails = self.email_list
+    if emails.any?
+      Notifier.new_idea(emails).deliver
+    end
     idea_json = IdeaSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: idea_json)
     # Activity Feed
@@ -50,6 +52,18 @@ class Idea < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
+  def email_list
+    email_list = []
+    self.idea_thread.voting_rights.each do |vr|
+      if vr.voter.notification_setting.idea
+        email_list << vr.voter.email
+      end
+
+    end
+    return email_list
+
+  end
+
   def delete_message
     message =  {
                         comment: self,
@@ -57,7 +71,6 @@ class Idea < ActiveRecord::Base
                         model_name: "Idea",
                         deleted: true
                       }
-    p message.to_json
     PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 

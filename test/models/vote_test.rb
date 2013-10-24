@@ -39,4 +39,10 @@ class VoteTest < ActiveSupport::TestCase
     @idea_thread.voters.destroy_all
     refute new_vote.valid?
   end
+
+  test "email list" do
+    vote = votes(:ross_vote_milkshake)
+    list = vote.email_list
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021213545) do
+ActiveRecord::Schema.define(version: 20131024195450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 20131021213545) do
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "notification_settings", force: true do |t|
-    t.boolean  "vote"
-    t.boolean  "idea"
-    t.boolean  "idea_thread"
-    t.boolean  "sound"
+    t.boolean  "vote",        default: false
+    t.boolean  "idea",        default: false
+    t.boolean  "idea_thread", default: false
+    t.boolean  "sound",       default: false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

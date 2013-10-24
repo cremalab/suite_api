@@ -7,6 +7,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
       password_confirmation: 'password', profile_attributes:
         {first_name: 'Fred', last_name: 'Flintstone'}
     )
+    NotificationSetting.create(idea_thread: true, user_id: @user.id)
     @user.api_keys.create()
     @request.env["HTTP_X_REQUESTED_WITH"] = {}
     @request.env["HTTP_X_USER_ID"] = @user.id
@@ -16,7 +17,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    # assert_includes @response.body, "ideas"
+    #assert_includes @response.body, "ideas"
   end
 
   test "should post create" do
