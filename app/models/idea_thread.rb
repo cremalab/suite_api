@@ -70,7 +70,11 @@ class IdeaThread < ActiveRecord::Base
       OR
       recipient_type = 'Idea' AND recipient_id IN (?)
     ", self.ideas.pluck(:id), self.ideas.pluck(:id) )
-    activities.order("created_at DESC").limit(10)
+    activities.order("created_at DESC")
+  end
+
+  def recent_activities
+    related_activities.limit(10)
   end
 
 

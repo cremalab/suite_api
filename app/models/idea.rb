@@ -51,7 +51,11 @@ class Idea < ActiveRecord::Base
       recipient_type = 'Idea' AND recipient_id = #{id}
       OR
       trackable_type = 'Idea' AND trackable_id = #{id}
-    ").order("created_at DESC").limit(10)
+    ").order("created_at DESC")
+  end
+
+  def recent_activities
+    related_activities.limit(10)
   end
 
 private
