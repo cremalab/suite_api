@@ -39,7 +39,9 @@ class Idea < ActiveRecord::Base
     p self.idea_thread.voting_rights.map {|a| a.voter.email}
     emails = self.idea_thread.voting_rights.map {|a| a.voter.email}
     #Notifier.new_idea(emails).deliver
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+
+    idea_json = IdeaSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: idea_json)
     # Activity Feed
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update

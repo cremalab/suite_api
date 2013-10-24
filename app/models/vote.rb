@@ -22,7 +22,8 @@ class Vote < ActiveRecord::Base
     emails = self.idea.idea_thread.voting_rights.map {|a| a.voter.email}
     #Notifier.new_vote(emails).deliver
 
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+    vote_json = VoteSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: vote_json)
     # Activity Feed
     activity = self.create_activity :create, owner: self.user, recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
