@@ -1,3 +1,7 @@
+# user.rb
+# Public:
+#
+# Example:
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   before_create :build_profile
@@ -14,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :voting_rights
 
   has_one :profile, foreign_key: "user_id"
+  has_one :notification_setting, foreign_key: "user_id"
 
   accepts_nested_attributes_for :profile
 
@@ -54,8 +59,12 @@ class User < ActiveRecord::Base
     end
 
     @api_key = api_keys.create()
+  end
 
-
+  def subscription
+    subscription = PrivatePub.subscription(:channel => '/message/channel')
+    subscription['signature'] = ''
+    subscription
   end
 
   def message
