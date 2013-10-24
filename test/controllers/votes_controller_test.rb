@@ -9,6 +9,7 @@ class VotesControllerTest < ActionController::TestCase
         first_name: 'Guy', last_name: 'Testington'
       }
     )
+    NotificationSetting.create(idea_thread: true, vote: true, user_id: @user.id)
     @vote.user_id = @user.id
     @user.api_keys.create()
     @request.env["HTTP_X_REQUESTED_WITH"] = {}

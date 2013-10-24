@@ -37,7 +37,6 @@ class IdeaTest < ActiveSupport::TestCase
     @idea_thread.voters.destroy_all
     new_idea = Idea.new(@new_idea_attr)
     refute new_idea.valid?
-
   end
 
   test "related activities" do
@@ -46,6 +45,14 @@ class IdeaTest < ActiveSupport::TestCase
 
     idea.related_activities.count.must_equal 1
     @idea_thread.related_activities.count.must_equal 1
+  end
+
+  test "email list" do
+    idea = ideas(:milkshakes)
+    list = idea.email_list
+
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
+
   end
 
 end
