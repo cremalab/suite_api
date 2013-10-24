@@ -83,7 +83,6 @@ class IdeasControllerTest < ActionController::TestCase
     delete :destroy, id: @idea.id
     assert_response :success
     Idea.all.count.must_equal idea_count - 1
-    assert_equal PublicActivity::Activity.last.key, 'idea.destroy'
   end
 
   test "should return unauthorized if no access_token" do
