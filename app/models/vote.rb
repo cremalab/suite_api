@@ -17,7 +17,7 @@ class Vote < ActiveRecord::Base
   def message
     p self.idea.idea_thread.voting_rights.map {|a| a.voter.email}
     emails = self.idea.idea_thread.voting_rights.map {|a| a.voter.email}
-    Notifier.new_vote(emails).deliver
+    #Notifier.new_vote(emails).deliver
 
     PrivatePub.publish_to("/message/channel", message: self.to_json)
   end
