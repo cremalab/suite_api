@@ -22,7 +22,8 @@ class Vote < ActiveRecord::Base
     if emails.any?
       Notifier.new_vote(emails).deliver
     end
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+    vote_json = VoteSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: vote_json)
     # Activity Feed
     activity = self.create_activity :create, owner: self.user, recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json

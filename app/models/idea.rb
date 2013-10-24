@@ -42,7 +42,8 @@ class Idea < ActiveRecord::Base
     if emails.any?
       Notifier.new_idea(emails).deliver
     end
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+    idea_json = IdeaSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: idea_json)
     # Activity Feed
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
@@ -70,7 +71,6 @@ class Idea < ActiveRecord::Base
                         model_name: "Idea",
                         deleted: true
                       }
-    p message.to_json
     PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 

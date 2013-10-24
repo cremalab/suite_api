@@ -55,7 +55,9 @@ class IdeaThread < ActiveRecord::Base
   def message
     emails = self.email_list
 
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
+    thread_json = IdeaThreadSerializer.new(self).to_json
+    PrivatePub.publish_to("/message/channel", message: thread_json)
+
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
     if emails.any? && action == :create
