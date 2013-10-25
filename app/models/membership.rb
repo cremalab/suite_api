@@ -10,5 +10,4 @@ class Membership < ActiveRecord::Base
   #Validation
   validates_presence_of :user_id
 
-
 end

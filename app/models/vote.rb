@@ -16,6 +16,17 @@ class Vote < ActiveRecord::Base
   validate :validate_voting_right
   validates_presence_of :idea_id, :user_id
 
+  def email_list
+    email_list = []
+    self.idea.idea_thread.voting_rights.each do |vr|
+      voter = vr.voter
+      if voter.notification_setting.vote
+        email_list << voter.email
+      end
+
+    end
+    return email_list
+  end
 
   def message
     emails = self.email_list
@@ -32,29 +43,7 @@ class Vote < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
-  def email_list
-    email_list = []
-    self.idea.idea_thread.voting_rights.each do |vr|
-      voter = vr.voter
-      if voter.notification_setting.vote
-        email_list << voter.email
-      end
-
-    end
-    return email_list
-
-
-  end
-
 private
-  def validate_voting_right
-    if idea_id
-      idea = Idea.find(idea_id)
-      voting_right = VotingRight.where( idea_thread_id: idea.idea_thread_id,
-                                        user_id: user_id)
-      errors.add(:base, "no permission") if voting_right.empty?
-    end
-  end
 
   def swan_song
     # Let Faye know it's about to go bye-bye
@@ -65,6 +54,15 @@ private
                                     recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
+  end
+
+  def validate_voting_right
+    if idea_id
+      idea = Idea.find(idea_id)
+      voting_right = VotingRight.where( idea_thread_id: idea.idea_thread_id,
+                                        user_id: user_id)
+      errors.add(:base, "no permission") if voting_right.empty?
+    end
   end
 
 

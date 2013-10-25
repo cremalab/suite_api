@@ -64,14 +64,15 @@ class User < ActiveRecord::Base
     @api_key = api_keys.create()
   end
 
+
+  def message
+    PrivatePub.publish_to("/message/channel", message: self.to_json)
+  end
+
   def subscription
     subscription = PrivatePub.subscription(:channel => '/message/channel')
     subscription['signature'] = ''
     subscription
-  end
-
-  def message
-    PrivatePub.publish_to("/message/channel", message: self.to_json)
   end
 
 end

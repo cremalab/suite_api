@@ -15,20 +15,20 @@ class IdeaSerializer < ActiveModel::Serializer
   has_many :related_activities
   has_one :user
 
-  def total_votes
-    object.votes.count
-  end
-
-  def original
-    object.first_in_thread?
+  def comment_count
+    object.comments.size
   end
 
   def model_name
     "Idea"
   end
 
-  def comment_count
-    object.comments.size
+  def original
+    object.first_in_thread?
+  end
+
+  def total_votes
+    object.votes.count
   end
 
 end
