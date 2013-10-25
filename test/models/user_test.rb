@@ -1,49 +1,23 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test "confirm Password" do
-    new_user_attr = {email: "mattowens11@gmail.com", password: "fauxhawks"}
-
-    #nil
-    new_user_attr[:password_confirmation] = nil
-    new_user = User.new(new_user_attr)
-    refute new_user.valid?
-
-
-
-    #Mismatch
-    new_user_attr[:password_confirmation] = "mowhawks"
-    new_user = User.new(new_user_attr)
-
-    refute new_user.valid?
-
-    #Match
-    new_user_attr[:password_confirmation] = "fauxhawks"
-    new_user = User.new(new_user_attr)
-    assert new_user.valid?
-
-    #Make sure you can still update with out password confirmation
-    assert users(:ross).update(email: "poop@poop.com" )
-
-
+  test "current_access_token" do
+    assert false, "I need a test! Waaaaa!"
   end
 
-  test "presence of email" do
-    new_user_attr = {password: "fauxhawks",
-                      password_confirmation: "fauxhawks"}
-
-    new_user = User.new(new_user_attr)
-    refute new_user.valid?
-
-    new_user_attr[:email] = "mattowens11@gmail.com"
-    new_user = User.new(new_user_attr)
-    assert new_user.valid?
-
+  test "display_name" do
+    assert false, "I need a test! Waaaaa!"
   end
 
-  test "uniqueness of email" do
-    new_user = users(:ross).attributes
-    new_user = User.new(new_user)
-    refute new_user.valid?
+  test "generate_api_key" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "message" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "subscription" do
+    assert false, "I need a test! Waaaaa!"
   end
 end

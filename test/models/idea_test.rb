@@ -15,28 +15,34 @@ class IdeaTest < ActiveSupport::TestCase
                     }
   end
 
-  test "validation" do
-    #With all necessary values
-    new_idea = Idea.new(@new_idea_attr)
-    assert new_idea.valid?
+
+  test "create_associated_vote" do
+    assert false, "I need a test! Waaaaa!"
   end
 
-  test "presence of title" do
-    new_idea = Idea.new(@new_idea_attr)
-    new_idea.title = nil
-    refute new_idea.valid?
+  test "delete_message" do
+    assert false, "I need a test! Waaaaa!"
   end
 
-  test "presence of user id" do
-    new_idea = Idea.new(@new_idea_attr)
-    new_idea.user_id = nil
-    refute new_idea.valid?
+
+  test "email list" do
+    idea = ideas(:milkshakes)
+    list = idea.email_list
+
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
   end
 
-  test "voting rights" do
-    @idea_thread.voters.destroy_all
-    new_idea = Idea.new(@new_idea_attr)
-    refute new_idea.valid?
+
+  test "first_in_thread?" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "message" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "recent_activities" do
+    assert false, "I need a test! Waaaaa!"
   end
 
   test "related activities" do
@@ -47,12 +53,10 @@ class IdeaTest < ActiveSupport::TestCase
     @idea_thread.related_activities.count.must_equal 1
   end
 
-  test "email list" do
-    idea = ideas(:milkshakes)
-    list = idea.email_list
-
-    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
-
+  test "voting rights" do
+    @idea_thread.voters.destroy_all
+    new_idea = Idea.new(@new_idea_attr)
+    refute new_idea.valid?
   end
 
 end

@@ -33,6 +33,10 @@ class UserVoteCheckerTest < ActiveSupport::TestCase
 
   end
 
+  test "get_existing_user_votes" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
   def teardown
     @idea_thread.destroy
     @first_idea.destroy

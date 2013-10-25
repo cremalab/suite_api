@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class VotingRightTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "destroy_associtated_votes" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
 end
