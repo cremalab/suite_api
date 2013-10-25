@@ -19,7 +19,6 @@ class CommentsControllerTest < ActionController::TestCase
     assert_includes @response.body, "idea_id"
     assert_includes @response.body, "user_name"
     assert_includes @response.body, "model_name"
-
   end
 
   test "create" do

@@ -13,21 +13,24 @@ class IdeaThreadSerializer < ActiveModel::Serializer
 
   has_many :ideas, :voting_rights, :related_activities
 
-  def original_idea_id
-    object.ideas.order("created_at ASC").first.id if object.ideas.any?
+  def related_activities
+    # Alias this method so only last 10 are delivered
+    # in this JSON payload
+    object.recent_activities
   end
 
   def model_name
     "IdeaThread"
   end
 
+  def original_idea_id
+    ideas = object.ideas
+    ideas.order("created_at ASC").first.id if ideas.any?
+  end
+
   def user_name
     object.user.display_name
   end
 
-  def related_activities
-    # Alias this method so only last 10 are delivered
-    # in this JSON payload
-    object.recent_activities
-  end
+
 end

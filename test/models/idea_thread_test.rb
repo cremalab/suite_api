@@ -13,16 +13,33 @@ class IdeaThreadTest < ActiveSupport::TestCase
 
   end
 
-  test "validations" do
-    #With all necessary values
-    new_idea_thread = IdeaThread.new(@new_idea_thread_attr)
-    assert new_idea_thread.valid?
+  test "set_archive" do
+    idea_thread = idea_threads(:fun)
+    assert_equal idea_thread.status, :open
+    idea_thread.set_archive
+    assert_equal idea_thread.status, :archived
   end
 
-  test "voting rights" do
-    new_idea_thread = IdeaThread.new(@new_idea_thread_attr)
-    new_idea_thread.voting_rights.destroy_all
-    refute new_idea_thread.valid?
+  test "delete_message" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "email_list" do
+    idea_thread = idea_threads(:fun)
+    list = idea_thread.email_list
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
+  end
+
+  test "expiration_check" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "message" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "recent_activities" do
+    assert false, "I need a test! Waaaaa!"
   end
 
   test "related activities" do
@@ -52,11 +69,22 @@ class IdeaThreadTest < ActiveSupport::TestCase
     idea_thread.related_activities.count.must_equal 3
   end
 
-  test "email_list" do
-    idea_thread = idea_threads(:fun)
-    list = idea_thread.email_list
-    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
+  test "self.set_archive" do
+    assert false, "I need a test! Waaaaa!"
+  end
 
+  test "set_expiration" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "update_expiration" do
+    assert false, "I need a test! Waaaaa!"
+  end
+
+  test "voting rights" do
+    new_idea_thread = IdeaThread.new(@new_idea_thread_attr)
+    new_idea_thread.voting_rights.destroy_all
+    refute new_idea_thread.valid?
   end
 
 end

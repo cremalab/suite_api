@@ -20,15 +20,8 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def get_header_info
-      headers = request.headers
-      @access_token = headers['HTTP_X_ACCESS_TOKEN']
-      @user_id      = headers['HTTP_X_USER_ID']
-    end
 
-    # Pre:
-    # Post:
-    def ensure_authenticated
+   def ensure_authenticated
       if is_xhr?
         if @access_token && @user_id
           api_key = ApiKey.find_by( access_token: @access_token,
@@ -44,5 +37,11 @@ class ApplicationController < ActionController::Base
 
     def is_xhr?
       return true if request.headers['HTTP_X_REQUESTED_WITH']
+    end
+
+    def get_header_info
+      headers = request.headers
+      @access_token = headers['HTTP_X_ACCESS_TOKEN']
+      @user_id      = headers['HTTP_X_USER_ID']
     end
 end

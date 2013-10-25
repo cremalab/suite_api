@@ -16,23 +16,22 @@ class VoteTest < ActiveSupport::TestCase
 
   end
 
-  test "validation" do
-    #With all necessary values
-    new_vote = Vote.new(@new_vote_attr)
-    assert new_vote.valid?
+  test "email list" do
+    vote = votes(:ross_vote_milkshake)
+    list = vote.email_list
+    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
   end
 
-  test "presence of user id" do
-    new_vote = Vote.new(@new_vote_attr)
-    new_vote.user_id = nil
-    refute new_vote.valid?
+  test "messages" do
+    assert false, "I need a test! Waaaaa!"
   end
 
-  test "presence of idea id" do
-    new_vote = Vote.new(@new_vote_attr)
-    new_vote.idea_id = nil
-    refute new_vote.valid?
+
+  test "swan_song" do
+    assert false, "I need a test! Waaaaa!"
   end
+
+
 
   test "voter rights" do
     new_vote = Vote.new(@new_vote_attr)
@@ -40,9 +39,5 @@ class VoteTest < ActiveSupport::TestCase
     refute new_vote.valid?
   end
 
-  test "email list" do
-    vote = votes(:ross_vote_milkshake)
-    list = vote.email_list
-    assert_equal list, ["ross@poop.com", "michael@theverge.com"]
-  end
+
 end

@@ -9,6 +9,7 @@ sandwich:
   description: "It's the best sandwich they have and I cant go on any longer without eating one."
   user_id: 2
   idea_thread: lunch
+  created_at: "2012-10-25 20:08:07"
 
 mildreds:
   title: Chicken Salad Sandwiches at Mildreds's

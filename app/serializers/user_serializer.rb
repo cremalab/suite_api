@@ -13,14 +13,12 @@ class UserSerializer < ActiveModel::Serializer
 
   has_one :profile
 
-  def name
-    object.display_name
+  def auth
+    {
+      access_token: object.current_access_token,
+      user_id: object.id
+    }
   end
-
-  def logged_in
-    true
-  end
-
   def autocomplete_search
     object.display_name
   end
@@ -29,15 +27,16 @@ class UserSerializer < ActiveModel::Serializer
     object.id
   end
 
-  def user_id
-    object.id
+  def logged_in
+    true
   end
 
-  def auth
-    {
-      access_token: object.current_access_token,
-      user_id: object.id
-    }
+  def name
+    object.display_name
+  end
+
+  def user_id
+    object.id
   end
 
 end

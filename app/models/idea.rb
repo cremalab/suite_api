@@ -27,14 +27,39 @@ class Idea < ActiveRecord::Base
 
   validates_presence_of :title, :user_id
 
-  def first_in_thread?
-    self == self.idea_thread.ideas.order("created_at ASC").first if self.idea_thread
-  end
-
   def create_associated_vote
     vote    = Vote.new(idea_id: self.id, user_id: self.user_id)
     checker = UserVoteChecker.new
     checker.create_vote(vote)
+  end
+
+  def delete_message
+    message =  {
+                        comment: self,
+                        id: self.id,
+                        model_name: "Idea",
+                        deleted: true
+                      }
+    PrivatePub.publish_to("/message/channel", message: message.to_json)
+  end
+
+  def email_list
+    email_list = []
+    self.idea_thread.voting_rights.each do |vr|
+      voter = vr.voter
+      if voter.notification_setting.idea
+        email_list << voter.email
+      end
+
+    end
+    return email_list
+  end
+
+  def first_in_thread?
+    idea_thred = self.idea_thread
+    if idea_thread
+      self == idea_thread.ideas.order("created_at ASC").first
+    end
   end
 
   def message
@@ -52,26 +77,8 @@ class Idea < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
-  def email_list
-    email_list = []
-    self.idea_thread.voting_rights.each do |vr|
-      if vr.voter.notification_setting.idea
-        email_list << vr.voter.email
-      end
-
-    end
-    return email_list
-
-  end
-
-  def delete_message
-    message =  {
-                        comment: self,
-                        id: self.id,
-                        model_name: "Idea",
-                        deleted: true
-                      }
-    PrivatePub.publish_to("/message/channel", message: message.to_json)
+  def recent_activities
+    related_activities.limit(10)
   end
 
   def related_activities
@@ -82,9 +89,7 @@ class Idea < ActiveRecord::Base
     ").order("created_at DESC")
   end
 
-  def recent_activities
-    related_activities.limit(10)
-  end
+
 
 private
   def validate_voting_right

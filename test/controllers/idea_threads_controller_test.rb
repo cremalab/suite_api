@@ -65,7 +65,7 @@ class IdeaThreadsControllerTest < ActionController::TestCase
                 ideas_attributes: [meatloaf],
                 voting_rights_attributes: [{user_id: 1}] }
     thread = IdeaThread.create(params)
-    IdeaThread.delay(run_at: thread.expiration, queue: thread.id).auto_archive(thread.id)
+    IdeaThread.delay(run_at: thread.expiration, queue: thread.id).set_archive(thread.id)
     delete :destroy, id: thread.id
     assert_response :success
     assert_includes @response.body, "Idea thread destroyed"
