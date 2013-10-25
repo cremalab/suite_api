@@ -44,7 +44,6 @@ class IdeaThreadsController < ApplicationController
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
         @idea_thread.update_expiration
-
         @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
       end
       @idea_thread.message

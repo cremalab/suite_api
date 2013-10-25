@@ -31,7 +31,7 @@ class IdeaThread < ActiveRecord::Base
 
 
 
-  def auto_archive
+  def set_archive
     update_attribute(:status, :archived)
   end
 
@@ -47,8 +47,6 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def email_list
-    #If the user wants emails (user.noification_settings.idea_thread == true)
-    #Then add to the list
     email_list = []
     self.voting_rights.each do |vr|
       voter = vr.voter
@@ -100,13 +98,13 @@ class IdeaThread < ActiveRecord::Base
     activities.order("created_at DESC")
   end
 
-  def self.auto_archive(id)
-      find(id).auto_archive
+  def self.set_archive(id)
+      find(id).set_archive
   end
 
  def set_expiration
     id = self.id
-    self.delay(run_at: expiration, queue: id).auto_archive(id)
+    self.delay(run_at: expiration, queue: id).set_archive(id)
   end
 
 
@@ -117,7 +115,7 @@ class IdeaThread < ActiveRecord::Base
     if job
       job.delete
     end
-    self.delay(run_at: expiration, queue: id).auto_archive(id)
+    self.delay(run_at: expiration, queue: id).set_archive(id)
   end
 
 

@@ -13,8 +13,11 @@ class IdeaThreadTest < ActiveSupport::TestCase
 
   end
 
-  test "auto_archive" do
-    assert false, "I need a test! Waaaaa!"
+  test "set_archive" do
+    idea_thread = idea_threads(:fun)
+    assert_equal idea_thread.status, :open
+    idea_thread.set_archive
+    assert_equal idea_thread.status, :archived
   end
 
   test "delete_message" do
@@ -66,7 +69,7 @@ class IdeaThreadTest < ActiveSupport::TestCase
     idea_thread.related_activities.count.must_equal 3
   end
 
-  test "self.auto_archive" do
+  test "self.set_archive" do
     assert false, "I need a test! Waaaaa!"
   end
 
