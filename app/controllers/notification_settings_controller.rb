@@ -1,3 +1,11 @@
+# Public:
+#
+# Example:
+#
+#
+#
+#
+#
 class NotificationSettingsController < ApplicationController
 
   def update

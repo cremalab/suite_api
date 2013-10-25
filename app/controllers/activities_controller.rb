@@ -1,3 +1,11 @@
+# Public:
+#
+# Example:
+#
+#
+#
+#
+#
 class ActivitiesController < ApplicationController
 
   def index

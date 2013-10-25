@@ -28,7 +28,10 @@ class Idea < ActiveRecord::Base
   validates_presence_of :title, :user_id
 
   def first_in_thread?
-    self == self.idea_thread.ideas.order("created_at ASC").first if self.idea_thread
+    idea_thred = self.idea_thread
+    if idea_thread
+      self == idea_thread.ideas.order("created_at ASC").first
+    end
   end
 
   def create_associated_vote
@@ -55,8 +58,9 @@ class Idea < ActiveRecord::Base
   def email_list
     email_list = []
     self.idea_thread.voting_rights.each do |vr|
-      if vr.voter.notification_setting.idea
-        email_list << vr.voter.email
+      voter = vr.voter
+      if voter.notification_setting.idea
+        email_list << voter.email
       end
 
     end

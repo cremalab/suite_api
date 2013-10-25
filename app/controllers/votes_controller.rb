@@ -32,7 +32,8 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
-    @vote.create_activity :destroy, owner: current_auth_user, recipient: @vote.idea
+    @vote.create_activity :destroy, owner: current_auth_user,
+                                    recipient: @vote.idea
     if @vote.destroy
 
       # Activity Feed

@@ -25,7 +25,9 @@ class Vote < ActiveRecord::Base
     vote_json = VoteSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: vote_json)
     # Activity Feed
-    activity = self.create_activity :create, owner: self.user, recipient: self.idea
+    activity = self.create_activity :create,
+                                    owner: self.user,
+                                    recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
@@ -33,8 +35,9 @@ class Vote < ActiveRecord::Base
   def email_list
     email_list = []
     self.idea.idea_thread.voting_rights.each do |vr|
-      if vr.voter.notification_setting.vote
-        email_list << vr.voter.email
+      voter = vr.voter
+      if voter.notification_setting.vote
+        email_list << voter.email
       end
 
     end
@@ -57,7 +60,9 @@ private
     # Let Faye know it's about to go bye-bye
     delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{id}}"
     PrivatePub.publish_to("/message/channel", message: delete_json)
-    activity = self.create_activity :destroy, owner: self.user, recipient: self.idea
+    activity = self.create_activity :destroy,
+                                    owner: self.user,
+                                    recipient: self.idea
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end

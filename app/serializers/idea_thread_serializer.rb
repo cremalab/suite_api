@@ -14,7 +14,8 @@ class IdeaThreadSerializer < ActiveModel::Serializer
   has_many :ideas, :voting_rights, :related_activities
 
   def original_idea_id
-    object.ideas.order("created_at ASC").first.id if object.ideas.any?
+    ideas = object.ideas
+    ideas.order("created_at ASC").first.id if ideas.any?
   end
 
   def model_name

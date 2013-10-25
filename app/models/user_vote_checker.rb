@@ -15,7 +15,10 @@ class UserVoteChecker
     if new_vote.save
       existing_user_vote = get_existing_user_votes(new_vote)
       if existing_user_vote.count > 0
-        existing_user_vote.first.create_activity :destroy, owner: @user, recipient: existing_user_vote.first.idea
+        first = existing_user_vote.first
+        first.create_activity :destroy,
+                                      owner: @user,
+                                      recipient: first.idea
         if existing_user_vote.destroy_all
           return true
         else
