@@ -42,7 +42,11 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "recent_activities" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    for i in 0..12
+      idea_thread.create_activity :create, owner: idea_thread.user
+    end
+    assert_equal idea_thread.recent_activities.length, 10
   end
 
   test "related activities" do
