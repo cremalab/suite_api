@@ -112,7 +112,7 @@ class IdeaThread < ActiveRecord::Base
 
 
   def update_expiration
-    expiration = @idea_thread.expiration
+    expiration = self.expiration
     id = self.id
     job = Delayed::Job.find_by(queue: id.to_s)
     if job
