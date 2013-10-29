@@ -107,7 +107,7 @@ class IdeaThread < ActiveRecord::Base
 
  def set_expiration
     id = self.id
-    self.delay(run_at: expiration, queue: id).set_archive(id)
+    self.delay(run_at: self.expiration, queue: id).set_archive(id)
   end
 
 

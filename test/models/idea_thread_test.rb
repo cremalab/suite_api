@@ -77,7 +77,11 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "set_expiration" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread.set_expiration
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+    p job
+    assert_equal job.run_at, "2014-10-25 20:08:07"
   end
 
   test "update_expiration" do

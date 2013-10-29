@@ -1,6 +1,7 @@
 fun:
   user_id: 1
   status: "open"
+  expiration: "2014-10-25 20:08:07"
   title: "Fun Fun Fun"
 
 lunch:
