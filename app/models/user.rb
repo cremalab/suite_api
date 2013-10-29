@@ -71,8 +71,6 @@ class User < ActiveRecord::Base
 
   def subscription
     subscription = PrivatePub.subscription(:channel => '/message/channel')
-    subscription['signature'] = ''
-    subscription
   end
 
 end

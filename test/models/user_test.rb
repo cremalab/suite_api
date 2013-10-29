@@ -2,7 +2,10 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test "current_access_token" do
-    assert false, "I need a test! Waaaaa!"
+    user = users(:rob)
+    assert_equal user.api_keys.length, 0
+    user.generate_api_key
+    assert_equal user.current_access_token.length, 32
   end
 
   test "display_name" do
@@ -13,7 +16,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "generate_api_key" do
-    assert false, "I need a test! Waaaaa!"
+    user = users(:rob)
+    assert_equal user.api_keys.length, 0
+    user.generate_api_key
+    assert_equal user.api_keys.length, 1
   end
 
   test "message" do
@@ -21,6 +27,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "subscription" do
-    assert false, "I need a test! Waaaaa!"
+    user = users(:rob)
+    subscription = user.subscription
+    assert_equal subscription[:server],     "http://localhost:9292/faye"
+    assert_equal subscription[:channel],    "/message/channel"
+    assert_not_nil subscription[:signature]
+
+
   end
 end
