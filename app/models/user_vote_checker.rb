@@ -6,7 +6,11 @@ class UserVoteChecker
 
   def create_vote(new_vote)
     if new_vote.save
-      existing_user_vote = get_existing_user_votes(new_vote)
+      #Get existing user votes
+      thread = new_vote.idea.idea_thread
+      @user  = new_vote.user
+      existing_user_vote  = thread.votes.where(user_id: @user.id).where.not(id: new_vote.id)
+
       if existing_user_vote.count > 0
         first = existing_user_vote.first
         first.create_activity :destroy,
@@ -23,13 +27,6 @@ class UserVoteChecker
     else
       return false
     end
-  end
-
-  def get_existing_user_votes(new_vote)
-    thread = new_vote.idea.idea_thread
-    @user  = new_vote.user
-    votes  = thread.votes.where(user_id: @user.id).where.not(id: new_vote.id)
-    return votes
   end
 
 end
