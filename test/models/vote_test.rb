@@ -22,16 +22,20 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   test "messages" do
-    #Behavioral Test?
-    assert false, "I need a test! Waaaaa!"
-  end
+    vote = votes(:ross_vote_milkshake)
+
+    vote.message
+
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "New vote!"  end
 
 
-  test "delete_message" do
-    #Behavioral Test?
+  # test "delete_message" do
+  #   #Behavioral Test?
 
-    assert false, "I need a test! Waaaaa!"
-  end
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
 
 

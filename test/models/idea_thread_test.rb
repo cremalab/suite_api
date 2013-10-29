@@ -20,9 +20,9 @@ class IdeaThreadTest < ActiveSupport::TestCase
     assert_equal idea_thread.status, :archived
   end
 
-  test "delete_message" do
-    assert false, "I need a test! Waaaaa!"
-  end
+  # test "delete_message" do
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
   test "email_list" do
     idea_thread = idea_threads(:fun)
@@ -38,7 +38,13 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "message" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+
+    idea_thread.message
+
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "Put on your thinkin' caps!"
   end
 
   test "recent_activities" do

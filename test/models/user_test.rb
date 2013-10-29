@@ -22,9 +22,9 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user.api_keys.length, 1
   end
 
-  test "message" do
-    assert false, "I need a test! Waaaaa!"
-  end
+  # test "message" do
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
   test "subscription" do
     user = users(:rob)

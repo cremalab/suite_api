@@ -25,10 +25,10 @@ class IdeaTest < ActiveSupport::TestCase
     assert_equal idea.votes.length, 1
   end
 
-  test "delete_message" do
-    #Don't know how to test this yet.
-    assert false, "I need a test! Waaaaa!"
-  end
+  # test "delete_message" do
+  #   #Don't know how to test this yet.
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
 
   test "email list" do
@@ -46,7 +46,13 @@ class IdeaTest < ActiveSupport::TestCase
   end
 
   test "message" do
-    assert false, "I need a test! Waaaaa!"
+    idea = ideas(:milkshakes)
+
+    idea.message
+
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "New idea! Or updated idea!"
   end
 
   test "recent_activities" do
