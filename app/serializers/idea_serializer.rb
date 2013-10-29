@@ -12,7 +12,7 @@ class IdeaSerializer < ActiveModel::Serializer
               :comment_count
 
   has_many :votes
-  has_many :related_activities
+  has_many :recent_activities
   has_one :user
 
   def comment_count
@@ -29,6 +29,10 @@ class IdeaSerializer < ActiveModel::Serializer
 
   def total_votes
     object.votes.count
+  end
+
+  def recent_activities
+    object.recent_activities
   end
 
 end
