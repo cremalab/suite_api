@@ -61,15 +61,14 @@ class IdeaThread < ActiveRecord::Base
 
   def expiration_check
     expiration = self.expiration
-      if expiration != nil
-        self.set_expiration
-        self.message.delay(run_at: expiration, queue: self.id)
-      end
+    if expiration != nil
+      self.set_expiration
+      self.message.delay(run_at: expiration, queue: self.id)
+    end
   end
 
  def message
     emails = self.email_list
-
     thread_json = IdeaThreadSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: thread_json)
 

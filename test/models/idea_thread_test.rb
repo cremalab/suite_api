@@ -31,7 +31,10 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "expiration_check" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread.expiration_check
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+    assert_equal job.run_at, "2014-10-25 20:08:07"
   end
 
   test "message" do

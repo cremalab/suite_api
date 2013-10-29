@@ -13,6 +13,8 @@ class IdeaTest < ActiveSupport::TestCase
                       idea_thread_id: @idea_thread.id,
                       description: "Mmmmm... eatloaf", user_id: @user.id,
                     }
+
+
   end
 
 
