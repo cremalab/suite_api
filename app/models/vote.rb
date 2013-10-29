@@ -30,9 +30,9 @@ class Vote < ActiveRecord::Base
 
   def message
     emails = self.email_list
-    if emails.any?
-      Notifier.new_vote(emails).deliver
-    end
+    # if emails.any?
+    #   Notifier.new_vote(emails).deliver
+    # end
     vote_json = VoteSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: vote_json)
     # Activity Feed
