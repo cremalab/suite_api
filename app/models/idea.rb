@@ -43,17 +43,17 @@ class Idea < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 
-  # def email_list
-  #   email_list = []
-  #   self.idea_thread.voting_rights.each do |vr|
-  #     voter = vr.voter
-  #     if voter.notification_setting.idea
-  #       email_list << voter.email
-  #     end
+  def email_list
+    email_list = []
+    self.idea_thread.voting_rights.each do |vr|
+      voter = vr.voter
+      if voter.notification_setting.idea
+        email_list << voter.email
+      end
 
-  #   end
-  #   return email_list
-  # end
+    end
+    return email_list
+  end
 
   def first_in_thread?
     idea_thred = self.idea_thread
@@ -63,10 +63,10 @@ class Idea < ActiveRecord::Base
   end
 
   def message
-    # emails = self.email_list
-    # if emails.any?
-    #   Notifier.new_idea(emails).deliver
-    # end
+    emails = self.email_list
+    if emails.any?
+      Notifier.new_idea(emails).deliver
+    end
     idea_json = IdeaSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: idea_json)
     # Activity Feed

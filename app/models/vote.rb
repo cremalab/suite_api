@@ -16,23 +16,23 @@ class Vote < ActiveRecord::Base
   validate :validate_voting_right
   validates_presence_of :idea_id, :user_id
 
-  # def email_list
-  #   email_list = []
-  #   self.idea.idea_thread.voting_rights.each do |vr|
-  #     voter = vr.voter
-  #     if voter.notification_setting.vote
-  #       email_list << voter.email
-  #     end
+  def email_list
+    email_list = []
+    self.idea.idea_thread.voting_rights.each do |vr|
+      voter = vr.voter
+      if voter.notification_setting.vote
+        email_list << voter.email
+      end
 
-  #   end
-  #   return email_list
-  # end
+    end
+    return email_list
+  end
 
   def message
-    # emails = self.email_list
-    # if emails.any?
-    #   Notifier.new_vote(emails).deliver
-    # end
+    emails = self.email_list
+    if emails.any?
+      Notifier.new_vote(emails).deliver
+    end
     vote_json = VoteSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: vote_json)
     # Activity Feed

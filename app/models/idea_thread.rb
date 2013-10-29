@@ -47,17 +47,17 @@ class IdeaThread < ActiveRecord::Base
 
   end
 
-  # def email_list
-  #   email_list = []
-  #   self.voting_rights.each do |vr|
-  #     voter = vr.voter
-  #     if voter.notification_setting.idea_thread
-  #       email_list << voter.email
-  #     end
+  def email_list
+    email_list = []
+    self.voting_rights.each do |vr|
+      voter = vr.voter
+      if voter.notification_setting.idea_thread
+        email_list << voter.email
+      end
 
-  #   end
-  #   return email_list
-  # end
+    end
+    return email_list
+  end
 
   def expiration_check
     expiration = self.expiration
@@ -68,15 +68,15 @@ class IdeaThread < ActiveRecord::Base
   end
 
  def message
-    # emails = self.email_list
+    emails = self.email_list
     thread_json = IdeaThreadSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: thread_json)
 
     is_new = self.updated_at == self.created_at
     action = is_new ? :create : :update
-    # if emails.any? && action == :create
-    #   Notifier.new_thread(emails).deliver
-    # end
+    if emails.any? && action == :create
+      Notifier.new_thread(emails).deliver
+    end
     activity = self.create_activity action, owner: self.user
     activity_json = PublicActivity::ActivitySerializer.new(activity).to_json
     PrivatePub.publish_to("/message/channel", message: activity_json)
