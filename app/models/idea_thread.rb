@@ -33,6 +33,7 @@ class IdeaThread < ActiveRecord::Base
 
   def set_archive
     update_attribute(:status, :archived)
+    return self
   end
 
   def delete_message
@@ -60,15 +61,14 @@ class IdeaThread < ActiveRecord::Base
 
   def expiration_check
     expiration = self.expiration
-      if expiration != nil
-        self.set_expiration
-        self.message.delay(run_at: expiration, queue: self.id)
-      end
+    if expiration != nil
+      self.set_expiration
+      self.message.delay(run_at: expiration, queue: self.id)
+    end
   end
 
  def message
     emails = self.email_list
-
     thread_json = IdeaThreadSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: thread_json)
 
@@ -99,17 +99,19 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def self.set_archive(id)
-      find(id).set_archive
+      hey = self.find(id).set_archive
+      return hey
+
   end
 
  def set_expiration
     id = self.id
-    self.delay(run_at: expiration, queue: id).set_archive(id)
+    self.delay(run_at: self.expiration, queue: id).set_archive(id)
   end
 
 
   def update_expiration
-    expiration = @idea_thread.expiration
+    expiration = self.expiration
     id = self.id
     job = Delayed::Job.find_by(queue: id.to_s)
     if job

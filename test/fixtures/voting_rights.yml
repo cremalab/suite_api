@@ -1,19 +1,19 @@
-one:
+ross:
   user_id: 1
   idea_thread: fun
 
-one_point_five:
+rob:
   user_id: 2
   idea_thread: fun
 
-two:
+michael:
   user_id: 3
   idea_thread: fun
 
-two_point_five:
+rob_lunch:
   user_id: 1
   idea_thread: lunch
 
-three:
+ross_lunch:
   user_id: 2
   idea_thread: lunch

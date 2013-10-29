@@ -13,7 +13,6 @@ class VoteTest < ActiveSupport::TestCase
     @idea_thread.save
 
     @new_vote_attr = {user_id: @user.id, idea_id: @idea.id}
-
   end
 
   test "email list" do
@@ -23,13 +22,20 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   test "messages" do
-    assert false, "I need a test! Waaaaa!"
-  end
+    vote = votes(:ross_vote_milkshake)
+
+    vote.message
+
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "New vote!"  end
 
 
-  test "swan_song" do
-    assert false, "I need a test! Waaaaa!"
-  end
+  # test "delete_message" do
+  #   #Behavioral Test?
+
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
 
 

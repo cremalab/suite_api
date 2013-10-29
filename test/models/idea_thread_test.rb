@@ -20,9 +20,9 @@ class IdeaThreadTest < ActiveSupport::TestCase
     assert_equal idea_thread.status, :archived
   end
 
-  test "delete_message" do
-    assert false, "I need a test! Waaaaa!"
-  end
+  # test "delete_message" do
+  #   assert false, "I need a test! Waaaaa!"
+  # end
 
   test "email_list" do
     idea_thread = idea_threads(:fun)
@@ -31,15 +31,28 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "expiration_check" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread.expiration_check
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+    assert_equal job.run_at, "2014-10-25 20:08:07"
   end
 
   test "message" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+
+    idea_thread.message
+
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "Put on your thinkin' caps!"
   end
 
   test "recent_activities" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    for i in 0..12
+      idea_thread.create_activity :create, owner: idea_thread.user
+    end
+    assert_equal idea_thread.recent_activities.length, 10
   end
 
   test "related activities" do
@@ -70,15 +83,30 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "self.set_archive" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread = IdeaThread.set_archive(idea_thread.id)
+
+    assert_equal idea_thread.status, :archived
   end
 
   test "set_expiration" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread.set_expiration
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+    assert_equal job.run_at, "2014-10-25 20:08:07"
   end
 
   test "update_expiration" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread.set_expiration
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+    assert_equal job.run_at, "2014-10-25 20:08:07"
+
+    idea_thread.expiration = "2015-10-25 20:08:07"
+    idea_thread.update_expiration
+    job = Delayed::Job.find_by(queue: idea_thread.id.to_s)
+
+    assert_equal job.run_at, "2015-10-25 20:08:07"
   end
 
   test "voting rights" do
