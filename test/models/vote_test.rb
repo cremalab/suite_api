@@ -22,11 +22,14 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   test "messages" do
+    #Behavioral Test?
     assert false, "I need a test! Waaaaa!"
   end
 
 
-  test "swan_song" do
+  test "delete_message" do
+    #Behavioral Test?
+
     assert false, "I need a test! Waaaaa!"
   end
 

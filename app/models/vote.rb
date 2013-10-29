@@ -10,7 +10,7 @@ class Vote < ActiveRecord::Base
   belongs_to :idea
   belongs_to :user
 
-  before_destroy :swan_song
+  before_destroy :delete_message
 
   #Validations
   validate :validate_voting_right
@@ -45,7 +45,7 @@ class Vote < ActiveRecord::Base
 
 private
 
-  def swan_song
+  def delete_message
     # Let Faye know it's about to go bye-bye
     delete_json = "{\"model_name\": \"Vote\", \"deleted\": true, \"id\": #{id}}"
     PrivatePub.publish_to("/message/channel", message: delete_json)
