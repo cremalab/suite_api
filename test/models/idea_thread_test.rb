@@ -70,7 +70,10 @@ class IdeaThreadTest < ActiveSupport::TestCase
   end
 
   test "self.set_archive" do
-    assert false, "I need a test! Waaaaa!"
+    idea_thread = idea_threads(:fun)
+    idea_thread = IdeaThread.set_archive(idea_thread.id)
+
+    assert_equal idea_thread.status, :archived
   end
 
   test "set_expiration" do

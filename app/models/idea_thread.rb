@@ -33,6 +33,7 @@ class IdeaThread < ActiveRecord::Base
 
   def set_archive
     update_attribute(:status, :archived)
+    return self
   end
 
   def delete_message
@@ -99,7 +100,9 @@ class IdeaThread < ActiveRecord::Base
   end
 
   def self.set_archive(id)
-      find(id).set_archive
+      hey = self.find(id).set_archive
+      return hey
+
   end
 
  def set_expiration
