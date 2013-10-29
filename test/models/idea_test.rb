@@ -50,7 +50,11 @@ class IdeaTest < ActiveSupport::TestCase
   end
 
   test "recent_activities" do
-    assert false, "I need a test! Waaaaa!"
+    idea = ideas(:milkshakes)
+    for i in 0..12
+      idea.create_activity :create, owner: idea.user
+    end
+    assert_equal idea.recent_activities.length, 10
   end
 
   test "related activities" do
