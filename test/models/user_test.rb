@@ -6,7 +6,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "display_name" do
-    assert false, "I need a test! Waaaaa!"
+    user = users(:rob)
+    profile = user.profile
+    full_name = "#{profile.first_name} #{profile.last_name}"
+    assert_equal user.display_name, full_name
   end
 
   test "generate_api_key" do
