@@ -12,6 +12,7 @@ class UserSerializer < ActiveModel::Serializer
               :user_id, :subscription
 
   has_one :profile
+  has_one :notification_setting
 
   def auth
     {
