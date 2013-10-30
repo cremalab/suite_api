@@ -65,7 +65,7 @@ class Idea < ActiveRecord::Base
   def message
     emails = self.email_list
     if emails.any?
-      Notifier.new_idea(emails).deliver
+      Notifier.new_idea(emails, self).deliver
     end
     idea_json = IdeaSerializer.new(self).to_json
     PrivatePub.publish_to("/message/channel", message: idea_json)
