@@ -60,4 +60,4 @@ gem 'delayed_job_active_record'
 
 gem 'active_model_serializers'
 
-gem 'daemons'
+gem 'daemons-rails'

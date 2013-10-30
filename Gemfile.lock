@@ -42,6 +42,9 @@ GEM
     coffee-script-source (1.6.3)
     cookiejar (0.3.0)
     daemons (1.1.9)
+    daemons-rails (1.2.1)
+      daemons
+      multi_json (~> 1.0)
     delayed_job (4.0.0)
       activesupport (>= 3.0, < 4.1)
     delayed_job_active_record (4.0.0)
@@ -184,7 +187,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   coffee-rails (~> 4.0.0)
-  daemons
+  daemons-rails
   delayed_job_active_record
   factory_girl (~> 4.2.0)
   jbuilder (~> 1.2)
