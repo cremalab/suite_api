@@ -59,3 +59,5 @@ gem "public_activity", "~> 1.4.0"
 gem 'delayed_job_active_record'
 
 gem 'active_model_serializers'
+
+gem 'daemons'
