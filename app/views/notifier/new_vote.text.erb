@@ -1,1 +1,3 @@
-New vote!
+<%= @vote.user.display_name %> voted on "<%= @idea.title %>" in the thread "<%= @thread.title %>"
+
+<%= "#{@app_url}/ideas/#{@thread.id}" %>

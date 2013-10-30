@@ -1,3 +1,5 @@
-You have been added to a new idea thread!
+<%= @thread_user.display_name %> has added you to the Idea Thread "<%= @thread.title %>"
+
+Contribute to this thread at <%= "#{@app_url}/ideas/#{@thread.id}" %>
 
 Put on your thinkin' caps!

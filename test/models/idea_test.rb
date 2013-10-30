@@ -52,7 +52,8 @@ class IdeaTest < ActiveSupport::TestCase
 
     mail = ActionMailer::Base.deliveries.last
 
-    assert_includes mail.body, "New idea! Or updated idea!"
+    assert_includes mail.body, "Milkshakes from Town Topic"
+    assert_includes mail.body, "Fun"
   end
 
   test "recent_activities" do

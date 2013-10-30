@@ -1,1 +1,5 @@
-New idea! Or updated idea!
+<%= @idea_user.display_name %> proposed the following idea in <%= @thread.title %>:
+
+"<%= @idea.title %>"
+
+View the idea at <%= "#{@app_url}/ideas/#{@thread.id}" %>
