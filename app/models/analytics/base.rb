@@ -1,4 +1,2 @@
-module Analytics
-  class Base < ActiveRecord::Base
-  end
+class Analytics::Base < ActiveRecord::Base
 end
