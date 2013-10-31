@@ -4,8 +4,481 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+time1:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:00
+  end_time: 2013-10-31 16:05
+
+time2:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:05
+  end_time: 2013-10-31 16:10
+
+time3:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:10
+  end_time: 2013-10-31 16:15
+
+time4:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:15
+  end_time: 2013-10-31 16:20
+
+time5:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:20
+  end_time: 2013-10-31 16:25
+
+time6:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:25
+  end_time: 2013-10-31 16:30
+
+time7:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:30
+  end_time: 2013-10-31 16:35
+
+time8:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:35
+  end_time: 2013-10-31 16:40
+
+time9:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:40
+  end_time: 2013-10-31 16:45
+time10:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:45
+  end_time: 2013-10-31 16:50
+
+time11:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:50
+  end_time: 2013-10-31 16:55
+
+time12:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 16:55
+  end_time: 2013-10-31 17:00
+
+time13:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:00
+  end_time: 2013-10-31 17:05
+
+time14:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:05
+  end_time: 2013-10-31 17:10
+
+time15:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:10
+  end_time: 2013-10-31 17:15
+
+time16:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:15
+  end_time: 2013-10-31 17:20
+
+time17:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:20
+  end_time: 2013-10-31 17:25
+
+time18:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:25
+  end_time: 2013-10-31 17:30
+
+time19:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:30
+  end_time: 2013-10-31 17:35
+
+time20:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:35
+  end_time: 2013-10-31 17:40
+
+time21:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:40
+  end_time: 2013-10-31 17:45
+time22:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:45
+  end_time: 2013-10-31 17:50
+
+time23:
+  idea_thread_creates: 19
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:50
+  end_time: 2013-10-31 17:55
+
+time24:
+  idea_thread_creates: 21
+  idea_thread_updates: 4
+  idea_thread_deletes: 3
+
+  idea_creates: 55
+  idea_updates: 26
+  idea_deletes: 34
+
+  vote_creates: 76
+  vote_updates: 34
+  vote_deletes: 12
+
+  comment_creates: 33
+  comment_updates: 45
+  comment_deletes: 1
+
+  start_time: 2013-10-31 17:55
+  end_time: 2013-10-31 18:00
+
