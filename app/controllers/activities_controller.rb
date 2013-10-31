@@ -22,7 +22,7 @@ class ActivitiesController < ApplicationController
     def get_activities
       if params[:idea_id]
         get_idea
-        @activities = @idea.related_activities
+        @activities = @idea.activity_feed
       else
         @activities = PublicActivity::Activity.all
       end

@@ -89,6 +89,11 @@ class Idea < ActiveRecord::Base
     ").order("created_at DESC")
   end
 
+  def activity_feed
+    content = related_activities.where("trackable_type != 'Comment'") + self.comments
+    content.sort_by(&:created_at)
+  end
+
 
 
 private
