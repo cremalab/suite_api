@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class Analytics::BaseTest < ActiveSupport::TestCase
-  test "self.average" do
-    avg = Analytics::Base.average(:idea_thread_creates)
+  test "self.average_per_segment" do
+    avg = Analytics::Base.average_per_segment(:idea_thread_creates)
 
     assert_equal avg, 20
 
@@ -18,6 +18,24 @@ class Analytics::BaseTest < ActiveSupport::TestCase
     std_dev = Analytics::Base.std_dev_per_segment(:idea_thread_creates)
 
     assert_in_delta 1.09, std_dev, 0.01
+
+  end
+
+  test "self.average_per_segment with time" do
+
+    assert false
+
+  end
+
+  test "self.var_per_segment with time" do
+
+    assert false
+
+  end
+
+  test "self.std_dev_per_segment with time" do
+
+    assert false
 
   end
 

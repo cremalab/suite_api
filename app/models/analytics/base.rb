@@ -2,8 +2,11 @@ include Math
 class Analytics::Base < ActiveRecord::Base
 
   #Segement is 5 minutes currently
-  def self.average_per_segment(column)
-    values = self.select(column).all
+  def self.average_per_segment(column, s_time = Time.new(2000), e_time = Time.now)
+    p s_time
+    p e_time
+    values = self.select(column).where(created_at: s_time..e_time)
+    p values
     amount = values.length
     sum = 0
     values.each do |value|
