@@ -20,7 +20,7 @@ class Notifier < ActionMailer::Base
     @app_url = app_url
     @thread = thread
     @thread_user = @thread.user
-    mail( to: emails, subject: 'New Thread Created')
+    mail( bcc: emails, subject: 'New Thread Created')
   end
 
   def new_idea(emails, idea)
@@ -28,7 +28,7 @@ class Notifier < ActionMailer::Base
     @idea_user = @idea.user
     @thread = @idea.idea_thread
     @app_url = app_url
-    mail( to: emails, subject: 'New Idea Created' )
+    mail( bcc: emails, subject: 'New Idea Created' )
   end
 
   def new_vote(emails, vote)
@@ -37,6 +37,6 @@ class Notifier < ActionMailer::Base
     @idea = @vote.idea
     @thread = @idea.idea_thread
     @app_url = app_url
-    mail( to: emails, subject: 'New Vote Created' )
+    mail( bcc: emails, subject: 'New Vote Created' )
   end
 end
