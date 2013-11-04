@@ -25,7 +25,6 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
-      @idea_thread.expiration_check
       @idea_thread.message
 
       render json: @idea_thread
@@ -43,8 +42,7 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.find(params[:id])
     if @idea_thread.update_attributes(update_params)
       if update_params[:expiration] != nil
-        @idea_thread.update_expiration
-        @idea_thread.message.delay(run_at: expiration, queue: @idea_thread.id)
+        @idea_thread.expiration_check
       end
       @idea_thread.message
       render json: @idea_thread
