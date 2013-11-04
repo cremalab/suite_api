@@ -25,6 +25,7 @@ class IdeaThreadsController < ApplicationController
     @idea_thread = IdeaThread.new(idea_thread_params)
 
     if @idea_thread.save
+      @idea_thread.expiration_check
       @idea_thread.message
 
       render json: @idea_thread
