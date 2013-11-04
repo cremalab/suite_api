@@ -58,7 +58,8 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(
         :email, :password, :password_confirmation, :notifications,
-        profile_attributes: [:first_name, :last_name]
+        profile_attributes: [:first_name, :last_name],
+        notification_setting_attributes: [:vote, :idea, :idea_thread, :sound]
       )
     end
 

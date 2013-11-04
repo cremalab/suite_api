@@ -28,7 +28,9 @@ class VoteTest < ActiveSupport::TestCase
 
     mail = ActionMailer::Base.deliveries.last
 
-    assert_includes mail.body, "New vote!"  end
+    assert_includes mail.body, "Ross Brown"
+    assert_includes mail.body, "Milkshakes from Town Topic"
+  end
 
 
   # test "delete_message" do
