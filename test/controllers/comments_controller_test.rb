@@ -30,9 +30,9 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "create_fail" do
+    comment_params = {user_id: 1, idea_id: @idea_id}
+    post :create, comment: comment_params, idea_id: @idea_id
     assert_response 422
-
-
   end
 
   test "show" do
@@ -48,6 +48,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "update_fail" do
+    post :update, id: @comment.id, comment: {content: nil}
     assert_response 422
 
   end
@@ -59,12 +60,5 @@ class CommentsControllerTest < ActionController::TestCase
     assert_response :success
     assert_includes @response.body, "Comment destroyed"
   end
-
-  test "destroy_fail" do
-    assert_response 422
-  end
-
-
-
 
 end
