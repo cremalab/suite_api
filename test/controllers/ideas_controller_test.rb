@@ -79,6 +79,8 @@ class IdeasControllerTest < ActionController::TestCase
   end
 
   test "update failure" do
+    put :update, id: @idea.id, idea: {title: nil}, auth: @auth
+
     assert_response 422
 
   end
