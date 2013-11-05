@@ -46,7 +46,7 @@ class IdeaThreadsController < ApplicationController
       @idea_thread.message
       render json: @idea_thread
     else
-      render :show, status: :unprocessable_entity
+      render :json => @idea_thread.errors.full_messages, status: 422
     end
   end
 

@@ -55,18 +55,36 @@ class IdeaThreadsControllerTest < ActionController::TestCase
   end
 
   test "create failure" do
+    meatloaf = {title: "Meatloaf at YJs",
+                description: "Mmmmm... eatloaf", user_id: @user.id}
+    voting_rights = {user_id: @user.id}
+    params = {  status: "open", user_id:  @user.id,
+                expiration: "2014-02-11 11:25:00",
+                ideas_attributes: [meatloaf],
+                voting_rights_attributes: [voting_rights]  }
+    post :create, idea_thread: params
     assert_response 422
   end
 
   test "show" do
+    get :show, id: idea_threads(:fun).id
+
     assert_response :success
   end
 
   test "update" do
+    idea_thread = idea_threads(:fun)
+    idea_thread.title = "Fun"
+    put :update, idea_thread: {title: "Fun"}, id: idea_thread.id
+
     assert_response :success
   end
 
   test "update failure" do
+    idea_thread = idea_threads(:fun)
+    idea_thread.title = nil
+    put :update, idea_thread: {title: nil}, id: idea_thread.id
+
     assert_response 422
   end
 
