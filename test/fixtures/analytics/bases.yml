@@ -37,7 +37,6 @@ time2:
   vote_updates: 34
   vote_deletes: 12
 
-  comment_creates: 33
   comment_updates: 45
   comment_deletes: 1
 
@@ -80,6 +79,7 @@ time4:
   comment_creates: 33
   comment_updates: 45
   comment_deletes: 1
+
 
   start_time: 2013-10-31 16:15
   end_time: 2013-10-31 16:20
@@ -183,6 +183,7 @@ time9:
 
   start_time: 2013-10-31 16:40
   end_time: 2013-10-31 16:45
+
 time10:
   idea_thread_creates: 21
   idea_thread_updates: 4
