@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     if @group.save
       render json: @group
     else
-      render :json => @idea_thread.errors.full_messages, status: 422
+      render :json => @group.errors.full_messages, status: 422
     end
   end
 
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
     if @group.update_attributes(group_params)
       render json: @group
     else
-      render :show, status: :unprocessable_entity
+      render :json => @group.errors.full_messages, status: 422
     end
   end
 

@@ -35,6 +35,9 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "create failure" do
+    group = {owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
+    post :create, group: group
+
     assert_response 422
   end
 
@@ -54,6 +57,11 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "update failure" do
+    update_group = groups(:developer_group)
+
+    update_group.name = "King Kong"
+    put :update, group: {name: nil}, id: update_group.id
+
     assert_response 422
   end
 
@@ -68,12 +76,5 @@ class GroupsControllerTest < ActionController::TestCase
     Group.all.count.must_equal group_count - 1
 
   end
-
-  test "destroy failure" do
-    assert_response 422
-  end
-
-
-
 
 end

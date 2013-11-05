@@ -86,9 +86,4 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     assert_includes @response.body, "Idea thread destroyed"
   end
 
-  test "destroy failure" do
-    assert_response 422
-  end
-
-
 end

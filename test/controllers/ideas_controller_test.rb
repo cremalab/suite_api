@@ -90,13 +90,6 @@ class IdeasControllerTest < ActionController::TestCase
     Idea.all.count.must_equal idea_count - 1
   end
 
-  test "destroy failure" do
-    assert_response 422
-
-
-  end
-
-
   test "should return unauthorized if no access_token" do
     @request.env["HTTP_X_ACCESS_TOKEN"] = ''
     get :show, id: @idea.id, auth: {}
