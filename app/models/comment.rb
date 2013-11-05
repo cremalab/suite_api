@@ -13,6 +13,9 @@ class Comment < ActiveRecord::Base
   belongs_to :idea
   belongs_to :user
 
+  #Validation
+  validates :content, presence: true
+
   def delete_message
     delete_message =  {
                         comment: self,

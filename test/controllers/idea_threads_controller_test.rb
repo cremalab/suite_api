@@ -14,13 +14,13 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
 
-  test "should get index" do
+  test "index" do
     get :index
     assert_response :success
     #assert_includes @response.body, "ideas"
   end
 
-  test "should post create" do
+  test "create" do
     meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf", user_id: @user.id}
     voting_rights = {user_id: @user.id}
@@ -52,10 +52,43 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     assert_includes @response.body, "model_name"
     assert_includes @response.body, "voting_rights"
 
-
   end
 
-  test "should destroy" do
+  test "create failure" do
+    meatloaf = {title: "Meatloaf at YJs",
+                description: "Mmmmm... eatloaf", user_id: @user.id}
+    voting_rights = {user_id: @user.id}
+    params = {  status: "open", user_id:  @user.id,
+                expiration: "2014-02-11 11:25:00",
+                ideas_attributes: [meatloaf],
+                voting_rights_attributes: [voting_rights]  }
+    post :create, idea_thread: params
+    assert_response 422
+  end
+
+  test "show" do
+    get :show, id: idea_threads(:fun).id
+
+    assert_response :success
+  end
+
+  test "update" do
+    idea_thread = idea_threads(:fun)
+    idea_thread.title = "Fun"
+    put :update, idea_thread: {title: "Fun"}, id: idea_thread.id
+
+    assert_response :success
+  end
+
+  test "update failure" do
+    idea_thread = idea_threads(:fun)
+    idea_thread.title = nil
+    put :update, idea_thread: {title: nil}, id: idea_thread.id
+
+    assert_response 422
+  end
+
+  test "destroy" do
     meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf",
                 user_id: 1

@@ -7,6 +7,9 @@ class VotingRight < ActiveRecord::Base
   belongs_to :idea_thread
   belongs_to :voter, foreign_key: 'user_id', class_name: 'User'
 
+  validates_presence_of :user_id
+
+
   def destroy_associtated_votes
     @idea_thread = self.idea_thread
     #This is bad but it will work for now!

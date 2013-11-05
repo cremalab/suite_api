@@ -34,6 +34,13 @@ class GroupsControllerTest < ActionController::TestCase
 
   end
 
+  test "create failure" do
+    group = {owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
+    post :create, group: group
+
+    assert_response 422
+  end
+
   test "show" do
     get :show, id: 1
 
@@ -49,6 +56,16 @@ class GroupsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "update failure" do
+    update_group = groups(:developer_group)
+
+    update_group.name = "King Kong"
+    put :update, group: {name: nil}, id: update_group.id
+
+    assert_response 422
+  end
+
+
   test "destroy" do
     group = {name: "Lords of the Dance", owner_id: 1, memberships_attributes: [{user_id: 1}, {user_id: 2}]}
     group = Group.create(group)
@@ -59,6 +76,5 @@ class GroupsControllerTest < ActionController::TestCase
     Group.all.count.must_equal group_count - 1
 
   end
-
 
 end

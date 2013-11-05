@@ -13,7 +13,7 @@ class IdeasControllerTest < ActionController::TestCase
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
 
-  test "should create new idea" do
+  test "create" do
 
     @user = users(:rob)
     @idea_thread = idea_threads(:lunch)
@@ -48,25 +48,25 @@ class IdeasControllerTest < ActionController::TestCase
     Idea.all.count.must_equal idea_count + 1
   end
 
-  test "should require voting_right" do
+  test "create failure" do
     @user = users(:michael)
     @idea_thread = idea_threads(:lunch)
     meatloaf = {title: "Meatloaf at YJ's",
                 description: "Mmmmm... eatloaf", user_id: @user.id,
                 idea_thread_id: @idea_thread.id}
     post :create, idea: meatloaf
-    assert_response :unprocessable_entity
+    assert_response 422
     assert_includes @response.body, "You do not have permission to add an idea to this thread"
   end
 
-  test "should get show" do
+  test "show" do
     get :show, id: @idea.id
     assert_response :success
     assert_includes @response.body, "Chicken Salad Sandwiches at Sylvias"
     assert_includes @response.body, "It's the best sandwich they have"
   end
 
-  test "should get update" do
+  test "update" do
 
     put :update, id: @idea.id, idea: {title: "BLT at Mildreds"}, auth: @auth
     assert_response :success
@@ -78,7 +78,14 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes idea.related_activities.last.key, "idea.update"
   end
 
-  test "should get destroy" do
+  test "update failure" do
+    put :update, id: @idea.id, idea: {title: nil}, auth: @auth
+
+    assert_response 422
+
+  end
+
+  test "destroy" do
     idea_count = Idea.all.count
     delete :destroy, id: @idea.id
     assert_response :success
