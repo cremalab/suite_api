@@ -50,8 +50,4 @@ class VotingRightsControllerTest < ActionController::TestCase
     votes.length.must_equal vote_size - 1
   end
 
-  test "destroy failure" do
-    assert_response 422
-  end
-
 end

@@ -60,15 +60,10 @@ class IdeaThreadsController < ApplicationController
         job.delete
       end
     end
-    if @idea_thread.destroy
-
-      @idea_thread.delete_message
-      # Activity Feed
-      render :json => ['Idea thread destroyed'], status: :ok
-    else
-      render :show, status: :unprocessable_entity
-    end
-
+    @idea_thread.destroy
+    @idea_thread.delete_message
+    # Activity Feed
+    render :json => ['Idea thread destroyed'], status: :ok
   end
 
 

@@ -52,10 +52,6 @@ class VotesControllerTest < ActionController::TestCase
     assert_equal idea.related_activities.last.key, 'vote.destroy'
   end
 
-  test "destroy failure" do
-    assert_response 422
-  end
-
   def teardown
     @user.destroy
     @vote.destroy

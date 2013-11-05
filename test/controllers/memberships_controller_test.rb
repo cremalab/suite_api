@@ -26,10 +26,6 @@ class MembershipsControllerTest < ActionController::TestCase
     assert_empty Membership.where(id: @membership.id)
   end
 
-  test "destroy failure" do
-    assert_response 422
-  end
-
   test "should only respond to group owner" do
     # As Sombody else
     @request.env["HTTP_X_REQUESTED_WITH"] = {}

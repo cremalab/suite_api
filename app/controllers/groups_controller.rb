@@ -42,11 +42,8 @@ class GroupsController < ApplicationController
 
   def destroy
     @group = Group.find(params[:id])
-    if @group.destroy
-      render :json => ['Group destroyed'], status: :ok
-    else
-      render :show, status: :unprocessable_entity
-    end
+    @group.destroy
+    render :json => ['Group destroyed'], status: :ok
   end
 
 private
