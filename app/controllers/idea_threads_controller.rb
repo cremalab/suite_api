@@ -46,7 +46,7 @@ class IdeaThreadsController < ApplicationController
       @idea_thread.message
       render json: @idea_thread
     else
-      render :show, status: :unprocessable_entity
+      render :json => @idea_thread.errors.full_messages, status: 422
     end
   end
 
@@ -60,15 +60,10 @@ class IdeaThreadsController < ApplicationController
         job.delete
       end
     end
-    if @idea_thread.destroy
-
-      @idea_thread.delete_message
-      # Activity Feed
-      render :json => ['Idea thread destroyed'], status: :ok
-    else
-      render :show, status: :unprocessable_entity
-    end
-
+    @idea_thread.destroy
+    @idea_thread.delete_message
+    # Activity Feed
+    render :json => ['Idea thread destroyed'], status: :ok
   end
 
 
@@ -83,6 +78,7 @@ private
       voting_rights_attributes: [ :user_id ]
     )
   end
+
   def update_params
     params.require(:idea_thread).permit(
       :title, :status, :expiration, :description

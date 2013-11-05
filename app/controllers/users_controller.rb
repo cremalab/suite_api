@@ -47,11 +47,7 @@ class UsersController < ApplicationController
 
   def me
     @user = User.find(params[:auth][:user_id])
-    if @user
-      render json: @user
-    else
-      return head :no_content
-    end
+    render json: @user
   end
 
   private

@@ -12,11 +12,8 @@ class MembershipsController < ApplicationController
   before_action :ensure_group_ownership
 
   def destroy
-    if @membership.destroy
-      render :json => ['Membership destroyed'], status: :ok
-    else
-      render :json => @membership.errors.full_messages, status: 422
-    end
+    @membership.destroy
+    render :json => ['Membership destroyed'], status: :ok
   end
 
 private

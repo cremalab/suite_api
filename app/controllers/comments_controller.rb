@@ -47,13 +47,8 @@ class CommentsController < ApplicationController
   def destroy
     id = params[:id]
     @comment = Comment.find(id)
-    if @comment.destroy
-      @comment.delete_message
-      render :json => ['Comment destroyed'], status: :ok
-    else
-      render :json => @comment.errors.full_messages, status: 422
-    end
-
+    @comment.delete_message
+    render :json => ['Comment destroyed'], status: :ok
   end
 
   private

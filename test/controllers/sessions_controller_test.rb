@@ -15,6 +15,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert_includes json['auth'], "user_id"
   end
 
+  test "login failure" do
+    post :create, email: 'ross@poop.com', password: 'poop'
+
+    assert_response 401
+  end
+
   test "logout" do
     get :destroy
     assert_response :success

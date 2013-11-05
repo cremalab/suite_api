@@ -1,10 +1,12 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  test "Create New" do
+
+  test "index" do
+    assert_response :success
+  end
+
+  test "create" do
     new_user = {user: {email: "mattowens11@gmail.com", password: "yellowsub",
                 password_confirmation: "yellowsub"} }
     post :create, new_user
@@ -19,35 +21,23 @@ class UsersControllerTest < ActionController::TestCase
     assert_includes @response.body, "id"
     assert_includes @response.body, "name"
     assert_includes @response.body, "notifications"
-    assert_includes @response.body, "logged_in"
+    assert_includes @response.body, "\"logged_in\":true"
     assert_includes @response.body, "access_token"
     assert_includes @response.body, "user_id"
     assert_includes @response.body, "access_token"
-    assert_includes @response.body, "auth"
-
   end
 
-  test "Return access_token after sign up" do
-    new_user = {user: {email: "mattowens11@gmail.com", password: "yellowsub",
-                password_confirmation: "yellowsub" }}
-    post :create, new_user
-    assert_response :success
-    response = JSON.parse(@response.body)
-    assert_includes @response.body, "access_token"
-    assert_equal response['logged_in'], true
-  end
-
-  test "should return error if validation fails" do
+  test "create failure" do
     post :create, user:
       {
         email: "mattowens11@gmail.com"
       }
-    assert_response :unprocessable_entity
+    assert_response 422
     assert_nil User.find_by(email: "mattowens11@gmail.com")
     assert_includes @response.body, "can't be blank"
   end
 
-  test "should get show" do
+  test "show" do
     new_user = {email: "mattowens11@gmail.com", password: "yellowsub",
                 password_confirmation: "yellowsub", profile_attributes: {
                   first_name: "Matt", last_name: "Owens" }
@@ -62,6 +52,31 @@ class UsersControllerTest < ActionController::TestCase
     get :show, id: user_id
     assert_response :success
     assert_includes @response.body, "mattowens11@gmail.com"
+  end
+
+  test "update" do
+    user = users(:rob)
+    post :update, id: user.id, user: {email: "robbobby@cool.com"}
+
+    assert_response :success
+  end
+
+  test "update failure" do
+    user = users(:rob)
+    post :update, id: user.id, user: {email: nil}
+
+    assert_response 422
+  end
+
+
+  test "me" do
+    user = users(:rob)
+    post :me, auth: {user_id: user.id}
+    assert_response :success
+  end
+
+  test "me failure" do
+
   end
 
 end

@@ -34,11 +34,8 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     @vote.create_activity :destroy, owner: current_auth_user,
                                     recipient: @vote.idea
-    if @vote.destroy
-      render :json => ['Vote destroyed'], status: :ok
-    else
-      render :json => @voting_right.errors.full_messages, status: 422
-    end
+    @vote.destroy
+    render :json => ['Vote destroyed'], status: :ok
   end
 
   private

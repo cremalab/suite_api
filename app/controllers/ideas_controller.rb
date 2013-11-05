@@ -50,15 +50,9 @@ class IdeasController < ApplicationController
     id = params[:id]
     @idea = Idea.find(id)
     @idea.create_activity :destroy, owner: current_auth_user
-    if @idea.destroy
-      @idea.delete_message
-
-      # Activity Feed
-
-      render :json => ['Idea destroyed'], status: :ok
-    else
-      render :json => @idea.errors.full_messages, status: 422
-    end
+    @idea.destroy
+    @idea.delete_message
+    render :json => ['Idea destroyed'], status: :ok
   end
 
   private
