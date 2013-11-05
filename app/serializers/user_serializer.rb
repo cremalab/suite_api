@@ -20,6 +20,7 @@ class UserSerializer < ActiveModel::Serializer
       user_id: object.id
     }
   end
+
   def autocomplete_search
     object.display_name
   end

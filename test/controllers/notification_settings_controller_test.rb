@@ -7,7 +7,7 @@ class NotificationSettingsControllerTest < ActionController::TestCase
 
   test "update" do
     post :update, id: @notification_setting.id,
-                  notification_settings: {vote: false}
+                  notification_settings: {sound: 0}
     assert_response :success
     assert_includes @response.body, "vote"
     assert_includes @response.body, "false"
@@ -15,6 +15,9 @@ class NotificationSettingsControllerTest < ActionController::TestCase
   end
 
   test "update failure" do
+    post :update, id: @notification_setting.id,
+          notification_settings: {vote: nil}
+
     assert_response 422
   end
 

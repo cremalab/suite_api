@@ -55,15 +55,23 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "update" do
+    user = users(:rob)
+    post :update, id: user.id, user: {email: "robbobby@cool.com"}
+
     assert_response :success
   end
 
   test "update failure" do
+    user = users(:rob)
+    post :update, id: user.id, user: {email: nil}
+
     assert_response 422
   end
 
 
   test "me" do
+    user = users(:rob)
+    post :me, auth: {user_id: user.id}
     assert_response :success
   end
 

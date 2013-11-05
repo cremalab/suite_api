@@ -4,14 +4,24 @@ require 'test_helper'
 class VotingRightsControllerTest < ActionController::TestCase
 
   test "create" do
+    idea_thread = idea_threads(:lunch)
+    voting_right = {idea_thread_id: idea_thread.id, user_id: 3}
+    post :create, voting_right: voting_right
+
     assert_response :success
   end
 
   test "create failure" do
+    idea_thread = idea_threads(:lunch)
+    voting_right = {idea_thread_id: idea_thread.id}
+    post :create, voting_right: voting_right
+
+
     assert_response 422
   end
 
   test "show" do
+    get :show, id: voting_rights(:rob).id
     assert_response :success
   end
 

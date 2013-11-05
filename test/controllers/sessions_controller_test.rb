@@ -16,6 +16,8 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test "login failure" do
+    post :create, email: 'ross@poop.com', password: 'poop'
+
     assert_response 401
   end
 
