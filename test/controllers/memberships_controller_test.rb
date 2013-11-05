@@ -13,7 +13,7 @@ class MembershipsControllerTest < ActionController::TestCase
     @membership = @group.memberships.first
   end
 
-  test "should destroy a Membership" do
+  test "destroy" do
     # As Group Owner
     @request.env["HTTP_X_REQUESTED_WITH"] = {}
     @request.env["HTTP_X_USER_ID"] = @owner.id
@@ -21,8 +21,13 @@ class MembershipsControllerTest < ActionController::TestCase
 
     assert_equal(@group.memberships.count, 1)
     delete :destroy, id: @membership.id
+    assert_response :success
     assert_equal(@group.memberships.count, 0)
     assert_empty Membership.where(id: @membership.id)
+  end
+
+  test "destroy failure" do
+    assert_response 422
   end
 
   test "should only respond to group owner" do
@@ -33,6 +38,7 @@ class MembershipsControllerTest < ActionController::TestCase
 
     assert_equal(@group.memberships.count, 1)
     delete :destroy, id: @membership.id
+    assert_response 401
     assert_equal(@group.memberships.count, 1)
     refute_empty Membership.where(id: @membership.id)
   end

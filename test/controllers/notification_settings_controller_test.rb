@@ -12,9 +12,10 @@ class NotificationSettingsControllerTest < ActionController::TestCase
     assert_includes @response.body, "vote"
     assert_includes @response.body, "false"
 
-
-
-
-
   end
+
+  test "update failure" do
+    assert_response 422
+  end
+
 end

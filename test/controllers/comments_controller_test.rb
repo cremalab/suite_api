@@ -30,7 +30,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "create_fail" do
-    assert_response :failure
+    assert_response 422
 
 
   end
@@ -48,7 +48,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "update_fail" do
-    assert_response :failure
+    assert_response 422
 
   end
 
@@ -61,7 +61,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "destroy_fail" do
-    assert_response :failure
+    assert_response 422
   end
 
 

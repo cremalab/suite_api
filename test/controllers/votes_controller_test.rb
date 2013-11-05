@@ -29,7 +29,7 @@ class VotesControllerTest < ActionController::TestCase
     assert_equal Vote.last.idea.related_activities.last.key, 'vote.create'
   end
 
-  test "can't create without permission" do
+  test "create failure" do
     new_vote = {user_id: @user.id, idea_id: @idea.id}
     @idea.idea_thread.voters.destroy_all
     vote_count = Vote.all.count
@@ -41,7 +41,6 @@ class VotesControllerTest < ActionController::TestCase
   test "show" do
     get :show, id: @vote.id
     assert_response :success
-
   end
 
   test "destroy" do
@@ -51,6 +50,10 @@ class VotesControllerTest < ActionController::TestCase
     assert_response :success
     Vote.all.count.must_equal vote_count - 1
     assert_equal idea.related_activities.last.key, 'vote.destroy'
+  end
+
+  test "destroy failure" do
+    assert_response 422
   end
 
   def teardown

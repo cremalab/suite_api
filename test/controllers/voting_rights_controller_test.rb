@@ -3,7 +3,20 @@ require 'test_helper'
 
 class VotingRightsControllerTest < ActionController::TestCase
 
-  test "should destroy" do
+  test "create" do
+    assert_response :success
+  end
+
+  test "create failure" do
+    assert_response 422
+  end
+
+  test "show" do
+    assert_response :success
+  end
+
+
+  test "destroy" do
     # Create an idea thread
     idea_thread = IdeaThread.create({ title: "Who is the best?",
                                       user_id: 1,
@@ -35,9 +48,10 @@ class VotingRightsControllerTest < ActionController::TestCase
     votes = Vote.where(idea_id: idea_thread.ideas[0].id)
 
     votes.length.must_equal vote_size - 1
+  end
 
-
-
+  test "destroy failure" do
+    assert_response 422
   end
 
 end

@@ -83,6 +83,7 @@ private
       voting_rights_attributes: [ :user_id ]
     )
   end
+
   def update_params
     params.require(:idea_thread).permit(
       :title, :status, :expiration, :description

@@ -14,13 +14,13 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     @request.env["HTTP_X_ACCESS_TOKEN"] = @user.current_access_token
   end
 
-  test "should get index" do
+  test "index" do
     get :index
     assert_response :success
     #assert_includes @response.body, "ideas"
   end
 
-  test "should post create" do
+  test "create" do
     meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf", user_id: @user.id}
     voting_rights = {user_id: @user.id}
@@ -52,10 +52,25 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     assert_includes @response.body, "model_name"
     assert_includes @response.body, "voting_rights"
 
-
   end
 
-  test "should destroy" do
+  test "create failure" do
+    assert_response 422
+  end
+
+  test "show" do
+    assert_response :success
+  end
+
+  test "update" do
+    assert_response :success
+  end
+
+  test "update failure" do
+    assert_response 422
+  end
+
+  test "destroy" do
     meatloaf = {title: "Meatloaf at YJs",
                 description: "Mmmmm... eatloaf",
                 user_id: 1
@@ -70,5 +85,10 @@ class IdeaThreadsControllerTest < ActionController::TestCase
     assert_response :success
     assert_includes @response.body, "Idea thread destroyed"
   end
+
+  test "destroy failure" do
+    assert_response 422
+  end
+
 
 end
