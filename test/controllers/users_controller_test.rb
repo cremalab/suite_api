@@ -75,8 +75,4 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "me failure" do
-
-  end
-
 end
