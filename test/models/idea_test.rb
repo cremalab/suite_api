@@ -56,6 +56,14 @@ class IdeaTest < ActiveSupport::TestCase
     assert_includes mail.body, "Fun"
   end
 
+  test "num_votes" do
+    idea = ideas(:milkshakes)
+
+    assert_equal idea.num_votes, 2
+
+
+  end
+
   test "recent_activities" do
     idea = ideas(:milkshakes)
     for i in 0..12

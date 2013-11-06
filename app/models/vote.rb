@@ -16,6 +16,19 @@ class Vote < ActiveRecord::Base
   validate :validate_voting_right
   validates_presence_of :idea_id, :user_id
 
+  #Callbacks
+  after_create :check_winner
+
+  def check_winner
+    idea = self.idea
+    idea_thread = idea.idea_thread
+    if idea_thread.threshold == idea.num_votes
+      idea_thread.winning_idea_id = idea.id
+      idea_thread.status = :archived
+    end
+
+  end
+
   def email_list
     email_list = []
     self.idea.idea_thread.voting_rights.each do |vr|

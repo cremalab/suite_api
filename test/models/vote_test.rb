@@ -32,14 +32,25 @@ class VoteTest < ActiveSupport::TestCase
     assert_includes mail.body, "Milkshakes from Town Topic"
   end
 
+  test "vote_winner" do
+    idea = ideas(:milkshakes)
 
-  # test "delete_message" do
-  #   #Behavioral Test?
+    assert_equal idea.num_votes, 2
 
-  #   assert false, "I need a test! Waaaaa!"
-  # end
+    vote = Vote.create(user_id: 3, idea_id: idea.id)
+
+    idea = vote.idea
+
+    assert_equal idea.num_votes, 3
+
+    assert_equal idea.idea_thread.winning_idea_id, idea.id
+
+    assert_equal idea.idea_thread.status, :archived
 
 
+
+
+  end
 
   test "voter rights" do
     new_vote = Vote.new(@new_vote_attr)

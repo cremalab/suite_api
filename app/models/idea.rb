@@ -77,6 +77,10 @@ class Idea < ActiveRecord::Base
     PrivatePub.publish_to("/message/channel", message: activity_json)
   end
 
+  def num_votes
+    self.votes.length
+  end
+
   def recent_activities
     related_activities.limit(10)
   end
