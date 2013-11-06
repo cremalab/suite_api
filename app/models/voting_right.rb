@@ -21,7 +21,6 @@ class VotingRight < ActiveRecord::Base
     @ideas.each do |idea|
       destroy_vote = votes.where(idea_id: idea[:id])
       destroy_vote.each do |vote|
-        #Vote.find(vote.id).destroy
         vote.destroy
       end
     end
