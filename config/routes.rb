@@ -9,6 +9,7 @@ SuiteApi::Application.routes.draw do
     resources :activities, format: :json,   only:   [:show, :index]
   end
 
+  get 'idea_threads/archives' => 'idea_threads#archives'
   resources :idea_threads, format: :json,   except: [:new, :edit]
 
   resources :memberships, format: :json,    only:   [:destroy]
