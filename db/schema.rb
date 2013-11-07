@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20131031192806) do
     t.integer  "idea_updates"
     t.integer  "idea_deletes"
     t.integer  "vote_creates"
-    t.integer  "vote_updates"
     t.integer  "vote_deletes"
     t.integer  "comment_creates"
     t.integer  "comment_updates"

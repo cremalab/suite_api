@@ -10,7 +10,6 @@ class CreateAnalyticsBases < ActiveRecord::Migration
       t.integer :idea_deletes
 
       t.integer :vote_creates
-      t.integer :vote_updates
       t.integer :vote_deletes
 
       t.integer :comment_creates
