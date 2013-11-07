@@ -9,7 +9,6 @@ namespace :attr_update do
 
     p without_set
     without_set.map { |a| a.create_notification_setting}
-
   end
 
 end
