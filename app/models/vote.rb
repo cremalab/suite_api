@@ -25,8 +25,8 @@ class Vote < ActiveRecord::Base
     if idea_thread.threshold == idea.num_votes
       idea_thread.winning_idea_id = idea.id
       idea_thread.status = :archived
+      Notifier.winning_idea(idea_thread.email_list, idea).deliver
     end
-
   end
 
   def email_list

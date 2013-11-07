@@ -39,4 +39,13 @@ class Notifier < ActionMailer::Base
     @app_url = app_url
     mail( bcc: emails, subject: 'New Vote Created' )
   end
+
+  def winning_idea(emails, idea)
+    @idea = idea
+    @idea_user = @idea.user
+    @thread = @idea.idea_thread
+    @app_url = app_url
+    mail( bcc: emails, subject: 'An Idea has Won!' )
+
+  end
 end

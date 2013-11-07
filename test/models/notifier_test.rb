@@ -36,4 +36,14 @@ class NotifierTest < ActiveSupport::TestCase
 
   end
 
+  test "winning_idea" do
+    Notifier.winning_idea(["mattowens11@gmail.com"], @idea).deliver
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_includes mail.body, "Rob LaFeve"
+
+
+
+  end
+
 end
