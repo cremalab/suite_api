@@ -14,7 +14,7 @@ time1:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -34,7 +34,7 @@ time2:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_updates: 45
@@ -53,7 +53,7 @@ time3:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -73,7 +73,7 @@ time4:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -94,7 +94,7 @@ time5:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -114,7 +114,7 @@ time6:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -134,7 +134,7 @@ time7:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -154,7 +154,7 @@ time8:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -174,7 +174,7 @@ time9:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -194,7 +194,7 @@ time10:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -214,7 +214,7 @@ time11:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -234,7 +234,7 @@ time12:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -254,7 +254,7 @@ time13:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -274,7 +274,7 @@ time14:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -294,7 +294,7 @@ time15:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -314,7 +314,7 @@ time16:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -334,7 +334,7 @@ time17:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -354,7 +354,7 @@ time18:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -374,7 +374,7 @@ time19:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -394,7 +394,7 @@ time20:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -414,7 +414,7 @@ time21:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -433,7 +433,7 @@ time22:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -453,7 +453,7 @@ time23:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
@@ -473,7 +473,7 @@ time24:
   idea_deletes: 34
 
   vote_creates: 76
-  vote_updates: 34
+
   vote_deletes: 12
 
   comment_creates: 33
