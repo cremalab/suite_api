@@ -18,9 +18,6 @@ gem "factory_girl", "~> 4.2.0"
 gem "sorcery", "~> 0.8.2"
 gem 'rack-cors', :require => 'rack/cors'
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 

@@ -3,8 +3,10 @@ set :repo_url, 'https://github.com/cremalab/suite_api'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :deploy_to, '/var/www/suite_api'
+set :deploy_to, '/home/ubuntu/app/suite_api'
 set :scm, :git
+
+set :use_sudo, true
 
 # set :format, :pretty
 # set :log_level, :debug
