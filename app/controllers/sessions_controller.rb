@@ -10,10 +10,9 @@
 class SessionsController < ApplicationController
 
   def create
-    @user = login(params[:email], params[:password], params[:remember_me])
+    @user = login(session_params[:email], session_params[:password], session_params[:remember_me])
     if @user
       @subscription = @user.subscription
-      @logged_in = current_user == @user
       render json: @user, status: 200
     else
       render :json => ['Invalid email or password'], status: 401
@@ -24,4 +23,11 @@ class SessionsController < ApplicationController
     logout
     render :json => ['Logged out'], status: :ok
   end
+
+  private
+
+    def session_params
+      params.require(:session).permit(:email, :password, :remember_me)
+    end
+
 end

@@ -60,8 +60,6 @@ class CommentsController < ApplicationController
       if params[:idea_id]
         get_idea
         @comments = @idea.comments
-      else
-        @comments = Comment.all
       end
     end
 

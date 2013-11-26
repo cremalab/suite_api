@@ -8,7 +8,8 @@
 #
 class IdeaSerializer < ActiveModel::Serializer
   attributes  :id, :title, :description, :idea_thread_id, :user_id,
-              :updated_at, :created_at, :total_votes, :original, :model_name,
+              :updated_at, :created_at, :total_votes, #:original,
+              :model_name,
               :comment_count
 
   has_many :votes
@@ -21,10 +22,6 @@ class IdeaSerializer < ActiveModel::Serializer
 
   def model_name
     "Idea"
-  end
-
-  def original
-    object.first_in_thread?
   end
 
   def total_votes

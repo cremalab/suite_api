@@ -82,13 +82,6 @@ class IdeaThreadTest < ActiveSupport::TestCase
     idea_thread.related_activities.count.must_equal 3
   end
 
-  test "self.set_archive" do
-    idea_thread = idea_threads(:fun)
-    idea_thread = IdeaThread.set_archive(idea_thread.id)
-
-    assert_equal idea_thread.status, :archived
-  end
-
   test "set_expiration" do
     idea_thread = idea_threads(:fun)
     idea_thread.set_expiration

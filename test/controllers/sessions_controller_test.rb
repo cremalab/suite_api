@@ -6,7 +6,7 @@ class SessionsControllerTest < ActionController::TestCase
   # end
 
   test "login" do
-    post :create, email: 'ross@poop.com', password: 'poopmom'
+    post :create, session: { email: 'ross@poop.com', password: 'poopmom'}
     assert_response :success
     assert_includes @response.body, "ross@poop.com"
     json = JSON.parse(@response.body)
@@ -16,7 +16,7 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test "login failure" do
-    post :create, email: 'ross@poop.com', password: 'poop'
+    post :create, session: { email: 'ross@poop.com', password: 'poop'}
 
     assert_response 401
   end

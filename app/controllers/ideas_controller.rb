@@ -11,11 +11,6 @@ class IdeasController < ApplicationController
 
   before_action :ensure_authenticated
 
-  def index
-    @ideas = Idea.all
-    render json: @ideas
-  end
-
   def create
     @idea = Idea.new(idea_params)
     if @idea.save

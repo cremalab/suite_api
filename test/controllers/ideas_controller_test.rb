@@ -38,7 +38,6 @@ class IdeasControllerTest < ActionController::TestCase
     assert_includes @response.body, "profile"
     assert_includes @response.body, "first_name"
     assert_includes @response.body, "last_name"
-    assert_includes @response.body, "original"
     assert_includes @response.body, "votes"
     assert_includes @response.body, "model_name"
 

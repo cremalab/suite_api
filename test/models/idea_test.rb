@@ -25,24 +25,11 @@ class IdeaTest < ActiveSupport::TestCase
     assert_equal idea.votes.length, 1
   end
 
-  # test "delete_message" do
-  #   #Don't know how to test this yet.
-  #   assert false, "I need a test! Waaaaa!"
-  # end
-
-
   test "email list" do
     idea = ideas(:milkshakes)
     list = idea.email_list
 
     assert_equal list, ["ross@poop.com", "michael@theverge.com"]
-  end
-
-  test "first_in_thread?" do
-    idea_thread = idea_threads(:lunch)
-
-    refute idea_thread.ideas[0].first_in_thread?
-    assert idea_thread.ideas[1].first_in_thread?
   end
 
   test "message" do
