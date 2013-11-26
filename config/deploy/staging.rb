@@ -5,9 +5,9 @@ set :stage, :staging
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-role :app, %w{deploy@example.com}
-role :web, %w{deploy@example.com}
-role :db,  %w{deploy@example.com}
+# role :app, %w{deploy@example.com}
+# role :web, %w{deploy@example.com}
+# role :db,  %w{deploy@example.com}
 
 # Extended Server Syntax
 # ======================
@@ -15,7 +15,13 @@ role :db,  %w{deploy@example.com}
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+server 'ec2-54-204-72-90.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}, my_property: :my_value,
+        ssh_options: {
+            user: 'ubuntu', # overrides user setting above
+            keys: %w(/Users/mattowens/.ssh/mowens),
+            forward_agent: true,
+            auth_methods: %w(publickey)
+          }
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
@@ -30,13 +36,12 @@ server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 # server 'example.com',
 #   user: 'user_name',
 #   roles: %w{web app},
-#   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
-#     forward_agent: false,
-#     auth_methods: %w(publickey password)
-#     # password: 'please use keys'
-#   }
+  # ssh_options: {
+  #   user: 'root', # overrides user setting above
+  #   keys: %w(/Users/mattowens/.ssh/mowens),
+  #   forward_agent: false,
+  #   auth_methods: %w(publickey password)
+  # }
 # setting per server overrides global ssh_options
 
 # fetch(:default_env).merge!(rails_env: :staging)

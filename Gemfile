@@ -61,3 +61,4 @@ gem 'delayed_job_active_record'
 gem 'active_model_serializers'
 
 gem 'capistrano', '~> 3.0.1'
+gem 'rvm-capistrano'
