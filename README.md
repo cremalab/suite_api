@@ -1,6 +1,5 @@
 # README
 
-## Introduction
 This is the API for vot.io. It works together with [cremalab-ideas-live](https://github.com/cremalab/cremalab-ideas-live) and [engagement-ring](https://github.com/cremalab/engagement-ring) to create the vot.io web application.
 
 ## Dependencies
