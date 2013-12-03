@@ -1,5 +1,5 @@
 
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -33,5 +33,7 @@ gem 'delayed_job_active_record'
 
 gem 'active_model_serializers'
 
-gem 'capistrano', '~> 3.0.1'
-gem 'rvm-capistrano'
+gem 'rubber', "~> 2.6.3"
+gem 'open4'
+gem 'gelf'
+gem 'unf'

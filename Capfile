@@ -1,29 +1,20 @@
-# Load DSL and Setup Up Stages
-require 'capistrano/setup'
+gemfile = File.expand_path(File.join(__FILE__, '..', 'Gemfile'))
+if File.exist?(gemfile) && ENV['BUNDLE_GEMFILE'].nil?
+  puts "Respawning with 'bundle exec'"
+  exec("bundle", "exec", "cap", *ARGV)
+end
 
-# Includes default deployment tasks
-require 'capistrano/deploy'
-#require 'capistrano/rvm'
+load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
+env = ENV['RUBBER_ENV'] ||= (ENV['RAILS_ENV'] || 'production')
+root = File.dirname(__FILE__)
 
+# this tries first as a rails plugin then as a gem
+$:.unshift "#{root}/vendor/plugins/rubber/lib/"
+require 'rubber'
 
-# Includes tasks from other gems included in your Gemfile
-#
-# For documentation on these, see for example:
-#
-#   https://github.com/capistrano/rvm
-#   https://github.com/capistrano/rbenv
-#   https://github.com/capistrano/chruby
-#   https://github.com/capistrano/bundler
-#   https://github.com/capistrano/rails/tree/master/assets
-#   https://github.com/capistrano/rails/tree/master/migrations
-#
-# require 'capistrano/rvm'
-# require 'capistrano/rbenv'
-# require 'capistrano/chruby'
-# require 'capistrano/bundler'
-# require 'capistrano/rails/assets'
-# require 'capistrano/rails/migrations'
+Rubber::initialize(root, env)
+require 'rubber/capistrano'
 
-# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
-Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
+Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
+load 'config/deploy'

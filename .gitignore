@@ -32,3 +32,5 @@ doc/
 /public/system/*
 *.DS_Store
 *.graffle
+
+config/rubber/rubber.yml
