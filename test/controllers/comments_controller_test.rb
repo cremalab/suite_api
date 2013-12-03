@@ -7,20 +7,6 @@ class CommentsControllerTest < ActionController::TestCase
     @comment = Comment.create(comment_params)
   end
 
-  test "index" do
-    get :index
-    assert_response :success
-
-    assert_includes @response.body, "id"
-    assert_includes @response.body, "content"
-    assert_includes @response.body, "created_at"
-    assert_includes @response.body, "updated_at"
-    assert_includes @response.body, "user_id"
-    assert_includes @response.body, "idea_id"
-    assert_includes @response.body, "user_name"
-    assert_includes @response.body, "model_name"
-  end
-
   test "create" do
     comment_params = {user_id: 1, idea_id: @idea_id, content: "Blue"}
     post :create, comment: comment_params, idea_id: @idea_id

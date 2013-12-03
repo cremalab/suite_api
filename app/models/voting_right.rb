@@ -21,9 +21,21 @@ class VotingRight < ActiveRecord::Base
     @ideas.each do |idea|
       destroy_vote = votes.where(idea_id: idea[:id])
       destroy_vote.each do |vote|
-        #Vote.find(vote.id).destroy
         vote.destroy
       end
     end
   end
+
+  def delete_message
+    delete_message =  {
+                        voting_right: self,
+                        id: self.id,
+                        user_id: self.voter.id,
+                        model_name: "VotingRight",
+                        deleted: true
+                      }
+    PrivatePub.publish_to("/message/channel", message: delete_message.to_json)
+  end
+
+
 end

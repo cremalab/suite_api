@@ -61,7 +61,7 @@ class IdeaThread < ActiveRecord::Base
 
   def expiration_check
     expiration = self.expiration
-    if expiration != nil
+    if not expiration.nil?
       self.set_expiration
       self.message.delay(run_at: expiration, queue: self.id)
     end
@@ -98,11 +98,11 @@ class IdeaThread < ActiveRecord::Base
     activities.order("created_at DESC")
   end
 
-  def self.set_archive(id)
-      hey = self.find(id).set_archive
-      return hey
+  # def self.set_archive(id)
+  #     hey = self.find(id).set_archive
+  #     return hey
 
-  end
+  # end
 
  def set_expiration
     id = self.id

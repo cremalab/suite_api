@@ -9,12 +9,10 @@ SuiteApi::Application.routes.draw do
     resources :activities, format: :json,   only:   [:show, :index]
   end
 
+  get 'idea_threads/archives' => 'idea_threads#archives'
   resources :idea_threads, format: :json,   except: [:new, :edit]
 
   resources :memberships, format: :json,    only:   [:destroy]
-
-  resources :notification_settings, format: :json,    only:   [:update]
-
 
   resources :sessions,   format: :json,     only:   [:create, :destroy]
   get "logout" => "sessions#destroy", :as => "logout"
@@ -24,7 +22,6 @@ SuiteApi::Application.routes.draw do
   get "me" => 'users#me', :as => 'me'
 
   resources :votes,      format: :json,     only:   [:show, :create, :destroy]
-
 
   resources :voting_rights, format: :json,  only:  [:show, :create, :destroy]
 end

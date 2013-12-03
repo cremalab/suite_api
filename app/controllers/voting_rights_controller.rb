@@ -28,6 +28,7 @@ class VotingRightsController < ApplicationController
 
   def destroy
     @voting_right = VotingRight.find(params[:id])
+    @voting_right.delete_message
     @voting_right.destroy
     @voting_right.destroy_associtated_votes
     @idea_thread = @voting_right.idea_thread

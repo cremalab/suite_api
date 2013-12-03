@@ -12,11 +12,12 @@ class IdeaThreadsController < ApplicationController
   before_action :ensure_authenticated
 
   def index
-    if @current_auth_user
-      @idea_threads = current_auth_user.idea_threads.status(:open)
-    else
-      @idea_threads = IdeaThread.status(:open)
-    end
+    @idea_threads = current_auth_user.idea_threads.where(status: :open)
+    render json: @idea_threads
+  end
+
+  def archives
+    @idea_threads = current_auth_user.idea_threads.where(status: :archived)
     render json: @idea_threads
   end
 

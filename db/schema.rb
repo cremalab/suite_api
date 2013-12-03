@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20131106163738) do
+=======
+ActiveRecord::Schema.define(version: 20131031192806) do
+>>>>>>> master
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +45,10 @@ ActiveRecord::Schema.define(version: 20131106163738) do
     t.integer  "idea_updates"
     t.integer  "idea_deletes"
     t.integer  "vote_creates"
+<<<<<<< HEAD
     t.integer  "vote_updates"
+=======
+>>>>>>> master
     t.integer  "vote_deletes"
     t.integer  "comment_creates"
     t.integer  "comment_updates"

@@ -10,6 +10,8 @@ class Idea < ActiveRecord::Base
   include PublicActivity::Common
 
   #Relationships
+
+  #The reason for validate false is because of the vote validation on destroy.
   has_many  :votes, foreign_key: "idea_id",
               autosave: true, dependent: :destroy,
               validate: false
@@ -35,11 +37,11 @@ class Idea < ActiveRecord::Base
 
   def delete_message
     message =  {
-                        comment: self,
-                        id: self.id,
-                        model_name: "Idea",
-                        deleted: true
-                      }
+                  comment: self,
+                  id: self.id,
+                  model_name: "Idea",
+                  deleted: true
+                }
     PrivatePub.publish_to("/message/channel", message: message.to_json)
   end
 
@@ -55,12 +57,12 @@ class Idea < ActiveRecord::Base
     return email_list
   end
 
-  def first_in_thread?
-    idea_thred = self.idea_thread
-    if idea_thread
-      self == idea_thread.ideas.order("created_at ASC").first
-    end
-  end
+  # def first_in_thread?
+  #   idea_thred = self.idea_thread
+  #   if idea_thread
+  #     self == idea_thread.ideas.order("created_at ASC").first
+  #   end
+  # end
 
   def message
     emails = self.email_list
@@ -91,6 +93,11 @@ class Idea < ActiveRecord::Base
       OR
       trackable_type = 'Idea' AND trackable_id = #{id}
     ").order("created_at DESC")
+  end
+
+  def activity_feed
+    content = related_activities.where("trackable_type != 'Comment'") + self.comments
+    content.sort_by(&:created_at)
   end
 
 

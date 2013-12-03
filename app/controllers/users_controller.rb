@@ -20,7 +20,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.generate_api_key
-      @user.message
       render json: @user
     else
       render :json => @user.errors.full_messages, status: 422
@@ -38,7 +37,6 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
 
       #Send to Faye
-      @user.message
       render json: @user
     else
       render :json => @user.errors.full_messages, status: 422
