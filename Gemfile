@@ -18,9 +18,6 @@ gem "factory_girl", "~> 4.2.0"
 gem "sorcery", "~> 0.8.2"
 gem 'rack-cors', :require => 'rack/cors'
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
@@ -35,3 +32,8 @@ gem "public_activity", "~> 1.4.0"
 gem 'delayed_job_active_record'
 
 gem 'active_model_serializers'
+
+gem 'rubber', "~> 2.6.3"
+gem 'open4'
+gem 'gelf'
+gem 'unf'
