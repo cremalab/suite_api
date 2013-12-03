@@ -24,21 +24,3 @@ To deploy this application, you will need to add a rubber.yml file in in the con
 Then run `cap rubber:create_staging `
 
 ---
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
