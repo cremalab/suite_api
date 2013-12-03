@@ -32,6 +32,7 @@ gem "public_activity", "~> 1.4.0"
 gem 'delayed_job_active_record'
 
 gem 'active_model_serializers'
+gem 'daemons'
 
 gem 'rubber', "~> 2.6.3"
 gem 'open4'
