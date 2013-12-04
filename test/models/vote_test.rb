@@ -47,7 +47,9 @@ class VoteTest < ActiveSupport::TestCase
 
     assert_equal idea.idea_thread.status, :archived
 
+    mail = ActionMailer::Base.deliveries.last
 
+    assert_includes mail.body, "Ross Brown"
 
 
   end
